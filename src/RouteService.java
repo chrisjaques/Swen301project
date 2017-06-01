@@ -4,31 +4,57 @@ import java.util.ArrayList;
 public class RouteService {
 
 	// static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc";
-	static final String DB_URL = "jdbc:sqlserver://swen301project.database.windows.net:1433;database=swen301project;user=chris@swen301project;password={SWEN$301};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+	//static final String DB_URL = "jdbc:sqlserver://swen301project.database.windows.net:1433;database=swen301project;user=chris@swen301project;password={SWEN$301};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+
+	static final String DB_URL = "jdbc:derby://localhost:1527/swen301;user=swen301;password=swen301";
+	private static Connection conn = null;
 
 	/**
 	 * A JDBC SELECT (JDBC query) example program.
 	 */
 
 	public static void main(String[] args) {
-		print(getAll());
-		// print(getAirRoutes());
-		// Route r = new Route(1235, "Wellington", "Paris",
-		// Route.TransportType.AIR, 12.50);
-		// insertOrUpdate(r);
+//		createConnection();
+//		print(getRoutesByOrigin("Wellington"));
+		
+		createConnection();
+		print(getRoutesByDestination("Paris"));
 
-		// Route r = new Route(12, "Wellington", "Pretoria",
-		// Route.TransportType.AIR, 52.50);
-		// insertOrUpdate(r);
+//		print(getAirRoutes());
+		
+//		createConnection();
+//		Route r = new Route(1235, "Wellington", "Paris",
+//		Route.TransportType.AIR, 12.50);
+//		insertOrUpdate(r);
+		
+//		createConnection();
+//		Route r = new Route(12, "Wellington", "Pretoria",
+//		Route.TransportType.AIR, 52.50);
+//		insertOrUpdate(r);
+		
+//		createConnection();
+//		print(getAll());
 
 	}
+	
+	private static void createConnection()
+    {
+        try
+        {
+            Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
+            conn = DriverManager.getConnection(DB_URL); 
+        }
+        catch (Exception except)
+        {
+            except.printStackTrace();
+        }
+    }
 
 	public static ArrayList<Route> getAll() {
 
 		ArrayList<Route> allRoutes = new ArrayList<Route>();
 
 		try {
-			Connection conn = DriverManager.getConnection(DB_URL);
 			Statement stmt = conn.createStatement();
 			ResultSet rs;
 
@@ -70,7 +96,6 @@ public class RouteService {
 
 	public static boolean insertOrUpdate(Route route) {
 		try {
-			Connection conn = DriverManager.getConnection(DB_URL);
 			PreparedStatement ps = conn.prepareStatement(
 					"UPDATE routetable SET origin = ?, destination = ?, transporttype = ?, price = ? WHERE uniqueid = ?");
 
@@ -112,7 +137,6 @@ public class RouteService {
 		ArrayList<String> allOrigins = new ArrayList<String>();
 
 		try {
-			Connection conn = DriverManager.getConnection(DB_URL);
 			Statement stmt = conn.createStatement();
 			ResultSet rs;
 
@@ -135,7 +159,6 @@ public class RouteService {
 		ArrayList<String> allDestinations = new ArrayList<String>();
 
 		try {
-			Connection conn = DriverManager.getConnection(DB_URL);
 			Statement stmt = conn.createStatement();
 			ResultSet rs;
 
@@ -154,17 +177,16 @@ public class RouteService {
 		return allDestinations;
 	}
 
-	public static ArrayList<Route> getAirRoutes() {
+	public static ArrayList<Route> getRoutes(Route.TransportType t) {
 
 		ArrayList<Route> airRoutes = new ArrayList<Route>();
 
 		try {
-			Connection conn = DriverManager.getConnection(DB_URL);
 			ResultSet rs;
 
 			PreparedStatement ps = conn.prepareStatement(
 					"SELECT id, origin, destination, transporttype, price, uniqueid FROM routetable WHERE transportType = ?");
-			ps.setString(1, "AIR");
+			ps.setString(1, t.toString());
 
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -178,6 +200,12 @@ public class RouteService {
 				switch (transportTypeString) {
 				case "AIR":
 					transport = Route.TransportType.AIR;
+					break;
+				case "LAND":
+					transport = Route.TransportType.LAND;
+					break;
+				case "SEA":
+					transport = Route.TransportType.SEA;
 					break;
 				default:
 					throw new IllegalArgumentException("Invalid transport type: " + transportTypeString);
@@ -195,18 +223,17 @@ public class RouteService {
 
 		return airRoutes;
 	}
+	
+	public static ArrayList<Route> getRoutesByOrigin(String orig) {
 
-	public static ArrayList<Route> getLandRoutes() {
-
-		ArrayList<Route> landRoutes = new ArrayList<Route>();
+		ArrayList<Route> routes = new ArrayList<Route>();
 
 		try {
-			Connection conn = DriverManager.getConnection(DB_URL);
 			ResultSet rs;
 
 			PreparedStatement ps = conn.prepareStatement(
-					"SELECT id, origin, destination, transporttype, price, uniqueid FROM routetable WHERE transportType = ?");
-			ps.setString(1, "LAND");
+					"SELECT id, origin, destination, transporttype, price, uniqueid FROM routetable WHERE origin = ?");
+			ps.setString(1, orig);
 
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -218,48 +245,12 @@ public class RouteService {
 				Route.TransportType transport;
 
 				switch (transportTypeString) {
+				case "AIR":
+					transport = Route.TransportType.AIR;
+					break;
 				case "LAND":
 					transport = Route.TransportType.LAND;
 					break;
-				default:
-					throw new IllegalArgumentException("Invalid transport type: " + transportTypeString);
-				}
-
-				Route r = new Route(uniqueid, origin, destination, transport, price);
-				landRoutes.add(r);
-			}
-			conn.close();
-		} catch (Exception e) {
-			System.err.println("Got an exception! ");
-			e.printStackTrace();
-			System.err.println(e.getMessage());
-		}
-
-		return landRoutes;
-	}
-
-	public static ArrayList<Route> getSeaRoutes() {
-
-		ArrayList<Route> seaRoutes = new ArrayList<Route>();
-
-		try {
-			Connection conn = DriverManager.getConnection(DB_URL);
-			ResultSet rs;
-
-			PreparedStatement ps = conn.prepareStatement(
-					"SELECT id, origin, destination, transporttype, price, uniqueid FROM routetable WHERE transportType = ?");
-			ps.setString(1, "SEA");
-
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				String origin = rs.getString("origin");
-				String destination = rs.getString("destination");
-				String transportTypeString = rs.getString("transporttype");
-				double price = rs.getDouble("price");
-				int uniqueid = rs.getInt("uniqueid");
-				Route.TransportType transport;
-
-				switch (transportTypeString) {
 				case "SEA":
 					transport = Route.TransportType.SEA;
 					break;
@@ -268,7 +259,7 @@ public class RouteService {
 				}
 
 				Route r = new Route(uniqueid, origin, destination, transport, price);
-				seaRoutes.add(r);
+				routes.add(r);
 			}
 			conn.close();
 		} catch (Exception e) {
@@ -277,7 +268,54 @@ public class RouteService {
 			System.err.println(e.getMessage());
 		}
 
-		return seaRoutes;
+		return routes;
+	}
+	
+	public static ArrayList<Route> getRoutesByDestination(String dest) {
+
+		ArrayList<Route> routes = new ArrayList<Route>();
+
+		try {
+			ResultSet rs;
+
+			PreparedStatement ps = conn.prepareStatement(
+					"SELECT id, origin, destination, transporttype, price, uniqueid FROM routetable WHERE destination = ?");
+			ps.setString(1, dest);
+
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				String origin = rs.getString("origin");
+				String destination = rs.getString("destination");
+				String transportTypeString = rs.getString("transporttype");
+				double price = rs.getDouble("price");
+				int uniqueid = rs.getInt("uniqueid");
+				Route.TransportType transport;
+
+				switch (transportTypeString) {
+				case "AIR":
+					transport = Route.TransportType.AIR;
+					break;
+				case "LAND":
+					transport = Route.TransportType.LAND;
+					break;
+				case "SEA":
+					transport = Route.TransportType.SEA;
+					break;
+				default:
+					throw new IllegalArgumentException("Invalid transport type: " + transportTypeString);
+				}
+
+				Route r = new Route(uniqueid, origin, destination, transport, price);
+				routes.add(r);
+			}
+			conn.close();
+		} catch (Exception e) {
+			System.err.println("Got an exception! ");
+			e.printStackTrace();
+			System.err.println(e.getMessage());
+		}
+
+		return routes;
 	}
 
 	public static void print(ArrayList<Route> routes) {
