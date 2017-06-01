@@ -17,23 +17,23 @@ public class RouteService {
 //		createConnection();
 //		print(getRoutesByOrigin("Wellington"));
 		
-		createConnection();
-		print(getRoutesByDestination("Paris"));
+//		createConnection();
+//		print(getRoutesByDestination("Paris"));
 
 //		print(getAirRoutes());
 		
-//		createConnection();
-//		Route r = new Route(1235, "Wellington", "Paris",
-//		Route.TransportType.AIR, 12.50);
-//		insertOrUpdate(r);
+		createConnection();
+		Route r = new Route(1235, "Wellington", "Paris",
+		Route.TransportType.AIR, 12.50);
+		insertOrUpdate(r);
 		
-//		createConnection();
-//		Route r = new Route(12, "Wellington", "Pretoria",
-//		Route.TransportType.AIR, 52.50);
-//		insertOrUpdate(r);
+		createConnection();
+		r = new Route(12, "Wellington", "Pretoria",
+		Route.TransportType.AIR, 52.50);
+		insertOrUpdate(r);
 		
-//		createConnection();
-//		print(getAll());
+		createConnection();
+		print(getAll());
 
 	}
 	
