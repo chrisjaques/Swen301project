@@ -3,7 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="ExternalJars"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="ExternalJars/derbyclient.jar"/>
-	<classpathentry kind="lib" path="ExternalJars/sqljdbc42.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/whitewill1/Desktop/test/Swen301project/sqljdbc42.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
