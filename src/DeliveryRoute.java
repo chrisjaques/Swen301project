@@ -66,7 +66,7 @@ public class DeliveryRoute {
 	}
 
 	/**
-	 * pseudo constructor to find a DeliveryRoute between origin and destination, will return that delivery route if it exists otherwise null
+	 * Something like a pseudo constructor, constructs a DeliveryRoute between origin and destination, will return that delivery route if it exists otherwise null
 	 * @param origin
 	 * @param destination
 	 * @param priority
@@ -86,7 +86,9 @@ public class DeliveryRoute {
 
 		while(!(queue.peek().getOrigin().equals(origin) && queue.peek().getDestination().equals(destination)) && !queue.isEmpty()){ //keep polling the priorityQueue until the first route off is from origin to destination
 
-			//availableRoutes = RouteService.getRoutesByOrigin(currentRoute.getOrigin());//TODO method i need doesnt exist yet
+			currentRoute = queue.poll();
+
+			availableRoutes = RouteService.getRoutesByOrigin(currentRoute.getOrigin());//TODO method i need doesnt exist yet
 			currentRoute = queue.poll();
 			DeliveryRoute tempRoute;
 
@@ -103,28 +105,26 @@ public class DeliveryRoute {
 				if(!loop){//if not somewhere we've been before
 
 					//add the routes to our search
-					if(r.getTransportType().equals(Route.TransportType.AIR)){ //add air routes
+					if(r.getTransportType().equals(Route.TransportType.AIR)){ //always add air routes, they just go to the back of the queue for standard delivery
 						tempRoute = new DeliveryRoute(currentRoute);
 						tempRoute.addRoute(r);
 						queue.add(tempRoute);
 
-					} else if (!priority) { //priority mail only uses air routes so dosn't add these
-						tempRoute = new DeliveryRoute(currentRoute); //add all land and sea routes
+					} else if (!priority) { //add all land and sea routes, priority mail only uses air routes so dosn't add these
+						tempRoute = new DeliveryRoute(currentRoute);
 						tempRoute.addRoute(r);
 						queue.add(tempRoute);
 					}
 				}
 			}
-
-			currentRoute = queue.poll();
 		}
 
 		return(queue.isEmpty()? null: queue.poll()); //if we ran out of routes to check return null, otherwise the first route in the queue should be the complete route
 	}
 
 	/**
-	 * Comparator for prioritizing deliveryroutes, land and sea routes automatically go ahead of air routes because standard delivery only uses air routes when land or sea arn't possible
-	 * the same comparitor is used for air priority because t wont include any land or air routes to compare
+	 * Comparator for prioritizing DeliveryRoutes, land and sea routes automatically go ahead of air routes because standard delivery only uses air routes when land or sea arn't possible
+	 * the same Comparitor is used for air priority because it wont include any land or sea routes to compare
 	 * @author whitewill1
 	 *
 	 */
