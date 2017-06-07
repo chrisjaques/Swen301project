@@ -2,3 +2,7 @@
 /RouteFinder.class
 /RouteFinder$RouteNode.class
 /DeliveryRoute$RouteComparitor.class
+/DeliveryRoute$costComparitor.class
+/DeliveryRoute$PriorityComparitor.class
+/DeliveryRoute$standardComparitor.class
+/DeliveryRoute$StandardComparitor.class

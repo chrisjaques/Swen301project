@@ -9,6 +9,8 @@ public class DeliveryRoute {
 	private String destination;
 	private double totalPrice = 0;
 
+	private boolean airPriority = true;//will be set to false if this route contains any land or Sea routes
+
 	/**
 	 * create a deliveryRoute with a set origin
 	 * @param origin
@@ -28,6 +30,7 @@ public class DeliveryRoute {
 		this.destination=r.getDestination();
 		this.totalPrice = r.getTotalPrice();
 		this.deliveryRoute = new ArrayList<Route>(r.getDeliveryRoute());
+		this.airPriority = r.getPriority();
 	}
 
 	/**
@@ -37,6 +40,9 @@ public class DeliveryRoute {
 	public void addRoute(Route r){
 		totalPrice+=r.getPrice();
 		destination = r.getDestination();
+		if(r.getTransportType()!=Route.TransportType.AIR){
+			airPriority = false;
+		}
 		deliveryRoute.add(r);
 	}
 
@@ -53,6 +59,10 @@ public class DeliveryRoute {
 
 	public String getDestination() {
 		return destination;
+	}
+
+	public boolean getPriority(){
+		return airPriority;
 	}
 
 	/**
@@ -89,18 +99,17 @@ public class DeliveryRoute {
 						loop = true;
 					}
 				}
-				if(!loop){
+
+				if(!loop){//if not somewhere we've been before
 
 					//add the routes to our search
-					if(r.getTransportType().equals(Route.TransportType.AIR)){ //only add air routes if this is priority delivery
-						if (priority){
-							tempRoute = new DeliveryRoute(currentRoute);
-							tempRoute.addRoute(r);
-							queue.add(tempRoute);
-						}
+					if(r.getTransportType().equals(Route.TransportType.AIR)){ //add air routes
+						tempRoute = new DeliveryRoute(currentRoute);
+						tempRoute.addRoute(r);
+						queue.add(tempRoute);
 
-					} else {
-						tempRoute = new DeliveryRoute(currentRoute); //add all land and sea routes regardless
+					} else if (!priority) { //priority mail only uses air routes so dosn't add these
+						tempRoute = new DeliveryRoute(currentRoute); //add all land and sea routes
 						tempRoute.addRoute(r);
 						queue.add(tempRoute);
 					}
@@ -114,15 +123,27 @@ public class DeliveryRoute {
 	}
 
 	/**
-	 * Comparator for prioritizing deliveryRoutes by totalCost
+	 * Comparator for prioritizing deliveryroutes, land and sea routes automatically go ahead of air routes because standard delivery only uses air routes when land or sea arn't possible
+	 * the same comparitor is used for air priority because t wont include any land or air routes to compare
 	 * @author whitewill1
 	 *
 	 */
 	private static class RouteComparitor implements Comparator<DeliveryRoute>{
 		@Override
 		public int compare(DeliveryRoute r1, DeliveryRoute r2) {
-			return (r1.getTotalPrice()<r2.getTotalPrice()? -1:1);//TODO, may have this the wrong way around, need to test it
-		}
+			if(r1.getPriority()){
 
+				if(r2.getPriority()){
+
+					return (r1.getTotalPrice()<r2.getTotalPrice()? -1:1); //if they are both air routes just compare by cost
+				}
+				return 1; //if r1 is an air route and r2 isn't, put r2 ahead of r1
+			}
+			if(r2.getPriority()){
+				return -1; //if r1 is a land or sea route and r2 isn't then r1 gets put ahead of r2
+			}
+
+			return (r1.getTotalPrice()<r2.getTotalPrice()? -1:1); //if neither are air routes order them by cost
+		}
 	}
 }
