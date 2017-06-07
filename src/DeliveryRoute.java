@@ -72,11 +72,11 @@ public class DeliveryRoute {
 
 		DeliveryRoute currentRoute;
 
-		//TODO get pathfinding working
+		//TODO get pathfinding working...
 
 		while(!(queue.peek().getOrigin().equals(origin) && queue.peek().getDestination().equals(destination)) && !queue.isEmpty()){ //keep polling the priorityQueue until the first route off is from origin to destination
 
-			//availableRoutes = RouteService.getRoutesFrom(currentRoute.destination);//TODO method i need doesnt exist yet
+			//availableRoutes = RouteService.getRoutesByOrigin(currentRoute.getOrigin());//TODO method i need doesnt exist yet
 			currentRoute = queue.poll();
 			DeliveryRoute tempRoute;
 
