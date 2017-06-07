@@ -81,17 +81,29 @@ public class DeliveryRoute {
 			DeliveryRoute tempRoute;
 
 			for(Route r: availableRoutes){
-				if(r.getTransportType().equals(Route.TransportType.AIR)){ //only add air routes if this is priority delivery
-					if (priority){
-						tempRoute = new DeliveryRoute(currentRoute);
+				//check if we are going somewhere we have been before
+				boolean loop=false;
+
+				for(Route r2: currentRoute.getDeliveryRoute()){
+					if(r.getDestination().equals(r2.getOrigin())){
+						loop = true;
+					}
+				}
+				if(!loop){
+
+					//add the routes to our search
+					if(r.getTransportType().equals(Route.TransportType.AIR)){ //only add air routes if this is priority delivery
+						if (priority){
+							tempRoute = new DeliveryRoute(currentRoute);
+							tempRoute.addRoute(r);
+							queue.add(tempRoute);
+						}
+
+					} else {
+						tempRoute = new DeliveryRoute(currentRoute); //add all land and sea routes regardless
 						tempRoute.addRoute(r);
 						queue.add(tempRoute);
 					}
-
-				} else {
-					tempRoute = new DeliveryRoute(currentRoute); //add all land and sea routes regardless
-					tempRoute.addRoute(r);
-					queue.add(tempRoute);
 				}
 			}
 
@@ -109,7 +121,7 @@ public class DeliveryRoute {
 	private static class RouteComparitor implements Comparator<DeliveryRoute>{
 		@Override
 		public int compare(DeliveryRoute r1, DeliveryRoute r2) {
-			return (r1.getTotalPrice()>r2.getTotalPrice()? -1:1);//TODO, may have this the wrong way around, need to test it
+			return (r1.getTotalPrice()<r2.getTotalPrice()? -1:1);//TODO, may have this the wrong way around, need to test it
 		}
 
 	}
