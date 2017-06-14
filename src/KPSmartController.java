@@ -26,7 +26,8 @@ public class KPSmartController {
 	 * @param route - the route to be added to the system.
 	 */
 	public void addRoute(Route route) {
-		// TODO: Where does the route come in from?
+		// TODO: Take in parameters for a route
+		// TODO: create a route with the parameters.
 		boolean success = false;
 		success = RouteService.insertOrUpdate(route);
 		if (success) {
@@ -38,10 +39,11 @@ public class KPSmartController {
 		}
 	}
 	
-	public void createOrder(String origin, String destination, boolean priority) {
+	public void createOrder(boolean priority, String volume, String origin, String destination, String weight, String timestamp) {
+		Mail mail = new Mail(priority, volume, origin, destination, weight, timestamp);
 		// TODO: Takes in an Order.
-		//Route route = DeliveryRoute.findRoute(origin,destination,priority) <- returns Route if it exists or null
-		
+		DeliveryRoute deliveryRoute = DeliveryRoute.findRoute(origin,destination,priority); //<- returns Route if it exists or null
+		// TODO do somehing here. Need to talk to Will and Chris.
 	}
 	
 	/**
@@ -137,7 +139,7 @@ public class KPSmartController {
 	 */
 	public void processEvent(String event) {
 		// TODO: should take in an Event.
-		// TODO: log it?
+		// TODO: log it
 	}
 	
 	public ArrayList<Actions> getActions() {
