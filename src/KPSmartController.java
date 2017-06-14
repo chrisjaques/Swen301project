@@ -66,6 +66,14 @@ public class KPSmartController {
 	 */
 	public void discontinueRoute(Route route) {
 		// TODO: takes in an existing route and removes it from the system.
+		boolean success = RouteService.deleteRoute(route);
+		if (success) {
+			System.out.println("Route has been removed");
+			// TODO: do something on GUI.
+		} else {
+			System.out.println("ERROR: Route failed to delete");
+			// Theoretically should never reach this step.
+		}
 	}
 
 
