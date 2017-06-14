@@ -10,33 +10,32 @@ public class RouteService {
 	private static Connection conn = null;
 
 	/**
-	 * A JDBC SELECT (JDBC query) example program.
+	 * Method purely for testing
 	 */
-
 	public static void main(String[] args) {
-//		createConnection();
 //		print(getRoutesByOrigin("Wellington"));
 		
-//		createConnection();
 //		print(getRoutesByDestination("Paris"));
 
 //		print(getAirRoutes());
 		
-		createConnection();
 		Route r = new Route(1235, "Wellington", "Paris",
 		Route.TransportType.AIR, 12.50);
 		insertOrUpdate(r);
 		
-		createConnection();
 		r = new Route(12, "Wellington", "Pretoria",
 		Route.TransportType.AIR, 52.50);
 		insertOrUpdate(r);
 		
-		createConnection();
-		print(getAll());
+		System.out.println(getRouteByID(12).getPrice());//should be 52.5
+		
+//		print(getAll());
 
 	}
 	
+	/**
+	 * Method purely for local environment hack
+	 */
 	private static void createConnection()
     {
         try
@@ -50,8 +49,12 @@ public class RouteService {
         }
     }
 
+	/**
+	 * Method to get all Routes from DB
+	 */
 	public static ArrayList<Route> getAll() {
-
+		
+		createConnection();
 		ArrayList<Route> allRoutes = new ArrayList<Route>();
 
 		try {
@@ -94,7 +97,13 @@ public class RouteService {
 		return allRoutes;
 	}
 
+	/**
+	 * Add new route or update existing route
+	 * @param route
+	 */
 	public static boolean insertOrUpdate(Route route) {
+		
+		createConnection();
 		try {
 			PreparedStatement ps = conn.prepareStatement(
 					"UPDATE routetable SET origin = ?, destination = ?, transporttype = ?, price = ? WHERE uniqueid = ?");
@@ -133,7 +142,12 @@ public class RouteService {
 		return true;
 	}
 
+	/**
+	 * Method to get all Origins from DB
+	 */
 	public static ArrayList<String> getOrigins() {
+		
+		createConnection();
 		ArrayList<String> allOrigins = new ArrayList<String>();
 
 		try {
@@ -155,7 +169,12 @@ public class RouteService {
 		return allOrigins;
 	}
 
+	/**
+	 * Method to get all Destinations from DB
+	 */
 	public static ArrayList<String> getDestinations() {
+		
+		createConnection();
 		ArrayList<String> allDestinations = new ArrayList<String>();
 
 		try {
@@ -177,8 +196,13 @@ public class RouteService {
 		return allDestinations;
 	}
 
+	/**
+	 * Method to get all Routes of a certain TransportType from DB
+	 * @param t
+	 */
 	public static ArrayList<Route> getRoutes(Route.TransportType t) {
-
+		
+		createConnection();
 		ArrayList<Route> airRoutes = new ArrayList<Route>();
 
 		try {
@@ -224,8 +248,13 @@ public class RouteService {
 		return airRoutes;
 	}
 	
+	/**
+	 * Method to get all Routes from a given Origin from DB
+	 * @param orig
+	 */
 	public static ArrayList<Route> getRoutesByOrigin(String orig) {
-
+		
+		createConnection();
 		ArrayList<Route> routes = new ArrayList<Route>();
 
 		try {
@@ -271,8 +300,13 @@ public class RouteService {
 		return routes;
 	}
 	
+	/**
+	 * Method to get all Routes from a given Destination from DB
+	 * @param dest
+	 */
 	public static ArrayList<Route> getRoutesByDestination(String dest) {
-
+		
+		createConnection();
 		ArrayList<Route> routes = new ArrayList<Route>();
 
 		try {
@@ -317,7 +351,61 @@ public class RouteService {
 
 		return routes;
 	}
+	
+	/**
+	 * Method to get a single Route from a given ID from DB
+	 * @param id
+	 */
+	public static Route getRouteByID(int id) {
+		
+		createConnection();
+		Route r = null;
 
+		try {
+			ResultSet rs;
+
+			PreparedStatement ps = conn.prepareStatement(
+					"SELECT id, origin, destination, transporttype, price, uniqueid FROM routetable WHERE uniqueid = ?");
+			ps.setInt(1, id);
+
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				String origin = rs.getString("origin");
+				String destination = rs.getString("destination");
+				String transportTypeString = rs.getString("transporttype");
+				double price = rs.getDouble("price");
+				int uniqueid = rs.getInt("uniqueid");
+				Route.TransportType transport;
+
+				switch (transportTypeString) {
+				case "AIR":
+					transport = Route.TransportType.AIR;
+					break;
+				case "LAND":
+					transport = Route.TransportType.LAND;
+					break;
+				case "SEA":
+					transport = Route.TransportType.SEA;
+					break;
+				default:
+					throw new IllegalArgumentException("Invalid transport type: " + transportTypeString);
+				}
+
+				r = new Route(uniqueid, origin, destination, transport, price);
+			}
+			conn.close();
+		} catch (Exception e) {
+			System.err.println("Got an exception! ");
+			e.printStackTrace();
+			System.err.println(e.getMessage());
+		}
+
+		return r;
+	}
+
+	/**
+	 * Method purely for testing
+	 */
 	public static void print(ArrayList<Route> routes) {
 		for (Route r : routes) {
 			System.out.println("\nID: " + r.getId());
