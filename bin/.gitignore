@@ -6,3 +6,5 @@
 /derbyclient.jar
 /sqljdbc42.jar
 /KPSmartController.class
+/KPSmartController$actions.class
+/KPSmartController$Actions.class
