@@ -1,12 +1,12 @@
 public class Mail {
-	private String priority;
+	private boolean priority;
 	private String volume;
 	private String origin;
 	private String destination;
 	private String weight;
 	private String timestamp;
 	
-	public Mail(String priority, String volume, String origin, String destination,
+	public Mail(boolean priority, String volume, String origin, String destination,
 			String weight, String timestamp) {
 		this.setPriority(priority);
 		this.setVolume(volume);
@@ -16,12 +16,12 @@ public class Mail {
 		this.setTimestamp(timestamp);
 	}
 
-	public String getPriority() {
+	public boolean getPriority() {
 		return priority;
 	}
 
-	public void setPriority(String priority) {
-		this.priority = priority;
+	public void setPriority(boolean priority2) {
+		this.priority = priority2;
 	}
 
 	public String getVolume() {
