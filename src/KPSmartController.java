@@ -1,4 +1,5 @@
-
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class KPSmartController {
 	
@@ -11,6 +12,15 @@ public class KPSmartController {
 		
 	}
 	
+	public enum Actions {
+		Booking,
+		CreateUser,
+		BussinessFigures,
+		UpdateRoute,
+		DiscontinueRoute,
+		Logout	
+	}
+	
 	/**
 	 * 	Adds a new route to the system.
 	 * @param route - the route to be added to the system.
@@ -20,10 +30,10 @@ public class KPSmartController {
 		boolean success = false;
 		success = RouteService.insertOrUpdate(route);
 		if (success) {
-			// TODO: success gui action
+			// TODO: success GUI action
 			System.out.println("new route added");
 		} else {
-			// TODO: failed gui action
+			// TODO: failed GUI action
 			System.out.println("route failed to add");
 		}
 	}
@@ -44,22 +54,18 @@ public class KPSmartController {
 	public void createUser(String username, String password, User.UserType role) {
 		// TODO: some sort of validation
 		// TODO: call user service to add it in the database.
-		
-		// Check if the user is a manager
-		if (getCurrentUser().getRole() == User.UserType.Manager) {
-			User newUser = new User(username, password, role); // Create User object
-			boolean success = UserService.insertOrUpdate(newUser);
-			if (success) {
-				// TODO: call a GUI function?
-				System.out.println("User has been created succesfully");
-			} else {
-				System.out.println("ERROR: failed to create user.");
-				// TODO: call a GUI function?
-			}
-		}
-		
+
+		User newUser = new User(username, password, role); // Create User object
+		boolean success = UserService.insertOrUpdate(newUser);
+		if (success) {
+			// TODO: call a GUI function?
+			System.out.println("User has been created succesfully");
+		} else {
+			System.out.println("ERROR: failed to create user.");
+			// TODO: call a GUI function?
+		}		
 	}
-	
+
 	/**
 	 * 	Takes in a route and removes it from the database and system.
 	 * @param route
@@ -94,7 +100,8 @@ public class KPSmartController {
 			if (password == user.getPassword()) {
 				System.out.println("Successfully logged in!");
 				setCurrentUser(user);
-				// TODO: Some GUI event: Take user to home page.
+				ArrayList<Actions> actions = getActions();
+				// TODO: Call GUI method to navigate to home page and pass in {actions}.
 			} else {
 				// Password is incorrect.
 				System.out.println("ERROR: Password does not match.");
@@ -133,6 +140,20 @@ public class KPSmartController {
 		// TODO: log it?
 	}
 	
+	public ArrayList<Actions> getActions() {
+		if (getCurrentUser().getRole() == User.UserType.Manager) {
+			ArrayList<Actions> actions = (ArrayList<Actions>) Arrays.asList(Actions.values());
+			return actions;
+		} else {
+			ArrayList<Actions> actions = new ArrayList<Actions>();
+			actions.add(Actions.Booking);
+			actions.add(Actions.UpdateRoute);
+			actions.add(Actions.DiscontinueRoute);
+			actions.add(Actions.Logout);			
+			return actions;
+		}
+	}
+	
 	/**
 	 * 	Update the current price.
 	 * @param newPrice
@@ -158,5 +179,6 @@ public class KPSmartController {
 	private void setCurrentUser(User user) {
 		this.currentUser = user;
 	}
+
 
 }
