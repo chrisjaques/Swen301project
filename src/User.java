@@ -5,7 +5,7 @@ public class User {
 	private UserType role;
 	
 	public enum UserType {
-		Manger, Clerk
+		Manager, Clerk
 	}
 	public String getUsername() {
 		return username;
