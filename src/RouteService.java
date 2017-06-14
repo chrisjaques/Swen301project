@@ -19,15 +19,19 @@ public class RouteService {
 
 //		print(getAirRoutes());
 		
+//		Route r = new Route(1235, "Wellington", "Paris",
+//		Route.TransportType.AIR, 12.50);
+//		insertOrUpdate(r);
+		
 		Route r = new Route(1235, "Wellington", "Paris",
-		Route.TransportType.AIR, 12.50);
-		insertOrUpdate(r);
+				Route.TransportType.AIR, 12.50);
+		System.out.println(deleteRoute(r));
 		
-		r = new Route(12, "Wellington", "Pretoria",
-		Route.TransportType.AIR, 52.50);
-		insertOrUpdate(r);
+//		r = new Route(12, "Wellington", "Pretoria",
+//		Route.TransportType.AIR, 52.50);
+//		insertOrUpdate(r);
 		
-		System.out.println(getRouteByID(12).getPrice());//should be 52.5
+//		System.out.println(getRouteByID(12).getPrice());//should be 52.5
 		
 //		print(getAll());
 
@@ -140,6 +144,38 @@ public class RouteService {
 			System.err.println(e.getMessage());
 		}
 		return true;
+	}
+	
+	/**
+	 * Delete route
+	 * @param route
+	 */
+	public static boolean deleteRoute(Route route) {
+		
+		int rowschanged = 0;		
+		createConnection();
+		try {
+			PreparedStatement ps = conn.prepareStatement(
+					"DELETE FROM routetable WHERE uniqueid = ?");
+
+			ps.setInt(1, route.getId());
+
+			rowschanged = ps.executeUpdate();
+
+			if (rowschanged > 0)
+				System.out.println("Successfully deleted route with uniqueID: " + route.getId());
+
+			conn.close();
+		} catch (Exception e) {
+			System.err.println("Got an exception! ");
+			e.printStackTrace();
+			System.err.println(e.getMessage());
+		}
+		if (rowschanged > 0){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
