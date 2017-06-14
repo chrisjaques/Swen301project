@@ -12,7 +12,7 @@ public class UserService {
 	 * Method purely for testing
 	 */
 	public static void main(String[] args) {
-		User u = new User("Chris", "Chris", User.UserType.Manger);
+		User u = new User("Chris", "Chris", User.UserType.Manager);
 		insertOrUpdate(u);
 		print(u);
 	}
@@ -99,7 +99,7 @@ public class UserService {
 
 				switch (roleString) {
 				case "MANAGER":
-					role = User.UserType.Manger;
+					role = User.UserType.Manager;
 					break;
 				case "CLERK":
 					role = User.UserType.Clerk;
