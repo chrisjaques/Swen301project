@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import javax.swing.DefaultComboBoxModel;
 
 @SuppressWarnings("serial")
 public class NewOrderPanel extends JPanel {
@@ -114,6 +115,7 @@ public class NewOrderPanel extends JPanel {
 		add(lblPriority, gbc_lblPriority);
 		
 		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Air ", "Land ", "Sea"}));
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;

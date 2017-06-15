@@ -1,12 +1,15 @@
 package gui;
 
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
 import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class CreateNewClerkPanel extends JPanel {
 	private JTextField firstnameTextField;
@@ -42,6 +45,7 @@ public class CreateNewClerkPanel extends JPanel {
 		add(firstnameLabel, gbc_firstnameLabel);
 		
 		firstnameTextField = new JTextField();
+		firstnameTextField.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_firstnameTextField = new GridBagConstraints();
 		gbc_firstnameTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_firstnameTextField.fill = GridBagConstraints.HORIZONTAL;
@@ -58,6 +62,7 @@ public class CreateNewClerkPanel extends JPanel {
 		add(lastnameLabel, gbc_lastnameLabel);
 		
 		lastnameTextField = new JTextField();
+		lastnameTextField.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_lastnameTextField = new GridBagConstraints();
 		gbc_lastnameTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_lastnameTextField.fill = GridBagConstraints.HORIZONTAL;
@@ -73,7 +78,8 @@ public class CreateNewClerkPanel extends JPanel {
 		gbc_passwordLabel.gridy = 5;
 		add(passwordLabel, gbc_passwordLabel);
 		
-		passwordTextField = new JTextField();
+		passwordTextField = new JPasswordField();
+		passwordTextField.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_passwordTextField = new GridBagConstraints();
 		gbc_passwordTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_passwordTextField.fill = GridBagConstraints.HORIZONTAL;
@@ -89,7 +95,8 @@ public class CreateNewClerkPanel extends JPanel {
 		gbc_confirmPasswordLabel.gridy = 7;
 		add(confirmPasswordLabel, gbc_confirmPasswordLabel);
 		
-		confirmPasswordField = new JTextField();
+		confirmPasswordField = new JPasswordField();
+		confirmPasswordField.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_confirmPasswordField = new GridBagConstraints();
 		gbc_confirmPasswordField.insets = new Insets(0, 0, 5, 5);
 		gbc_confirmPasswordField.fill = GridBagConstraints.HORIZONTAL;

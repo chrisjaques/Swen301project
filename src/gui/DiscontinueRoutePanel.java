@@ -9,6 +9,7 @@ import java.awt.Insets;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.Font;
+import javax.swing.DefaultComboBoxModel;
 
 public class DiscontinueRoutePanel extends JPanel {
 	private JTextField destinationTextField;
@@ -74,6 +75,7 @@ public class DiscontinueRoutePanel extends JPanel {
 		add(lblPriority, gbc_lblPriority);
 		
 		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Air\t", "Land", "Sea"}));
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
