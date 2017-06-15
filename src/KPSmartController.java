@@ -3,15 +3,20 @@ import java.util.Arrays;
 
 public class KPSmartController {
 	
+	// The user that is logged in to the system. If no user is logged in, currentUser = null.
 	private User currentUser = null;
 
-	public KPSmartController(User currentUser) {
-		this.currentUser = currentUser;
-		
-		// TODO: Do I take in a User? OR all the information of a User?
+	/**
+	 * Initialise the controller.
+	 */
+	public KPSmartController() {
 		
 	}
 	
+	/**
+	 * List of enum actions which will be used to display the actions that are available for that user type.
+	 *
+	 */
 	public enum Actions {
 		Booking,
 		CreateUser,
@@ -23,7 +28,8 @@ public class KPSmartController {
 	
 	/**
 	 * 	Adds a new route to the system.
-	 * @param route - the route to be added to the system.
+	 * 
+	 * @param {Route} route - the route to be added to the system.
 	 */
 	public void addRoute(Route route) {
 		// TODO: Take in parameters for a route
