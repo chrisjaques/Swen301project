@@ -27,7 +27,6 @@ public class KPSmartController {
 	}
 	
 	/**
-<<<<<<< HEAD
 	 * Adds a new route to the system.
 	 * 
 	 * @param origin - origin of the Route.
@@ -119,7 +118,7 @@ public class KPSmartController {
 		// Check if a user was found.
 		if (user != null) {
 			// Check if password is correct.
-			if (password == user.getPassword()) {
+			if (password.equals(user.getPassword())) {
 				System.out.println("Successfully logged in!");
 				setCurrentUser(user);
 				ArrayList<Actions> actions = getActions();
@@ -166,7 +165,7 @@ public class KPSmartController {
 	 * @return - the list of actions available to the user.
 	 */
 	public ArrayList<Actions> getActions() {
-		if (getCurrentUser().getRole() == User.UserType.Manager) {
+		if (getCurrentUser().getRole().equals(User.UserType.Manager)) {
 			ArrayList<Actions> actions = (ArrayList<Actions>) Arrays.asList(Actions.values());
 			return actions;
 		} else {
