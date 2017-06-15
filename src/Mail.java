@@ -4,24 +4,24 @@ public class Mail {
 	private String origin;
 	private String destination;
 	private String weight;
-	private String timestamp;
+	private long timestamp;
 	
 	public Mail(boolean priority, String volume, String origin, String destination,
-			String weight, String timestamp) {
+			String weight) {
 		this.setPriority(priority);
 		this.setVolume(volume);
 		this.setOrigin(origin);
 		this.setDestination(destination);
 		this.setWeight(weight);
-		this.setTimestamp(timestamp);
+		this.setTimestamp(System.currentTimeMillis());
 	}
 
 	public boolean getPriority() {
 		return priority;
 	}
 
-	public void setPriority(boolean priority2) {
-		this.priority = priority2;
+	public void setPriority(boolean priority) {
+		this.priority = priority;
 	}
 
 	public String getVolume() {
@@ -56,11 +56,11 @@ public class Mail {
 		this.weight = weight;
 	}
 
-	public String getTimestamp() {
+	public long getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(String timestamp) {
+	public void setTimestamp(long timestamp) {
 		this.timestamp = timestamp;
 	}
 	

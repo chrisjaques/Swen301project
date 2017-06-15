@@ -27,15 +27,18 @@ public class KPSmartController {
 	}
 	
 	/**
-	 * 	Adds a new route to the system.
+	 * Adds a new route to the system.
 	 * 
-	 * @param {Route} route - the route to be added to the system.
+	 * @param origin - origin of the Route.
+	 * @param destination - the destination of the Route.
+	 * @param transportType - the transport type of the route.
+	 * @param price - price of the route.
 	 */
-	public void addRoute(Route route) {
+	public void addRoute(String origin, String destination, Route.TransportType transportType, double price) {
 		// TODO: Take in parameters for a route
 		// TODO: create a route with the parameters.
-		boolean success = false;
-		success = RouteService.insertOrUpdate(route);
+		Route route = new Route(origin, destination, transportType, price);
+		boolean success = RouteService.insertOrUpdate(route);
 		if (success) {
 			// TODO: success GUI action
 			System.out.println("new route added");
@@ -45,19 +48,29 @@ public class KPSmartController {
 		}
 	}
 	
-	public void createOrder(boolean priority, String volume, String origin, String destination, String weight, String timestamp) {
-		Mail mail = new Mail(priority, volume, origin, destination, weight, timestamp);
+	/**
+	 * Creates a new order.
+	 * 
+	 * @param priority - the priority of the order.
+	 * @param volume - volume of the order.
+	 * @param origin - where the order is made.
+	 * @param destination - where the order needs to go.
+	 * @param weight - weight of the order.
+	 * @param timestamp - when the order is made.
+	 */
+	public void createOrder(boolean priority, String volume, String origin, String destination, String weight) {
+		Mail mail = new Mail(priority, volume, origin, destination, weight);
 		// TODO: Takes in an Order.
 		DeliveryRoute deliveryRoute = DeliveryRoute.findRoute(origin,destination,priority); //<- returns Route if it exists or null
-		// TODO do somehing here. Need to talk to Will and Chris.
+		// TODO do something here. Need to talk to Will and Chris.
 	}
 	
 	/**
 	 * Create a new user and add it to the database.
 	 * 
-	 * @param username
-	 * @param password
-	 * @param role
+	 * @param username - username of new account
+	 * @param password - password of new account
+	 * @param role - role of new account (Manager or Clerk)
 	 */
 	public void createUser(String username, String password, User.UserType role) {
 		// TODO: some sort of validation
@@ -76,10 +89,10 @@ public class KPSmartController {
 
 	/**
 	 * 	Takes in a route and removes it from the database and system.
-	 * @param route
+	 * 
+	 * @param route - the route to be deleted.
 	 */
 	public void discontinueRoute(Route route) {
-		// TODO: takes in an existing route and removes it from the system.
 		boolean success = RouteService.deleteRoute(route);
 		if (success) {
 			System.out.println("Route has been removed");
@@ -122,9 +135,7 @@ public class KPSmartController {
 				
 	}
 	
-	/**
-	 * Log the user out of the system and change the screen to the login screen.
-	 */
+	/** Log the user out of the system and change the screen to the login screen. */
 	public void logoutUser() {
 		
 		setCurrentUser(null);
@@ -140,14 +151,19 @@ public class KPSmartController {
 	}
 	
 	/**
-	 * 	Process an event that occurs.
-	 * @param event
+	 * 	Log an event.
+	 * 
+	 * @param event - event to be logged.
 	 */
 	public void processEvent(String event) {
-		// TODO: should take in an Event.
 		// TODO: log it
 	}
 	
+	/**
+	 * Gets the actions that are available to the logged in user type.
+	 * 
+	 * @return - the list of actions available to the user.
+	 */
 	public ArrayList<Actions> getActions() {
 		if (getCurrentUser().getRole() == User.UserType.Manager) {
 			ArrayList<Actions> actions = (ArrayList<Actions>) Arrays.asList(Actions.values());
@@ -164,6 +180,7 @@ public class KPSmartController {
 	
 	/**
 	 * 	Update the current price.
+	 * 
 	 * @param newPrice
 	 */
 	public void updatePrice(int newPrice) {
