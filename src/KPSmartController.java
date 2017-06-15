@@ -188,5 +188,4 @@ public class KPSmartController {
 		this.currentUser = user;
 	}
 
-
 }

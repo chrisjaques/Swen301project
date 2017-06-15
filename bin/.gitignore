@@ -9,3 +9,11 @@
 /KPSmartController$actions.class
 /KPSmartController$Actions.class
 /Mail.class
+/DeliveryRoute$RouteComparitor.class
+/DeliveryRoute.class
+/User$UserType.class
+/User.class
+/UserService.class
+/derbyclient.jar
+/sqljdbc42.jar
+/KPSmartController.class
