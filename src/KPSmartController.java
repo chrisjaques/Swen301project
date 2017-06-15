@@ -27,6 +27,7 @@ public class KPSmartController {
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * Adds a new route to the system.
 	 * 
 	 * @param origin - origin of the Route.

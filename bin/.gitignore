@@ -9,3 +9,14 @@
 /KPSmartController$actions.class
 /KPSmartController$Actions.class
 /Mail.class
+<<<<<<< HEAD
+=======
+/DeliveryRoute$RouteComparitor.class
+/DeliveryRoute.class
+/User$UserType.class
+/User.class
+/UserService.class
+/derbyclient.jar
+/sqljdbc42.jar
+/KPSmartController.class
+>>>>>>> branch 'logic' of https://github.com/chrisjaques/Swen301project.git
