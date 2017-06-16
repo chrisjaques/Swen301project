@@ -1,8 +1,11 @@
 package logic;
 import java.util.ArrayList;
-import gui.KPSmartFrame;
 import java.util.List;
 import java.util.PriorityQueue;
+
+import event_logging.SaveDataToXML;
+
+import gui.KPSmartFrame;
 
 import logic.Route.TransportType;
 
@@ -48,6 +51,7 @@ public class KPSmartController {
 		if (success) {
 			// TODO: success GUI action
 			System.out.println("new route added");
+			SaveDataToXML.saveToXML(route);
 		} else {
 			// TODO: failed GUI action
 			System.out.println("route failed to add");
@@ -66,7 +70,7 @@ public class KPSmartController {
 	 */
 	public void createOrder(boolean priority, String volume, String origin, String destination, String weight) {
 		Mail mail = new Mail(priority, volume, origin, destination, weight);
-		System.out.println(mail);
+		SaveDataToXML.saveToXML(mail);
 		// TODO: Takes in an Order.
 		//DeliveryRoute deliveryRoute = DeliveryRoute.findRoute(origin,destination,priority); //<- returns Route if it exists or null
 		// TODO do something here. Need to talk to Will and Chris.
@@ -139,6 +143,7 @@ public class KPSmartController {
 		if (success) {
 			// TODO: call a GUI function?
 			System.out.println("User has been created succesfully");
+			SaveDataToXML.saveToXML(newUser);
 		} else {
 			System.out.println("ERROR: failed to create user.");
 			// TODO: call a GUI function?
@@ -154,6 +159,7 @@ public class KPSmartController {
 		boolean success = RouteService.deleteRoute(route);
 		if (success) {
 			System.out.println("Route has been removed");
+//			SaveDataToXML.discontinueRoute(route);
 			// TODO: do something on GUI.
 		} else {
 			System.out.println("ERROR: Route failed to delete");
@@ -171,30 +177,25 @@ public class KPSmartController {
 	 * @return boolean - true or false indicating if the user logged in or not. This should be changed later.
 	 */
 
-	public void loginUser(String username, String password, KPSmartFrame frame) {
-
-		System.out.println(username);
-		System.out.println(password);
+	public String loginUser(String username, String password, KPSmartFrame frame) {
+		this.kpSmartFrame = frame;
 
 		User user = UserService.getUser(username);
 		// Check if a user was found.
 		if (user != null) {
 			// Check if password is correct.
 			if (password.equals(user.getPassword())) {
-				System.out.println("Successfully logged in!");
 				setCurrentUser(user);
-				frame.changeFocus("Home Screen");
-//				return "Success";
+				kpSmartFrame.initialiseHomeScreen();
+				kpSmartFrame.changeFocus("Home Screen");				
+				return "Success";
 			} else {
 				// Password is incorrect.
-				System.out.println("ERROR: Password does not match.");
-				// TODO: Display error message on GUI.
-//				return "Password does not match.";
+				return "Password does not match. Please try again.";
 			}
 		} else {
 			System.out.println("User does not exist.");
-			// TODO: Display error message on GUI.
-//			return "User does not exist.";
+			return "User does not exist.";
 		}
 
 	}
@@ -240,7 +241,7 @@ public class KPSmartController {
 	 *
 	 * @param user - the user that is now logged in.
 	 */
-	private void setCurrentUser(User user) {
+	public void setCurrentUser(User user) {
 		this.currentUser = user;
 	}
 

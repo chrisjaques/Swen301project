@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import logic.KPSmartController;
+import logic.User;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JButton;
@@ -28,6 +30,7 @@ public class HomeScreenPanel extends JPanel implements ActionListener {
 	 * Create the panel.
 	 */
 	public HomeScreenPanel(KPSmartController controller, KPSmartFrame frame) {
+		this.controller = controller;
 		setLayout(new BorderLayout(0, 0));
 		this.frame = frame;
 		JLabel lblHome = new JLabel("Home");
@@ -64,19 +67,33 @@ public class HomeScreenPanel extends JPanel implements ActionListener {
 		JButton updatePriceButton = new JButton("Update Pricing");
 		panel.add(updatePriceButton);
 		updatePriceButton.addActionListener(this);
+		
+//		System.out.println(this.controller.getCurrentUser().getRole().name());
 
-		JButton createNewUserButton = new JButton("Create New User");
-		panel.add(createNewUserButton);
-		createNewUserButton.addActionListener(this);
+		if (this.controller.getCurrentUser().getRole().equals(User.UserType.MANAGER)) {
+			JButton createNewUserButton = new JButton("Create New User");
+			panel.add(createNewUserButton);
+			createNewUserButton.addActionListener(this);
 
-		JButton viewBusinessFiguresButton = new JButton("View Business Figures");
-		panel.add(viewBusinessFiguresButton);
-		viewBusinessFiguresButton.addActionListener(this);
+			JButton viewBusinessFiguresButton = new JButton("View Business Figures");
+			panel.add(viewBusinessFiguresButton);
+			viewBusinessFiguresButton.addActionListener(this);
+		}
+		
+		JButton logoutButton = new JButton("Logout");
+		panel.add(logoutButton);
+		logoutButton.addActionListener(this);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		frame.changeToNavigationalHomeScreen(e.getActionCommand());
+		if (e.getActionCommand().equals("Logout")) {
+			// set current user to null to indicate no user has been logged in.
+			controller.setCurrentUser(null);			
+			controller.getKPSmartFrame().changeFocus("Login Screen");
+		} else {
+			frame.changeToNavigationalHomeScreen(e.getActionCommand());				
+		}
 		
 	}
 
