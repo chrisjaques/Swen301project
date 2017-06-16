@@ -72,6 +72,14 @@ public class HomeScreenPanel extends JPanel implements ActionListener {
 		JButton viewBusinessFiguresButton = new JButton("View Business Figures");
 		panel.add(viewBusinessFiguresButton);
 		viewBusinessFiguresButton.addActionListener(this);
+		
+		JButton logoutButton = new JButton("Logout");
+		logoutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.logoutUser();
+			}
+		});
+		panel.add(logoutButton);
 	}
 	
 	@Override
