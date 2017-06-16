@@ -1,12 +1,6 @@
+package logic;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import logic.DeliveryRoute;
-import logic.Mail;
-import logic.Route;
-import logic.RouteService;
-import logic.User;
-import logic.UserService;
 
 public class KPSmartController {
 	

@@ -109,7 +109,7 @@ public class NavigationalHomeScreen extends JFrame{
 		userFocusPanel.setLayout(layout);
 		this.newOrderPanel = new NewOrderPanel();
 		userFocusPanel.add(newOrderPanel, "New Order");
-		this.newClerkPanel = new CreateNewClerkPanel();
+		this.newClerkPanel = new CreateNewUser();
 		userFocusPanel.add(newClerkPanel, "Create New Clerk");
 		this.newRoutePanel = new NewRoutePanel();
 		userFocusPanel.add(newRoutePanel, "New Route");

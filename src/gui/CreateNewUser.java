@@ -10,8 +10,10 @@ import java.awt.Insets;
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
-public class CreateNewClerkPanel extends JPanel {
+public class CreateNewUser extends JPanel {
 	private JTextField firstnameTextField;
 	private JTextField lastnameTextField;
 	private JTextField passwordTextField;
@@ -20,15 +22,15 @@ public class CreateNewClerkPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public CreateNewClerkPanel() {
+	public CreateNewUser() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] {0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JLabel lblKpsmartCreate = new JLabel("KPSmart - Create New Clerk");
+		JLabel lblKpsmartCreate = new JLabel("KPSmart - Create New User");
 		lblKpsmartCreate.setFont(new Font("Lucida Grande", Font.BOLD, 24));
 		GridBagConstraints gbc_lblKpsmartCreate = new GridBagConstraints();
 		gbc_lblKpsmartCreate.gridwidth = 3;
@@ -104,6 +106,23 @@ public class CreateNewClerkPanel extends JPanel {
 		gbc_confirmPasswordField.gridy = 8;
 		add(confirmPasswordField, gbc_confirmPasswordField);
 		confirmPasswordField.setColumns(10);
+		
+		JLabel lblUserTypr = new JLabel("User Type");
+		GridBagConstraints gbc_lblUserTypr = new GridBagConstraints();
+		gbc_lblUserTypr.insets = new Insets(0, 0, 5, 5);
+		gbc_lblUserTypr.gridx = 1;
+		gbc_lblUserTypr.gridy = 9;
+		add(lblUserTypr, gbc_lblUserTypr);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Clerk\t", "Manager"}));
+		comboBox.setSelectedIndex(-1);
+		GridBagConstraints gbc_comboBox = new GridBagConstraints();
+		gbc_comboBox.insets = new Insets(0, 0, 0, 5);
+		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBox.gridx = 1;
+		gbc_comboBox.gridy = 10;
+		add(comboBox, gbc_comboBox);
 
 	}
 
