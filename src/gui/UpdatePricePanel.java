@@ -34,7 +34,7 @@ public class UpdatePricePanel extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JLabel lblKpsmartCreate = new JLabel("KPSmart - Update Route Price");
+		JLabel lblKpsmartCreate = new JLabel("Update Route Price");
 		lblKpsmartCreate.setFont(new Font("Lucida Grande", Font.BOLD, 24));
 		GridBagConstraints gbc_lblKpsmartCreate = new GridBagConstraints();
 		gbc_lblKpsmartCreate.gridwidth = 3;

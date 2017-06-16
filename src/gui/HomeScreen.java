@@ -108,8 +108,8 @@ public class HomeScreen extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			NavigationalHomeScreen frame = new NavigationalHomeScreen(e.getActionCommand(), controller.getCurrentUser().getRole().toString());
-			frame.setVisible(true);
+			//NavigationalHomeScreen frame = new NavigationalHomeScreen(e.getActionCommand(), controller.getCurrentUser().getRole().toString());
+			//frame.setVisible(true);
 		}
 
 	}
