@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import gui.HomeScreen;
+import gui.KPSmartFrame;
 import gui.LoginScreen;
 
 public class KPSmartController {
@@ -117,7 +118,7 @@ public class KPSmartController {
 	 * 
 	 * @return boolean - true or false indicating if the user logged in or not. This should be changed later.
 	 */
-	public void loginUser(String username, String password) {
+	public void loginUser(String username, String password, KPSmartFrame frame) {
 		
 		System.out.println(username);
 		System.out.println(password);
@@ -131,8 +132,10 @@ public class KPSmartController {
 				setCurrentUser(user);
 				ArrayList<Actions> actions = getActions();
 				// TODO: Call GUI method to navigate to home page and pass in {actions}.
-				HomeScreen homeScreen = new HomeScreen(this);
-				homeScreen.openHomeScreen();
+				//KPSmartFrame.changeFocus("Initial Home Screen" 
+				frame.changeFocus("Home Screen");
+//				HomeScreen homeScreen = new HomeScreen(this);
+//				homeScreen.openHomeScreen();
 			} else {
 				// Password is incorrect.
 				System.out.println("ERROR: Password does not match.");

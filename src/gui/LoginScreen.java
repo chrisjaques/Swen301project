@@ -13,6 +13,7 @@ import logic.KPSmartController;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.GridBagLayout;
@@ -28,6 +29,8 @@ public class LoginScreen extends JFrame implements ActionListener{
 	private JTextField usernameField;
 	private JPasswordField passwordField;
 	private KPSmartController controller;
+	private KPSmartFrame topFrame;
+
 
 	/**
 	 * Launch the application.
@@ -49,6 +52,7 @@ public class LoginScreen extends JFrame implements ActionListener{
 	 * Create the frame.
 	 */
 	public LoginScreen(KPSmartController controller) {
+		this.topFrame = (KPSmartFrame) SwingUtilities.getWindowAncestor(this);		
 		this.controller = controller;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -122,7 +126,7 @@ public class LoginScreen extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		controller.loginUser(usernameField.getText(), String.valueOf(passwordField.getPassword()));
+		controller.loginUser(usernameField.getText(), String.valueOf(passwordField.getPassword()), topFrame);
 	}
 
 }

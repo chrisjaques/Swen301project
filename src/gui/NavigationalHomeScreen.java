@@ -50,7 +50,7 @@ public class NavigationalHomeScreen extends JFrame{
 
 
 	}
-	
+
 	public void addNavigationPanel(JPanel parent){
 		JPanel navigationPanel = new JPanel();
 		GridBagConstraints gbc_navigationPanel = new GridBagConstraints();
@@ -81,22 +81,19 @@ public class NavigationalHomeScreen extends JFrame{
 		navigationPanel.add(updatePriceButton);
 		updatePriceButton.addActionListener(listener);
 
+		if(currentUser == "MANAGER"){
+			JButton createNewUserButton = new JButton("Create New User");
+			navigationPanel.add(createNewUserButton);
+			createNewUserButton.addActionListener(listener);
 
-		JButton createNewUserButton = new JButton("Create New User");
-		navigationPanel.add(createNewUserButton);
-		createNewUserButton.addActionListener(listener);
-		if(currentUser == "CLERK"){
-			createNewUserButton.setVisible(false);
+
+			JButton businessFiguresButton = new JButton("View Business Figures");
+			navigationPanel.add(businessFiguresButton);
+			businessFiguresButton.addActionListener(listener);
 		}
 
-		JButton businessFiguresButton = new JButton("View Business Figures");
-		navigationPanel.add(businessFiguresButton);
-		businessFiguresButton.addActionListener(listener);
-		if(currentUser == "CLERK"){
-			businessFiguresButton.setVisible(false);
-		}
 	}
-	
+
 	public void addUserFocusPanelComponents(JPanel panel){
 		JPanel userFocusPanel = new JPanel();
 		GridBagConstraints gbc_userFocusPanel = new GridBagConstraints();
@@ -122,9 +119,8 @@ public class NavigationalHomeScreen extends JFrame{
 		panel.add(userFocusPanel, gbc_userFocusPanel);
 		
 		//set initial focus
-		System.out.println("Showing "+this.userFocus);
 		layout.show(userFocusPanel, this.userFocus);
-		
+
 	}
 
 	private class ButtonListener implements ActionListener{
@@ -133,7 +129,7 @@ public class NavigationalHomeScreen extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			userFocus = e.getActionCommand();
 			CardLayout layout = (CardLayout)userFocusPanel.getLayout();
-			layout.show(userFocusPanel, e.getActionCommand());
+			layout.show(userFocusPanel, userFocus);
 		}
 
 	}
