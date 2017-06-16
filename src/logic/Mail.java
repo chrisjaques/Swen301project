@@ -9,6 +9,7 @@ public class Mail {
 	private String destination;
 	private double weight;
 	private long timestamp;
+	private double price = 0;
 	
 	public Mail(Route.TransportType transportType, double volume, String origin, String destination,
 			double weight) {
@@ -18,6 +19,14 @@ public class Mail {
 		this.setDestination(destination);
 		this.setWeight(weight);
 		this.setTimestamp(System.currentTimeMillis());
+	}
+	
+	public void setPrice(double price){
+		this.price=price;
+	}
+	
+	public double getPrice(){
+		return price;
 	}
 
 	public Route.TransportType getPriority() {

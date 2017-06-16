@@ -14,6 +14,7 @@ public class KPSmartController {
 	// The user that is logged in to the system. If no user is logged in, currentUser = null.
 	private User currentUser = null;
 	private KPSmartFrame kpSmartFrame;
+	private final double weightCost = 0.25;
 
 	/**
 	 * Initialise the controller.
@@ -175,6 +176,7 @@ public class KPSmartController {
 			return "Route does not exist";
 		} else {
 			DeliveryRoute deliveryRoute = queue.poll();//TODO do something with the completed route, will need to log something here
+			mail.setPrice(deliveryRoute.getTotalPrice() + ((mail.getWeight() + mail.getVolume()) * weightCost));
 			return "Success";
 		}
 
