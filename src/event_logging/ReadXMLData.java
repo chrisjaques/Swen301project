@@ -75,15 +75,12 @@ public static ArrayList<String> readXML(){
 		return elements;
 	}
 
-	/* • Amount of Mail: The amount of mail (by total volume and total weight and total
-number of items) delivered to each destination from each origin. */
-
-
-	//vol
-//	weight
-//	count
-	
-	//dest -> origin
+	/**
+	 * The amount of mail (by total volume, total weight and total number of items) 
+	 * delivered to each destination from each origin
+	 * 
+	 * @return ArrayList of mail analysis
+	 */
 	public static ArrayList<String> amountOfMail(){
 		
 		ArrayList<String> mailList = new ArrayList<String>();
@@ -95,19 +92,19 @@ number of items) delivered to each destination from each origin. */
 		try {
 			
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-			// parse using the builder to get the DOM mapping of the XML file
+
 			xml = docBuilder.parse("resources/logfile.xml");
 			xml.getDocumentElement().normalize();
 			
-			Element root = xml.getDocumentElement(); //getAttributes()
+			Element root = xml.getDocumentElement();
 			NodeList nl = root.getElementsByTagName("mail");
 			
 			for (int temp = 0; temp < nl.getLength(); temp++) {
 				
 				String destination = "";
 		        String origin = "";
-		        int volume = 0;
-		        int weight = 0;
+		        double volume = 0;
+		        double weight = 0;
 		        
 				Node nNode = nl.item(temp);
 				if(nNode.getNodeType()==Node.ELEMENT_NODE) {
@@ -121,40 +118,27 @@ number of items) delivered to each destination from each origin. */
 			            } else if(n.getNodeName().equals("origin")){
 			            	origin = n.getFirstChild().getTextContent();
 			            } else if(n.getNodeName().equals("volume")){
-			            	volume = Integer.parseInt(n.getFirstChild().getTextContent());
+			            	volume = Double.parseDouble(n.getFirstChild().getTextContent());
 			            } else if(n.getNodeName().equals("weight")){
-			            	weight = Integer.parseInt(n.getFirstChild().getTextContent());
+			            	weight = Double.parseDouble(n.getFirstChild().getTextContent());
 			            }
 			        }
-			        System.out.println(destination + " " + origin);
 		        }
-				
-				//if(mailCountList.contains())
+
 				Boolean present = false;
-				System.out.println(mailCountList.size());
+
 				for(MailCount mail : mailCountList){
 					System.out.println(mail.getDestination() + mail.getOrigin());
 					if(mail.getDestination().equals(destination) && mail.getOrigin().equals(origin)){
-						// add to this
-						System.out.println("ssss");
-						System.out.println(mail.volume);
-						
 						mail.addData(volume, weight);
-						System.out.println(mail.volume);
 						present = true;
 						break;
 					}
 				}
 				if(!present){
-					
 					MailCount mail = new MailCount(volume, weight, destination, origin);
-					System.out.println("here");
 					mailCountList.add(mail);
-					System.out.println(mailCountList.contains(mail));
 				}
-				
-				System.out.println(mailCountList.size());
-
 			}
 			
 			for(MailCount mail : mailCountList){
@@ -179,13 +163,13 @@ number of items) delivered to each destination from each origin. */
 	
 	private static class MailCount{
 		
-		private int volume;
-		private int weight;
+		private double volume;
+		private double weight;
 		private String destination;
 		private String origin;
 		private int count;
 		
-		private MailCount(int volume, int weight, String dest, String origin){
+		private MailCount(double volume, double weight, String dest, String origin){
 			this.volume = volume;
 			this.weight = weight;
 			this.destination = dest;
@@ -193,7 +177,7 @@ number of items) delivered to each destination from each origin. */
 			this.count = 1;
 		}
 		
-		public void addData(int volume2, int weight2) {
+		public void addData(double volume2, double weight2) {
 			this.volume += volume2;
 			this.weight += weight2;
 			this.count++;
@@ -211,16 +195,97 @@ number of items) delivered to each destination from each origin. */
 			return this.count;
 		}
 		
-		private int getVolume(){
+		private double getVolume(){
 			return this.volume;
 		}
 		
-		private int getWeight(){
+		private double getWeight(){
 			return this.weight;
 		}
 	}
+	
+	/**
+	 * The number of events that have been processed to generate the current report
+	 * @return number of business events stored in log file
+	 */
+	public static int numberOfEvents(){
+		
+		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+		Document xml;
+		int eventCount = 0;
+		
+		try {
+			
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
-	public static ArrayList<String> readXMLFromTimePeriod(){
+			xml = docBuilder.parse("resources/logfile.xml");
+			xml.getDocumentElement().normalize();
+			
+			Element root = xml.getDocumentElement();		
+			NodeList nl = root.getChildNodes();
+			
+			for (int temp = 0; temp < nl.getLength(); temp++) {
+				Node nNode = nl.item(temp);
+				if(!nNode.getNodeName().equals("#text")){
+					eventCount++;
+				}
+			}
+			
+		} catch (ParserConfigurationException pce) {
+			pce.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		}
+			
+		return eventCount;
+	}
+	
+	/**
+	 * The number of events that have been processed to generate the current report
+	 * @return number of business events stored in log file
+	 */
+	public static double totalRevenue(){
+		
+		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+		Document xml;
+		double revenue = 0;
+		//revenue.
+		
+		try {
+			
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+			xml = docBuilder.parse("resources/logfile.xml");
+			xml.getDocumentElement().normalize();
+			
+			Element root = xml.getDocumentElement();		
+			NodeList nl = root.getElementsByTagName("mail");
+			
+			for (int temp = 0; temp < nl.getLength(); temp++) {{
+		            Node n = nl.item(temp);
+
+		            if(n.getNodeName().equals("price")){
+		            	//revenue
+		            	// n.getFirstChild().getTextContent();
+		            }
+		        }
+			}
+			
+		} catch (ParserConfigurationException pce) {
+			pce.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		}
+			
+		return revenue;
+	}
+
+
+	public static ArrayList<String> readXMLFromTimePeriod(int time){
 		
 		ArrayList<String> elements = new ArrayList<String>();
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();

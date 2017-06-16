@@ -15,6 +15,7 @@ import javax.xml.transform.stream.StreamResult;
 import logic.Mail;
 import logic.Route;
 import logic.User;
+import logic.Route.TransportType;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -84,6 +85,7 @@ generate the current report.
 		mailMap.put("volume", String.valueOf(mail.getVolume()));
 		mailMap.put("weight", String.valueOf(mail.getWeight()));
 		mailMap.put("priority", mail.getPriority().toString());
+		mailMap.put("price", mail.getOrigin());
 		
 		convertDataToXML(mailMap);	
 	}
@@ -134,11 +136,12 @@ generate the current report.
 	
 	public static void main(String argv[]) {
 		
-		ArrayList<String> hello = ReadXMLData.amountOfMail();
+		//ArrayList<String> hello = ReadXMLData.amountOfMail();
+		System.out.println(ReadXMLData.numberOfEvents());
 		//System.out
 		//Route r = new Route("well", "auck", Route.TransportType.AIR, 1.00);
 		//User u = new User("chloe", "graham", User.UserType.CLERK);
-		//Mail m = new Mail(true, "1","upper hutt", "otaki","20");
+		Mail m = new Mail(TransportType.AIR, 1.00,"upper hutt", "otaki",20.00);
 		//saveToXML(m);
 		//saveToXML(u);
 		  
