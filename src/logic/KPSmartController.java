@@ -129,7 +129,7 @@ public class KPSmartController {
 			if (password.equals(user.getPassword())) {
 				System.out.println("Successfully logged in!");
 				setCurrentUser(user);
-				ArrayList<Actions> actions = getActions();
+//				ArrayList<Actions> actions = getActions();
 				// TODO: Call GUI method to navigate to home page and pass in {actions}.
 				HomeScreen homeScreen = new HomeScreen(this);
 				homeScreen.openHomeScreen();
@@ -169,27 +169,27 @@ public class KPSmartController {
 		// TODO: log it
 	}
 	
-	/**
-	 * Gets the actions that are available to the logged in user type.
-	 * 
-	 * @return - the list of actions available to the user.
-	 */
-	public ArrayList<Actions> getActions() {		
-		ArrayList<Actions> actions = new ArrayList<Actions>();
-		actions.add(Actions.BOOKING);
-		actions.add(Actions.UPDATE_ROUTE);
-		actions.add(Actions.DISCONTINUE_ROUTE);
-		actions.add(Actions.LOGOUT);	
-		if (getCurrentUser().getRole().equals(User.UserType.MANAGER)) {
-			actions.add(Actions.CREATE_USER);
-			actions.add(Actions.BUSINESS_FIGURES);
-		}
-		for (Actions a: actions) {
-			System.out.println(a.getClass());
-			System.out.println(a);
-		}
-		return actions;
-	}
+//	/**
+//	 * Gets the actions that are available to the logged in user type.
+//	 * 
+//	 * @return - the list of actions available to the user.
+//	 */
+//	public ArrayList<Actions> getActions() {		
+//		ArrayList<Actions> actions = new ArrayList<Actions>();
+//		actions.add(Actions.BOOKING);
+//		actions.add(Actions.UPDATE_ROUTE);
+//		actions.add(Actions.DISCONTINUE_ROUTE);
+//		actions.add(Actions.LOGOUT);	
+//		if (getCurrentUser().getRole().equals(User.UserType.MANAGER)) {
+//			actions.add(Actions.CREATE_USER);
+//			actions.add(Actions.BUSINESS_FIGURES);
+//		}
+//		for (Actions a: actions) {
+//			System.out.println(a.getClass());
+//			System.out.println(a);
+//		}
+//		return actions;
+//	}
 	
 	/**
 	 * 	Update the current price.
