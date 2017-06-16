@@ -100,7 +100,7 @@ public class InitialHomeScreen extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			NavigationalHomeScreen frame = new NavigationalHomeScreen(e.getActionCommand(), "MANAGER");
+			NavigationalHomeScreen frame = new NavigationalHomeScreen(e.getActionCommand(), "CLERK");
 			frame.setVisible(true);
 		}
 

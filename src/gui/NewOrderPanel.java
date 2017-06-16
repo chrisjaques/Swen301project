@@ -6,18 +6,20 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
+
+import logic.RouteService;
+
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
 
 @SuppressWarnings("serial")
 public class NewOrderPanel extends JPanel {
-	private JTextField textField;
-	private JTextField textField_1;
 
 	/**
 	 * Create the panel.
@@ -34,7 +36,7 @@ public class NewOrderPanel extends JPanel {
 		lblKpsmartCreate.setFont(new Font("Lucida Grande", Font.BOLD, 24));
 		GridBagConstraints gbc_lblKpsmartCreate = new GridBagConstraints();
 		gbc_lblKpsmartCreate.gridwidth = 3;
-		gbc_lblKpsmartCreate.insets = new Insets(0, 0, 5, 5);
+		gbc_lblKpsmartCreate.insets = new Insets(0, 0, 5, 0);
 		gbc_lblKpsmartCreate.gridx = 0;
 		gbc_lblKpsmartCreate.gridy = 0;
 		add(lblKpsmartCreate, gbc_lblKpsmartCreate);
@@ -53,29 +55,32 @@ public class NewOrderPanel extends JPanel {
 		gbc_lblDestination.gridy = 2;
 		add(lblDestination, gbc_lblDestination);
 		
-		textField_1 = new JTextField();
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 0;
-		gbc_textField_1.gridy = 3;
-		add(textField_1, gbc_textField_1);
-		textField_1.setColumns(10);
-		
 		JButton doneButton = new JButton("Done");
 		doneButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		
-		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 0);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 2;
-		gbc_textField.gridy = 3;
-		add(textField, gbc_textField);
-		textField.setColumns(10);
+		JComboBox originDropDownBox = new JComboBox();
+		//get contents for origin drop down
+		ArrayList<String> origins = RouteService.getOrigins();
+		originDropDownBox.setModel(new DefaultComboBoxModel(origins.toArray()));
+		GridBagConstraints gbc_originDropDownBox = new GridBagConstraints();
+		gbc_originDropDownBox.insets = new Insets(0, 0, 5, 5);
+		gbc_originDropDownBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_originDropDownBox.gridx = 0;
+		gbc_originDropDownBox.gridy = 3;
+		add(originDropDownBox, gbc_originDropDownBox);
+		
+		JComboBox destinationDropDownBox = new JComboBox();
+		ArrayList<String> destinations = RouteService.getDestinations();
+		destinationDropDownBox.setModel(new DefaultComboBoxModel(destinations.toArray()));
+		GridBagConstraints gbc_destinationDropDownBox = new GridBagConstraints();
+		gbc_destinationDropDownBox.insets = new Insets(0, 0, 5, 0);
+		gbc_destinationDropDownBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_destinationDropDownBox.gridx = 2;
+		gbc_destinationDropDownBox.gridy = 3;
+		add(destinationDropDownBox, gbc_destinationDropDownBox);
 		
 		JLabel lblWeight = new JLabel("Weight");
 		GridBagConstraints gbc_lblWeight = new GridBagConstraints();
