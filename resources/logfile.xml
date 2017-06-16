@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><events>
+<user><password>graham</password><role>CLERK</role><username>chloe</username></user><user><password>graham</password><role>CLERK</role><username>chloe</username></user><mail><volume>1</volume><origin>upper hutt</origin><destination>otaki</destination><weight>20</weight><priority>true</priority></mail></events>
