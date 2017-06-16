@@ -1,12 +1,14 @@
 package logic;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.PriorityQueue;
 
 import gui.HomeScreen;
 import gui.LoginScreen;
 
 public class KPSmartController {
-	
+
 	// The user that is logged in to the system. If no user is logged in, currentUser = null.
 	private User currentUser = null;
 
@@ -14,9 +16,9 @@ public class KPSmartController {
 	 * Initialise the controller.
 	 */
 	public KPSmartController() {
-		
+
 	}
-	
+
 	/**
 	 * List of enum actions which will be used to display the actions that are available for that user type.
 	 *
@@ -27,12 +29,12 @@ public class KPSmartController {
 		BUSINESS_FIGURES,
 		UPDATE_ROUTE,
 		DISCONTINUE_ROUTE,
-		LOGOUT	
+		LOGOUT
 	}
-	
+
 	/**
 	 * Adds a new route to the system.
-	 * 
+	 *
 	 * @param origin - origin of the Route.
 	 * @param destination - the destination of the Route.
 	 * @param transportType - the transport type of the route.
@@ -51,10 +53,10 @@ public class KPSmartController {
 			System.out.println("route failed to add");
 		}
 	}
-	
+
 	/**
 	 * Creates a new order.
-	 * 
+	 *
 	 * @param priority - the priority of the order.
 	 * @param volume - volume of the order.
 	 * @param origin - where the order is made.
@@ -66,13 +68,64 @@ public class KPSmartController {
 		Mail mail = new Mail(priority, volume, origin, destination, weight);
 		System.out.println(mail);
 		// TODO: Takes in an Order.
-		DeliveryRoute deliveryRoute = DeliveryRoute.findRoute(origin,destination,priority); //<- returns Route if it exists or null
+		//DeliveryRoute deliveryRoute = DeliveryRoute.findRoute(origin,destination,priority); //<- returns Route if it exists or null
 		// TODO do something here. Need to talk to Will and Chris.
+
+
+		PriorityQueue<DeliveryRoute> queue = new PriorityQueue<DeliveryRoute>(new RouteComparitor());
+
+		queue.add(new DeliveryRoute(origin));
+
+		List<Route> availableRoutes = new ArrayList<>();
+
+		DeliveryRoute currentRoute;
+
+		while(!(queue.peek().getOrigin().equals(origin) && queue.peek().getDestination().equals(destination)) && !queue.isEmpty()){ //keep polling the priorityQueue until the first route off is from origin to destination
+
+			currentRoute = queue.poll();
+
+			availableRoutes = RouteService.getRoutesByOrigin(currentRoute.getDestination());
+
+			DeliveryRoute tempRoute;
+
+			for(Route r: availableRoutes){
+				//check if we are going somewhere we have been before
+				boolean loop=false;
+
+				for(Route r2: currentRoute.getDeliveryRoute()){
+					if(r.getDestination().equals(r2.getOrigin())){
+						loop = true;
+					}
+				}
+
+				if(!loop){//if not somewhere we've been before
+
+					//add the routes to our search
+					if(r.getTransportType().equals(Route.TransportType.AIR)){ //always add air routes, they just go to the back of the queue for standard delivery
+						tempRoute = new DeliveryRoute(currentRoute);
+						tempRoute.addRoute(r);
+						queue.add(tempRoute);
+
+					} else if (!priority) { //add all land and sea routes, priority mail only uses air routes so dosn't add these
+						tempRoute = new DeliveryRoute(currentRoute);
+						tempRoute.addRoute(r);
+						queue.add(tempRoute);
+					}
+				}
+			}
+		}
+
+		if(queue.isEmpty()){
+			//TODO no route exists so do something
+		} else {
+			DeliveryRoute deliveryRoute = queue.poll();//TODO do something with the completed route
+		}
+
 	}
-	
+
 	/**
 	 * Create a new user and add it to the database.
-	 * 
+	 *
 	 * @param username - username of new account
 	 * @param password - password of new account
 	 * @param role - role of new account (Manager or Clerk)
@@ -89,12 +142,12 @@ public class KPSmartController {
 		} else {
 			System.out.println("ERROR: failed to create user.");
 			// TODO: call a GUI function?
-		}		
+		}
 	}
 
 	/**
 	 * 	Takes in a route and removes it from the database and system.
-	 * 
+	 *
 	 * @param route - the route to be deleted.
 	 */
 	public void discontinueRoute(Route route) {
@@ -111,17 +164,17 @@ public class KPSmartController {
 
 	/**
 	 * Login the user and navigate the GUI to the home page on successful login.
-	 * 
+	 *
 	 * @param user - the username of the user logging in.
 	 * @param password - the password of the user logging in.
-	 * 
+	 *
 	 * @return boolean - true or false indicating if the user logged in or not. This should be changed later.
 	 */
 	public void loginUser(String username, String password) {
-		
+
 		System.out.println(username);
 		System.out.println(password);
-		
+
 		User user = UserService.getUser(username);
 		// Check if a user was found.
 		if (user != null) {
@@ -142,44 +195,44 @@ public class KPSmartController {
 			System.out.println("User does not exist.");
 			// TODO: Display error message on GUI.
 		}
-				
+
 	}
-	
+
 	/** Log the user out of the system and change the screen to the login screen. */
 	public void logoutUser() {
-		
+
 		setCurrentUser(null);
-		
+
 		//TODO: Navigate GUI to login page.
 	}
-	
+
 	/**
 	 * Display the business figures of the business.
 	 */
 	public void monitorBusinessFigures() {
 		// TODO: probably open up the business figures window.
 	}
-	
+
 	/**
 	 * 	Log an event.
-	 * 
+	 *
 	 * @param event - event to be logged.
 	 */
 	public void processEvent(String event) {
 		// TODO: log it
 	}
-	
+
 	/**
 	 * Gets the actions that are available to the logged in user type.
-	 * 
+	 *
 	 * @return - the list of actions available to the user.
 	 */
-	public ArrayList<Actions> getActions() {		
+	public ArrayList<Actions> getActions() {
 		ArrayList<Actions> actions = new ArrayList<Actions>();
 		actions.add(Actions.BOOKING);
 		actions.add(Actions.UPDATE_ROUTE);
 		actions.add(Actions.DISCONTINUE_ROUTE);
-		actions.add(Actions.LOGOUT);	
+		actions.add(Actions.LOGOUT);
 		if (getCurrentUser().getRole().equals(User.UserType.MANAGER)) {
 			actions.add(Actions.CREATE_USER);
 			actions.add(Actions.BUSINESS_FIGURES);
@@ -190,10 +243,10 @@ public class KPSmartController {
 		}
 		return actions;
 	}
-	
+
 	/**
 	 * 	Update the current price.
-	 * 
+	 *
 	 * @param newPrice
 	 */
 	public void updatePrice(int newPrice) {
@@ -202,16 +255,16 @@ public class KPSmartController {
 
 	/**
 	 * Get the current user (the user that is logged in to the system).
-	 * 
+	 *
 	 * @return String - currentUser
 	 */
 	public User getCurrentUser() {
 		return currentUser;
 	}
-	
+
 	/**
 	 * Set the logged in user to the user.
-	 * 
+	 *
 	 * @param user - the user that is now logged in.
 	 */
 	private void setCurrentUser(User user) {
