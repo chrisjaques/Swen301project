@@ -1,5 +1,6 @@
 package logic;
 
+import event_logging.SaveDataToXML;
 import gui.HomeScreen;
 
 public class KPSmartController {
@@ -43,6 +44,7 @@ public class KPSmartController {
 		if (success) {
 			// TODO: success GUI action
 			System.out.println("new route added");
+			SaveDataToXML.saveToXML(route);
 		} else {
 			// TODO: failed GUI action
 			System.out.println("route failed to add");
@@ -61,6 +63,7 @@ public class KPSmartController {
 	 */
 	public void createOrder(boolean priority, String volume, String origin, String destination, String weight) {
 		Mail mail = new Mail(priority, volume, origin, destination, weight);
+		SaveDataToXML.saveToXML(mail);
 		System.out.println(mail);
 		// TODO: Takes in an Order.
 		DeliveryRoute deliveryRoute = DeliveryRoute.findRoute(origin,destination,priority); //<- returns Route if it exists or null
@@ -83,6 +86,7 @@ public class KPSmartController {
 		if (success) {
 			// TODO: call a GUI function?
 			System.out.println("User has been created succesfully");
+			SaveDataToXML.saveToXML(newUser);
 		} else {
 			System.out.println("ERROR: failed to create user.");
 			// TODO: call a GUI function?
@@ -98,6 +102,7 @@ public class KPSmartController {
 		boolean success = RouteService.deleteRoute(route);
 		if (success) {
 			System.out.println("Route has been removed");
+			SaveDataToXML.saveToXML(route);
 			// TODO: do something on GUI.
 		} else {
 			System.out.println("ERROR: Route failed to delete");
@@ -126,6 +131,7 @@ public class KPSmartController {
 			if (password.equals(user.getPassword())) {
 				System.out.println("Successfully logged in!");
 				setCurrentUser(user);
+				SaveDataToXML.saveToXML(user);
 				HomeScreen homeScreen = new HomeScreen(this);
 				homeScreen.openHomeScreen();
 				return "Success";
@@ -156,15 +162,6 @@ public class KPSmartController {
 	 */
 	public void monitorBusinessFigures() {
 		// TODO: probably open up the business figures window.
-	}
-	
-	/**
-	 * 	Log an event.
-	 * 
-	 * @param event - event to be logged.
-	 */
-	public void processEvent(String event) {
-		// TODO: log it
 	}
 	
 	/**
