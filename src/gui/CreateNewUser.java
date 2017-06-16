@@ -54,7 +54,7 @@ public class CreateNewUser extends JPanel implements ActionListener {
 		gbc_lblKpsmartCreate.gridy = 0;
 		add(lblKpsmartCreate, gbc_lblKpsmartCreate);
 		
-		JLabel firstnameLabel = new JLabel("Firstname");
+		JLabel firstnameLabel = new JLabel("First Name");
 		GridBagConstraints gbc_firstnameLabel = new GridBagConstraints();
 		gbc_firstnameLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_firstnameLabel.gridx = 1;
@@ -71,7 +71,7 @@ public class CreateNewUser extends JPanel implements ActionListener {
 		add(firstnameTextField, gbc_firstnameTextField);
 		firstnameTextField.setColumns(10);
 		
-		JLabel lastnameLabel = new JLabel("Lastname");
+		JLabel lastnameLabel = new JLabel("Last Name");
 		GridBagConstraints gbc_lastnameLabel = new GridBagConstraints();
 		gbc_lastnameLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lastnameLabel.gridx = 1;
@@ -122,12 +122,12 @@ public class CreateNewUser extends JPanel implements ActionListener {
 		add(confirmPasswordField, gbc_confirmPasswordField);
 		confirmPasswordField.setColumns(10);
 		
-		JLabel lblUserTypr = new JLabel("User Type");
-		GridBagConstraints gbc_lblUserTypr = new GridBagConstraints();
-		gbc_lblUserTypr.insets = new Insets(0, 0, 5, 5);
-		gbc_lblUserTypr.gridx = 1;
-		gbc_lblUserTypr.gridy = 9;
-		add(lblUserTypr, gbc_lblUserTypr);
+		JLabel userTypeLabel = new JLabel("User Type");
+		GridBagConstraints gbc_userTypeLabel = new GridBagConstraints();
+		gbc_userTypeLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_userTypeLabel.gridx = 1;
+		gbc_userTypeLabel.gridy = 9;
+		add(userTypeLabel, gbc_userTypeLabel);
 		
 		this.userType = new JComboBox();
 		userType.setModel(new DefaultComboBoxModel(new String[] {"Clerk", "Manager"}));
