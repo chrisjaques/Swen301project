@@ -40,21 +40,42 @@ public class KPSmartController {
 	 *
 	 * @param origin - origin of the Route.
 	 * @param destination - the destination of the Route.
-	 * @param transportType - the transport type of the route.
+	 * @param priority - the transport type of the route.
 	 * @param price - price of the route.
+	 * 
+	 * @return String - error or success message.
 	 */
-	public void addRoute(String origin, String destination, Route.TransportType transportType, double price) {
-		// TODO: Take in parameters for a route
-		// TODO: create a route with the parameters.
-		Route route = new Route(origin, destination, transportType, price);
+	public String addRoute(String origin, String destination, String priority, String price) {
+		Route.TransportType transportType;
+		if (priority.equals("Air")) {
+			transportType = Route.TransportType.AIR;
+		} else if (priority.equals("Land")) {
+			transportType = Route.TransportType.LAND;
+		} else if (priority.equals("Sea")) {
+			transportType = Route.TransportType.SEA;
+		} else {
+			return "Please select a Priority.";
+		}
+		
+		double doublePrice;
+		
+		// TODO: I have no idea how the double price field works in NewRoutePanel.java.
+		if (price.matches("^(?:\\d+(?:\\.\\d{2})?)$")) {
+			doublePrice = Double.parseDouble(price);
+		} else {
+			return "Price must be in the correct format.";
+		}		
+		
+		Route route = new Route(origin, destination, transportType, doublePrice);
 		boolean success = RouteService.insertOrUpdate(route);
 		if (success) {
-			// TODO: success GUI action
 			System.out.println("new route added");
 			SaveDataToXML.saveToXML(route);
+			return "Success";
 		} else {
-			// TODO: failed GUI action
+			// This should be unreachable code at this point in time.
 			System.out.println("route failed to add");
+			return "Route failed to add";
 		}
 	}
 
@@ -67,13 +88,44 @@ public class KPSmartController {
 	 * @param destination - where the order needs to go.
 	 * @param weight - weight of the order.
 	 * @param timestamp - when the order is made.
+	 * 
+	 * @return String - error or success message.
 	 */
-	public void createOrder(boolean priority, String volume, String origin, String destination, String weight) {
-		Mail mail = new Mail(priority, volume, origin, destination, weight);
+	public String createOrder(String prioritySelected, String volume, String origin, String destination, String weight) {
+		Route.TransportType transportType;
+		boolean priority = false;
+		
+		// Convert priority/transportType to correct format.
+		if (prioritySelected.equals("Air")) {
+			transportType = Route.TransportType.AIR;
+			priority = true;
+		} else if (prioritySelected.equals("Land")) {
+			transportType = Route.TransportType.LAND;
+		} else if (prioritySelected.equals("Sea")) {
+			transportType = Route.TransportType.SEA;
+		} else {
+			return "Please select a Priority.";
+		}
+		
+		// TODO: Check weight is in correct format.
+		double doubleWeight;
+		if (weight.matches("^(?:\\d+(?:\\.\\d{2})?)$")) {
+			doubleWeight = Double.parseDouble(weight);
+		} else {
+			return "Weight must be in the correct format.";
+		}
+		
+		// TODO: Check volume is in correct format.
+		double doubleVolume;
+		if (volume.matches("^(?:\\d+(?:\\.\\d{2})?)$")) {
+			doubleVolume = Double.parseDouble(volume);
+		} else {
+			return "Volume must be in the correct format.";
+		}
+		
+		
+		Mail mail = new Mail(transportType, doubleVolume, origin, destination, doubleWeight);
 		SaveDataToXML.saveToXML(mail);
-		// TODO: Takes in an Order.
-		//DeliveryRoute deliveryRoute = DeliveryRoute.findRoute(origin,destination,priority); //<- returns Route if it exists or null
-		// TODO do something here. Need to talk to Will and Chris.
 
 
 		PriorityQueue<DeliveryRoute> queue = new PriorityQueue<DeliveryRoute>(new RouteComparitor());
@@ -121,8 +173,10 @@ public class KPSmartController {
 
 		if(queue.isEmpty()){
 			//TODO no route exists so do something
+			return "Route does not exist";
 		} else {
 			DeliveryRoute deliveryRoute = queue.poll();//TODO do something with the completed route, will need to log something here
+			return "Success";
 		}
 
 	}
@@ -134,19 +188,27 @@ public class KPSmartController {
 	 * @param password - password of new account
 	 * @param role - role of new account (Manager or Clerk)
 	 */
-	public void createUser(String username, String password, User.UserType role) {
-		// TODO: some sort of validation
-		// TODO: call user service to add it in the database.
+	public String createUser(String username, String password, String role) {
+		User.UserType userType;
+		if (role.equals("Clerk")) {
+			userType = User.UserType.CLERK;
+		} else if (role.equals("Manager")) {
+			userType = User.UserType.MANAGER;
+		} else {
+			return "Please select a user type";
+		}
 
-		User newUser = new User(username, password, role); // Create User object
+		User newUser = new User(username, password, userType); // Create User object
 		boolean success = UserService.insertOrUpdate(newUser);
 		if (success) {
 			// TODO: call a GUI function?
 			System.out.println("User has been created succesfully");
 			SaveDataToXML.saveToXML(newUser);
+			return "Success";
 		} else {
 			System.out.println("ERROR: failed to create user.");
 			// TODO: call a GUI function?
+			return "Failed to create User";
 		}
 	}
 
@@ -155,15 +217,31 @@ public class KPSmartController {
 	 *
 	 * @param route - the route to be deleted.
 	 */
-	public void discontinueRoute(Route route) {
+	public String discontinueRoute(String origin, String destination, String prioritySelected) {
+		Route.TransportType transportType;
+		if (prioritySelected.equals("Air")) {
+			transportType = Route.TransportType.AIR;
+		} else if (prioritySelected.equals("Land")) {
+			transportType = Route.TransportType.LAND;
+		} else if (prioritySelected.equals("Sea")) {
+			transportType = Route.TransportType.SEA;
+		} else {
+			return "Please select a Priority.";
+		}
+		
+		// Price doesn't matter so temp value of 0 is added here.
+		Route route = new Route(origin, destination, transportType, 0);
+		
 		boolean success = RouteService.deleteRoute(route);
 		if (success) {
 			System.out.println("Route has been removed");
 //			SaveDataToXML.discontinueRoute(route);
 			// TODO: do something on GUI.
+			return "Success";
 		} else {
 			System.out.println("ERROR: Route failed to delete");
 			// Theoretically should never reach this step.
+			return "Failed to delete";
 		}
 	}
 
@@ -204,8 +282,6 @@ public class KPSmartController {
 	public void logoutUser() {
 
 		setCurrentUser(null);
-
-		//TODO: Navigate GUI to login page.
 	}
 
 	/**
@@ -220,11 +296,22 @@ public class KPSmartController {
 	 *
 	 * @param newPrice
 	 */
-	public void updatePrice(String origin, String destination, TransportType transportType ,double newPrice) {
-		//double oldPrice = RouteService.get
+	public String updatePrice(String origin, String destination, TransportType transportType ,String price) {
+		double newPrice;
+		
+		if (price.matches("^(?:\\d+(?:\\.\\d{2})?)$")) {
+			newPrice = Double.parseDouble(price);
+		} else {
+			return "Price must be in the correct format.";
+		}
+		
 		Route route = new Route(origin, destination, transportType, newPrice);
 		boolean success = RouteService.insertOrUpdate(route);//TODO should probably log this change which would require getting the previous route before i overwrite it
-
+		if (success) {
+			return "Success";
+		} else {
+			return "Price failed to update";
+		}
 	}
 
 	/**

@@ -80,9 +80,9 @@ generate the current report.
 		mailMap.put("Type", "mail");
 		mailMap.put("origin", mail.getOrigin());
 		mailMap.put("destination", mail.getDestination());
-		mailMap.put("volume", mail.getVolume());
-		mailMap.put("weight", mail.getWeight());
-		mailMap.put("priority", Boolean.toString(mail.getPriority()));
+		mailMap.put("volume", String.valueOf(mail.getVolume()));
+		mailMap.put("weight", String.valueOf(mail.getWeight()));
+		mailMap.put("priority", mail.getPriority().toString());
 		
 		convertDataToXML(mailMap);	
 	}
