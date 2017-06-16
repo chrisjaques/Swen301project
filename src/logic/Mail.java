@@ -1,15 +1,18 @@
 package logic;
+
+import logic.Route.TransportType;
+
 public class Mail {
-	private boolean priority;
-	private String volume;
+	private Route.TransportType priority;
+	private double volume;
 	private String origin;
 	private String destination;
-	private String weight;
+	private double weight;
 	private long timestamp;
 	
-	public Mail(boolean priority, String volume, String origin, String destination,
-			String weight) {
-		this.setPriority(priority);
+	public Mail(Route.TransportType transportType, double volume, String origin, String destination,
+			double weight) {
+		this.setPriority(transportType);
 		this.setVolume(volume);
 		this.setOrigin(origin);
 		this.setDestination(destination);
@@ -17,19 +20,19 @@ public class Mail {
 		this.setTimestamp(System.currentTimeMillis());
 	}
 
-	public boolean getPriority() {
+	public Route.TransportType getPriority() {
 		return priority;
 	}
 
-	public void setPriority(boolean priority) {
-		this.priority = priority;
+	public void setPriority(TransportType transportType) {
+		this.priority = transportType;
 	}
 
-	public String getVolume() {
+	public double getVolume() {
 		return volume;
 	}
 
-	public void setVolume(String volume) {
+	public void setVolume(double volume) {
 		this.volume = volume;
 	}
 
@@ -49,11 +52,11 @@ public class Mail {
 		this.destination = destination;
 	}
 
-	public String getWeight() {
+	public double getWeight() {
 		return weight;
 	}
 
-	public void setWeight(String weight) {
+	public void setWeight(double weight) {
 		this.weight = weight;
 	}
 

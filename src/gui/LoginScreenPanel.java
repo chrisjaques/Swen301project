@@ -8,6 +8,8 @@ import logic.KPSmartController;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -94,7 +96,13 @@ public class LoginScreenPanel extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		controller.loginUser(usernameField.getText(), String.valueOf(passwordField.getPassword()), topFrame);
+		String loginAttempt = controller.loginUser(usernameField.getText(), String.valueOf(passwordField.getPassword()), topFrame);		
+		if (!loginAttempt.equals("Success")) {
+			JOptionPane.showMessageDialog(new JFrame(), loginAttempt, "ERROR", JOptionPane.ERROR_MESSAGE);
+		} else {
+			usernameField.setText("");
+			passwordField.setText("");
+		}
 	}
 
 }

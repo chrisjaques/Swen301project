@@ -4,24 +4,36 @@ import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import javax.swing.JTextField;
 
+import logic.KPSmartController;
 import logic.RouteService;
 
 import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
 
-public class DiscontinueRoutePanel extends JPanel {
+public class DiscontinueRoutePanel extends JPanel implements ActionListener {
 
+	private KPSmartController controller;
+	private JComboBox originDropDownBox;
+	private JComboBox destinationDropDownBox;
+	private JComboBox priorityDropDownBox;
+	
 	/**
 	 * Create the panel.
 	 */
-	public DiscontinueRoutePanel() {
+	public DiscontinueRoutePanel(KPSmartController controller) {
+		this.controller = controller;
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
@@ -52,7 +64,7 @@ public class DiscontinueRoutePanel extends JPanel {
 		gbc_destinationLabel.gridy = 1;
 		add(destinationLabel, gbc_destinationLabel);
 		
-		JComboBox originDropDownBox = new JComboBox();
+		this.originDropDownBox = new JComboBox();
 		ArrayList<String> origins = RouteService.getOrigins();
 		originDropDownBox.setModel(new DefaultComboBoxModel(origins.toArray()));
 		originDropDownBox.setSelectedIndex(-1);
@@ -63,7 +75,7 @@ public class DiscontinueRoutePanel extends JPanel {
 		gbc_originDropDownBox.gridy = 2;
 		add(originDropDownBox, gbc_originDropDownBox);
 		
-		JComboBox destinationDropDownBox = new JComboBox();
+		this.destinationDropDownBox = new JComboBox();
 		ArrayList<String> destinations = RouteService.getDestinations();
 		destinationDropDownBox.setModel(new DefaultComboBoxModel(destinations.toArray()));
 		destinationDropDownBox.setSelectedIndex(-1);
@@ -81,23 +93,43 @@ public class DiscontinueRoutePanel extends JPanel {
 		gbc_lblPriority.gridy = 3;
 		add(lblPriority, gbc_lblPriority);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Air\t", "Land", "Sea"}));
-		comboBox.setSelectedIndex(-1);
+		this.priorityDropDownBox = new JComboBox();
+		priorityDropDownBox.setModel(new DefaultComboBoxModel(new String[] {"Air", "Land", "Sea"}));
+		priorityDropDownBox.setSelectedIndex(-1);
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 0;
 		gbc_comboBox.gridy = 4;
-		add(comboBox, gbc_comboBox);
+		add(priorityDropDownBox, gbc_comboBox);
 		
-		JButton doneButton = new JButton("Done");
+		JButton doneButton = new JButton("Delete Route");
 		GridBagConstraints gbc_doneButton = new GridBagConstraints();
 		gbc_doneButton.insets = new Insets(0, 0, 0, 5);
 		gbc_doneButton.gridx = 1;
 		gbc_doneButton.gridy = 5;
 		add(doneButton, gbc_doneButton);
+		doneButton.addActionListener(this);
 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		if (this.originDropDownBox.getSelectedItem() != null
+				&& this.destinationDropDownBox.getSelectedItem() != null
+				&& this.priorityDropDownBox.getSelectedItem() != null) {
+			String createAttempt = this.controller.discontinueRoute(this.originDropDownBox.getSelectedItem().toString(),
+					this.destinationDropDownBox.getSelectedItem().toString(), this.priorityDropDownBox.getSelectedItem().toString());
+			if (!createAttempt.equals("Success")) {
+				JOptionPane.showMessageDialog(new JFrame(), createAttempt, "ERROR", JOptionPane.ERROR_MESSAGE);
+			} else {
+				this.controller.getKPSmartFrame().changeFocus("Home Screen");
+			}
+			
+		} else {
+			JOptionPane.showMessageDialog(new JFrame(), "Please fill out all fields", "ERROR", JOptionPane.ERROR_MESSAGE);
+		}
+		
 	}
 
 }
