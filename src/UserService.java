@@ -12,7 +12,7 @@ public class UserService {
 	 * Method purely for testing
 	 */
 	public static void main(String[] args) {
-		User u = new User("Chris", "Chris", User.UserType.Manager);
+		User u = new User("Chris", "Chris", User.UserType.MANAGER);
 		insertOrUpdate(u);
 		print(u);
 	}
@@ -99,10 +99,10 @@ public class UserService {
 
 				switch (roleString) {
 				case "MANAGER":
-					role = User.UserType.Manager;
+					role = User.UserType.MANAGER;
 					break;
 				case "CLERK":
-					role = User.UserType.Clerk;
+					role = User.UserType.CLERK;
 					break;
 				default:
 					throw new IllegalArgumentException("Invalid role type: " + roleString);

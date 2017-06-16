@@ -18,12 +18,12 @@ public class KPSmartController {
 	 *
 	 */
 	public enum Actions {
-		Booking,
-		CreateUser,
-		BussinessFigures,
-		UpdateRoute,
-		DiscontinueRoute,
-		Logout	
+		BOOKING,
+		CREATE_USER,
+		BUSSINESS_FIGURES,
+		UPDATE_ROUTE,
+		DISCONTINUE_ROUTE,
+		LOGOUT	
 	}
 	
 	/**
@@ -165,15 +165,15 @@ public class KPSmartController {
 	 * @return - the list of actions available to the user.
 	 */
 	public ArrayList<Actions> getActions() {
-		if (getCurrentUser().getRole().equals(User.UserType.Manager)) {
+		if (getCurrentUser().getRole().equals(User.UserType.MANAGER)) {
 			ArrayList<Actions> actions = (ArrayList<Actions>) Arrays.asList(Actions.values());
 			return actions;
 		} else {
 			ArrayList<Actions> actions = new ArrayList<Actions>();
-			actions.add(Actions.Booking);
-			actions.add(Actions.UpdateRoute);
-			actions.add(Actions.DiscontinueRoute);
-			actions.add(Actions.Logout);			
+			actions.add(Actions.BOOKING);
+			actions.add(Actions.UPDATE_ROUTE);
+			actions.add(Actions.DISCONTINUE_ROUTE);
+			actions.add(Actions.LOGOUT);			
 			return actions;
 		}
 	}
