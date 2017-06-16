@@ -86,9 +86,9 @@ public class InitialHomeScreen extends JFrame {
 		panel.add(updatePriceButton);
 		updatePriceButton.addActionListener(l);
 
-		JButton createNewClerkButton = new JButton("Create New Clerk");
-		panel.add(createNewClerkButton);
-		createNewClerkButton.addActionListener(l);
+		JButton createNewUserButton = new JButton("Create New User");
+		panel.add(createNewUserButton);
+		createNewUserButton.addActionListener(l);
 
 		JButton viewBusinessFiguresButton = new JButton("View Business Figures");
 		panel.add(viewBusinessFiguresButton);
