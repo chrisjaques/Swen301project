@@ -6,6 +6,7 @@ import java.util.PriorityQueue;
 
 import gui.HomeScreen;
 import gui.LoginScreen;
+import logic.Route.TransportType;
 
 public class KPSmartController {
 
@@ -250,7 +251,9 @@ public class KPSmartController {
 	 *
 	 * @param newPrice
 	 */
-	public void updatePrice(int newPrice) {
+	public void updatePrice(String origin, String destination, TransportType transportType ,int newPrice) {
+		Route route = new Route(origin, destination, transportType, newPrice);
+		RouteService.insertOrUpdate(route);//TODO should probably log this change which would require getting the previous route before i overwrite it
 		// TODO: set the current price to the new price.
 	}
 
