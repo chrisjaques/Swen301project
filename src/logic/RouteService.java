@@ -4,70 +4,23 @@ import java.util.ArrayList;
 
 public class RouteService {
 
-	// static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc";
-	// static final String DB_URL =
-	// "jdbc:sqlserver://swen301project.database.windows.net:1433;database=swen301project;user=chris@swen301project;password={SWEN$301};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
-
-	static final String DB_URL = "jdbc:derby://localhost:1527/swen301;user=swen301;password=swen301";
-	private static Connection conn = null;
-
-	/**
-	 * Method purely for testing
-	 */
-	public static void main(String[] args) {
-		// print(getRoutesByOrigin("Wellington"));
-
-		// print(getRoutesByDestination("Paris"));
-
-		// print(getAirRoutes());
-
-		Route r = new Route("Wellington", "Paris", Route.TransportType.AIR,
-				12.50);
-		System.out.println(insertOrUpdate(r));
-		
-		r = new Route("Wellington", "Paris", Route.TransportType.AIR,
-				50);
-		System.out.println(insertOrUpdate(r));
-
-//		Route r = new Route("Wellington", "Paris", Route.TransportType.AIR, 12.50);
-//		System.out.println(deleteRoute(r));
-
-		// r = new Route("Wellington", "Pretoria",
-		// Route.TransportType.AIR, 52.50);
-		// insertOrUpdate(r);
-
-		// System.out.println(getRouteByID(12).getPrice());//should be 52.5
-
-		// print(getAll());
-
-	}
-
-	/**
-	 * Method purely for local environment hack
-	 */
-	private static void createConnection() {
-		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
-			conn = DriverManager.getConnection(DB_URL);
-		} catch (Exception except) {
-			except.printStackTrace();
-		}
-	}
+	static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc";
+	static final String DB_URL = "jdbc:sqlserver://swen301.database.windows.net:1433;database=Swen301;user=swen301@swen301;password={Cotton208};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
 
 	/**
 	 * Method to get all Routes from DB
 	 */
 	public static ArrayList<Route> getAll() {
 
-		createConnection();
 		ArrayList<Route> allRoutes = new ArrayList<Route>();
 
 		try {
+			Connection conn = DriverManager.getConnection(DB_URL);
 			Statement stmt = conn.createStatement();
 			ResultSet rs;
 
 			rs = stmt
-					.executeQuery("SELECT id, origin, destination, transporttype, price FROM routetable");
+					.executeQuery("SELECT id, origin, destination, transporttype, price FROM route");
 			while (rs.next()) {
 				String origin = rs.getString("origin");
 				String destination = rs.getString("destination");
@@ -110,10 +63,10 @@ public class RouteService {
 	 */
 	public static boolean insertOrUpdate(Route route) {
 
-		createConnection();
 		try {
+			Connection conn = DriverManager.getConnection(DB_URL);
 			PreparedStatement ps = conn
-					.prepareStatement("UPDATE routetable SET price = ? WHERE origin = ? AND destination = ? AND transporttype = ?");
+					.prepareStatement("UPDATE route SET price = ? WHERE origin = ? AND destination = ? AND transporttype = ?");
 
 			ps.setDouble(1, route.getPrice());
 			ps.setString(2, route.getOrigin());
@@ -127,7 +80,7 @@ public class RouteService {
 
 			if (rowschanged == 0) {
 				ps = conn
-						.prepareStatement("INSERT INTO routetable (origin, destination, transporttype, price) VALUES (?, ?, ?, ?)");
+						.prepareStatement("INSERT INTO route (origin, destination, transporttype, price) VALUES (?, ?, ?, ?)");
 				ps.setString(1, route.getOrigin());
 				ps.setString(2, route.getDestination());
 				ps.setString(3, route.getTransportType().toString());
@@ -155,10 +108,10 @@ public class RouteService {
 	public static boolean deleteRoute(Route route) {
 
 		int rowschanged = 0;
-		createConnection();
 		try {
+			Connection conn = DriverManager.getConnection(DB_URL);
 			PreparedStatement ps = conn
-					.prepareStatement("DELETE FROM routetable WHERE origin = ? AND destination = ? AND transporttype = ?");
+					.prepareStatement("DELETE FROM route WHERE origin = ? AND destination = ? AND transporttype = ?");
 
 			ps.setString(1, route.getOrigin());
 			ps.setString(2, route.getDestination());
@@ -187,14 +140,14 @@ public class RouteService {
 	 */
 	public static ArrayList<String> getOrigins() {
 
-		createConnection();
 		ArrayList<String> allOrigins = new ArrayList<String>();
 
 		try {
+			Connection conn = DriverManager.getConnection(DB_URL);
 			Statement stmt = conn.createStatement();
 			ResultSet rs;
 
-			rs = stmt.executeQuery("SELECT DISTINCT origin FROM routetable");
+			rs = stmt.executeQuery("SELECT DISTINCT origin FROM route");
 			while (rs.next()) {
 				String origin = rs.getString("origin");
 				allOrigins.add(origin);
@@ -214,15 +167,15 @@ public class RouteService {
 	 */
 	public static ArrayList<String> getDestinations() {
 
-		createConnection();
 		ArrayList<String> allDestinations = new ArrayList<String>();
 
 		try {
+			Connection conn = DriverManager.getConnection(DB_URL);
 			Statement stmt = conn.createStatement();
 			ResultSet rs;
 
 			rs = stmt
-					.executeQuery("SELECT DISTINCT destination FROM routetable");
+					.executeQuery("SELECT DISTINCT destination FROM route");
 			while (rs.next()) {
 				String destination = rs.getString("destination");
 				allDestinations.add(destination);
@@ -244,14 +197,14 @@ public class RouteService {
 	 */
 	public static ArrayList<Route> getRoutes(Route.TransportType t) {
 
-		createConnection();
 		ArrayList<Route> airRoutes = new ArrayList<Route>();
 
 		try {
+			Connection conn = DriverManager.getConnection(DB_URL);
 			ResultSet rs;
 
 			PreparedStatement ps = conn
-					.prepareStatement("SELECT id, origin, destination, transporttype, price FROM routetable WHERE transportType = ?");
+					.prepareStatement("SELECT id, origin, destination, transporttype, price FROM route WHERE transportType = ?");
 			ps.setString(1, t.toString());
 
 			rs = ps.executeQuery();
@@ -297,14 +250,14 @@ public class RouteService {
 	 */
 	public static ArrayList<Route> getRoutesByOrigin(String orig) {
 
-		createConnection();
 		ArrayList<Route> routes = new ArrayList<Route>();
 
 		try {
+			Connection conn = DriverManager.getConnection(DB_URL);
 			ResultSet rs;
 
 			PreparedStatement ps = conn
-					.prepareStatement("SELECT id, origin, destination, transporttype, price FROM routetable WHERE origin = ?");
+					.prepareStatement("SELECT id, origin, destination, transporttype, price FROM route WHERE origin = ?");
 			ps.setString(1, orig);
 
 			rs = ps.executeQuery();
@@ -350,14 +303,14 @@ public class RouteService {
 	 */
 	public static ArrayList<Route> getRoutesByDestination(String dest) {
 
-		createConnection();
 		ArrayList<Route> routes = new ArrayList<Route>();
 
 		try {
+			Connection conn = DriverManager.getConnection(DB_URL);
 			ResultSet rs;
 
 			PreparedStatement ps = conn
-					.prepareStatement("SELECT id, origin, destination, transporttype, price FROM routetable WHERE destination = ?");
+					.prepareStatement("SELECT id, origin, destination, transporttype, price FROM route WHERE destination = ?");
 			ps.setString(1, dest);
 
 			rs = ps.executeQuery();
@@ -403,14 +356,14 @@ public class RouteService {
 	 */
 	public static Route getRouteByID(int id) {
 
-		createConnection();
 		Route r = null;
 
 		try {
+			Connection conn = DriverManager.getConnection(DB_URL);
 			ResultSet rs;
 
 			PreparedStatement ps = conn
-					.prepareStatement("SELECT id, origin, destination, transporttype, price FROM routetable WHERE id = ?");
+					.prepareStatement("SELECT id, origin, destination, transporttype, price FROM route WHERE id = ?");
 			ps.setInt(1, id);
 
 			rs = ps.executeQuery();
@@ -446,19 +399,5 @@ public class RouteService {
 		}
 
 		return r;
-	}
-
-	/**
-	 * Method purely for testing
-	 */
-	public static void print(ArrayList<Route> routes) {
-		for (Route r : routes) {
-			System.out.println("Origin: " + r.getOrigin());
-			System.out.println("Destination: " + r.getDestination());
-			System.out.println("TransportType: "
-					+ r.getTransportType().toString());
-			System.out.println("Price: " + r.getPrice());
-		}
-
 	}
 }
