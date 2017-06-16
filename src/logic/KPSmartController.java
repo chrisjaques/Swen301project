@@ -246,6 +246,7 @@ public class KPSmartController {
 //		return actions;
 //	}
 
+
 	/**
 	 * 	Update the current price.
 	 *
