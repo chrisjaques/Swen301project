@@ -179,7 +179,7 @@ public class KPSmartController {
 	 * @return boolean - true or false indicating if the user logged in or not. This should be changed later.
 	 */
 
-	public void loginUser(String username, String password, KPSmartFrame frame) {
+	public String loginUser(String username, String password, KPSmartFrame frame) {
 		this.kpSmartFrame = frame;
 
 		System.out.println(username);
@@ -194,17 +194,17 @@ public class KPSmartController {
 				setCurrentUser(user);
 				kpSmartFrame.initialiseHomeScreen();
 				kpSmartFrame.changeFocus("Home Screen");				
-//				return "Success";
+				return "Success";
 			} else {
 				// Password is incorrect.
 				System.out.println("ERROR: Password does not match.");
 				// TODO: Display error message on GUI.
-//				return "Password does not match.";
+				return "Password does not match. Please try again.";
 			}
 		} else {
 			System.out.println("User does not exist.");
 			// TODO: Display error message on GUI.
-//			return "User does not exist.";
+			return "User does not exist.";
 		}
 
 	}
