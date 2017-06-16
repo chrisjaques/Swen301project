@@ -17,7 +17,7 @@ import java.awt.event.ActionEvent;
 public class NavigationalHomeScreen extends JFrame{
 
 	private JPanel userFocusPanel;
-	private String currentUser;
+	private String userType;
 	private String userFocus;
 	private JPanel newOrderPanel;
 	private JPanel newClerkPanel;
@@ -30,7 +30,7 @@ public class NavigationalHomeScreen extends JFrame{
 	 */
 	public NavigationalHomeScreen(String focus, String user) {
 		//Is user a manager or clerk? 
-		this.currentUser = user;
+		this.userType = user;
 		//set initial focus
 		this.userFocus = focus;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,19 +82,16 @@ public class NavigationalHomeScreen extends JFrame{
 		updatePriceButton.addActionListener(listener);
 
 
-		JButton createNewUserButton = new JButton("Create New User");
-		navigationPanel.add(createNewUserButton);
-		createNewUserButton.addActionListener(listener);
-		if(currentUser == "CLERK"){
-			createNewUserButton.setVisible(false);
-		}
+		if (userType.equals("MANAGER")){
+			JButton createNewUserButton = new JButton("Create New User");
+			navigationPanel.add(createNewUserButton);
+			createNewUserButton.addActionListener(listener);
 
-		JButton businessFiguresButton = new JButton("View Business Figures");
-		navigationPanel.add(businessFiguresButton);
-		businessFiguresButton.addActionListener(listener);
-		if(currentUser == "CLERK"){
-			businessFiguresButton.setVisible(false);
+			JButton businessFiguresButton = new JButton("View Business Figures");
+			navigationPanel.add(businessFiguresButton);
+			businessFiguresButton.addActionListener(listener);
 		}
+		
 	}
 	
 	public void addUserFocusPanelComponents(JPanel panel){

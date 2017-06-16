@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -12,6 +13,7 @@ import logic.KPSmartController;
 
 import java.awt.GridLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -122,7 +124,13 @@ public class LoginScreen extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		controller.loginUser(usernameField.getText(), String.valueOf(passwordField.getPassword()));
+		String loginAttempt = controller.loginUser(usernameField.getText(), String.valueOf(passwordField.getPassword()));
+		if (!loginAttempt.equals("Success")) {
+			JOptionPane.showMessageDialog(new JFrame(),
+				    loginAttempt,
+				    "Error",
+				    JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 }
