@@ -180,6 +180,7 @@ public class KPSmartController {
 	 */
 
 	public void loginUser(String username, String password, KPSmartFrame frame) {
+		this.kpSmartFrame = frame;
 
 		System.out.println(username);
 		System.out.println(password);
@@ -191,7 +192,8 @@ public class KPSmartController {
 			if (password.equals(user.getPassword())) {
 				System.out.println("Successfully logged in!");
 				setCurrentUser(user);
-				frame.changeFocus("Home Screen");
+				kpSmartFrame.initialiseHomeScreen();
+				kpSmartFrame.changeFocus("Home Screen");				
 //				return "Success";
 			} else {
 				// Password is incorrect.

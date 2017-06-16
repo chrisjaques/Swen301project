@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import logic.KPSmartController;
+import logic.User;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JButton;
@@ -28,6 +30,7 @@ public class HomeScreenPanel extends JPanel implements ActionListener {
 	 * Create the panel.
 	 */
 	public HomeScreenPanel(KPSmartController controller, KPSmartFrame frame) {
+		this.controller = controller;
 		setLayout(new BorderLayout(0, 0));
 		this.frame = frame;
 		JLabel lblHome = new JLabel("Home");
@@ -64,14 +67,19 @@ public class HomeScreenPanel extends JPanel implements ActionListener {
 		JButton updatePriceButton = new JButton("Update Pricing");
 		panel.add(updatePriceButton);
 		updatePriceButton.addActionListener(this);
+		
+//		System.out.println(this.controller.getCurrentUser().getRole().name());
 
-		JButton createNewUserButton = new JButton("Create New User");
-		panel.add(createNewUserButton);
-		createNewUserButton.addActionListener(this);
+		if (this.controller.getCurrentUser().getRole().equals(User.UserType.MANAGER)) {
+			JButton createNewUserButton = new JButton("Create New User");
+			panel.add(createNewUserButton);
+			createNewUserButton.addActionListener(this);
 
-		JButton viewBusinessFiguresButton = new JButton("View Business Figures");
-		panel.add(viewBusinessFiguresButton);
-		viewBusinessFiguresButton.addActionListener(this);
+			JButton viewBusinessFiguresButton = new JButton("View Business Figures");
+			panel.add(viewBusinessFiguresButton);
+			viewBusinessFiguresButton.addActionListener(this);
+		}
+		
 	}
 	
 	@Override

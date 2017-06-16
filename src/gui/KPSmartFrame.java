@@ -42,8 +42,8 @@ public class KPSmartFrame extends JFrame {
 	 */
 	public KPSmartFrame(KPSmartController controller) {
 		this.controller = controller;
-		controller.addRefrenceToFrame(this);
-		System.out.println(controller);
+		this.controller.addRefrenceToFrame(this);
+		System.out.println(this.controller);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 400);
 		contentPane = new JPanel();
@@ -62,8 +62,6 @@ public class KPSmartFrame extends JFrame {
 		this.mainPanel = new JPanel();
 		this.mainPanel.setLayout(mainPanelLayout);
 
-		HomeScreenPanel homePanel = new HomeScreenPanel(this.controller, this);
-		this.mainPanel.add(homePanel, "Home Screen");
 		LoginScreenPanel loginPanel = new LoginScreenPanel(this.controller, this);
 		this.mainPanel.add(loginPanel, "Login Screen");
 		this.mainPanelLayout.show(mainPanel, "Login Screen");
@@ -80,6 +78,11 @@ public class KPSmartFrame extends JFrame {
 		this.mainPanel.add(navPanel, "Navigation Home Screen");
 		this.mainPanelLayout.show(mainPanel, "Navigation Home Screen");
 		
+	}
+	
+	public void initialiseHomeScreen() {
+		HomeScreenPanel homePanel = new HomeScreenPanel(this.controller, this);
+		this.mainPanel.add(homePanel, "Home Screen");
 	}
 
 }
