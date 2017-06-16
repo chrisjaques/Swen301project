@@ -72,11 +72,11 @@ public class UserService {
 
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				String username = rs.getString("username");
-				String password = rs.getString("password");
-				String roleString = rs.getString("role");
+				String username = rs.getString("username").trim();
+				String password = rs.getString("password").trim();
+				String roleString = rs.getString("role").trim();
 				User.UserType role;
-
+			
 				switch (roleString) {
 				case "MANAGER":
 					role = User.UserType.MANAGER;
