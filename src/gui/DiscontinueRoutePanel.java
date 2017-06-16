@@ -3,17 +3,20 @@ package gui;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import javax.swing.JTextField;
+
+import logic.RouteService;
+
 import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
 import java.awt.Insets;
+import java.util.ArrayList;
+
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
 
 public class DiscontinueRoutePanel extends JPanel {
-	private JTextField destinationTextField;
-	private JTextField originTextField;
 
 	/**
 	 * Create the panel.
@@ -30,7 +33,7 @@ public class DiscontinueRoutePanel extends JPanel {
 		lblKpsmartDiscontinue.setFont(new Font("Lucida Grande", Font.BOLD, 24));
 		GridBagConstraints gbc_lblKpsmartDiscontinue = new GridBagConstraints();
 		gbc_lblKpsmartDiscontinue.gridwidth = 3;
-		gbc_lblKpsmartDiscontinue.insets = new Insets(0, 0, 5, 5);
+		gbc_lblKpsmartDiscontinue.insets = new Insets(0, 0, 5, 0);
 		gbc_lblKpsmartDiscontinue.gridx = 0;
 		gbc_lblKpsmartDiscontinue.gridy = 0;
 		add(lblKpsmartDiscontinue, gbc_lblKpsmartDiscontinue);
@@ -49,23 +52,27 @@ public class DiscontinueRoutePanel extends JPanel {
 		gbc_destinationLabel.gridy = 1;
 		add(destinationLabel, gbc_destinationLabel);
 		
-		originTextField = new JTextField();
-		GridBagConstraints gbc_originTextField = new GridBagConstraints();
-		gbc_originTextField.insets = new Insets(0, 0, 5, 5);
-		gbc_originTextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_originTextField.gridx = 0;
-		gbc_originTextField.gridy = 2;
-		add(originTextField, gbc_originTextField);
-		originTextField.setColumns(10);
+		JComboBox originDropDownBox = new JComboBox();
+		ArrayList<String> origins = RouteService.getOrigins();
+		originDropDownBox.setModel(new DefaultComboBoxModel(origins.toArray()));
+		originDropDownBox.setSelectedIndex(-1);
+		GridBagConstraints gbc_originDropDownBox = new GridBagConstraints();
+		gbc_originDropDownBox.insets = new Insets(0, 0, 5, 5);
+		gbc_originDropDownBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_originDropDownBox.gridx = 0;
+		gbc_originDropDownBox.gridy = 2;
+		add(originDropDownBox, gbc_originDropDownBox);
 		
-		destinationTextField = new JTextField();
-		GridBagConstraints gbc_destinationTextField = new GridBagConstraints();
-		gbc_destinationTextField.insets = new Insets(0, 0, 5, 0);
-		gbc_destinationTextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_destinationTextField.gridx = 2;
-		gbc_destinationTextField.gridy = 2;
-		add(destinationTextField, gbc_destinationTextField);
-		destinationTextField.setColumns(10);
+		JComboBox destinationDropDownBox = new JComboBox();
+		ArrayList<String> destinations = RouteService.getDestinations();
+		destinationDropDownBox.setModel(new DefaultComboBoxModel(destinations.toArray()));
+		destinationDropDownBox.setSelectedIndex(-1);
+		GridBagConstraints gbc_destinationDropDownBox = new GridBagConstraints();
+		gbc_destinationDropDownBox.insets = new Insets(0, 0, 5, 0);
+		gbc_destinationDropDownBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_destinationDropDownBox.gridx = 2;
+		gbc_destinationDropDownBox.gridy = 2;
+		add(destinationDropDownBox, gbc_destinationDropDownBox);
 		
 		JLabel lblPriority = new JLabel("Priority");
 		GridBagConstraints gbc_lblPriority = new GridBagConstraints();
@@ -76,6 +83,7 @@ public class DiscontinueRoutePanel extends JPanel {
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Air\t", "Land", "Sea"}));
+		comboBox.setSelectedIndex(-1);
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;

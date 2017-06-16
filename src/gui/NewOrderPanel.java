@@ -65,6 +65,7 @@ public class NewOrderPanel extends JPanel {
 		//get contents for origin drop down
 		ArrayList<String> origins = RouteService.getOrigins();
 		originDropDownBox.setModel(new DefaultComboBoxModel(origins.toArray()));
+		originDropDownBox.setSelectedIndex(-1);
 		GridBagConstraints gbc_originDropDownBox = new GridBagConstraints();
 		gbc_originDropDownBox.insets = new Insets(0, 0, 5, 5);
 		gbc_originDropDownBox.fill = GridBagConstraints.HORIZONTAL;
@@ -75,6 +76,7 @@ public class NewOrderPanel extends JPanel {
 		JComboBox destinationDropDownBox = new JComboBox();
 		ArrayList<String> destinations = RouteService.getDestinations();
 		destinationDropDownBox.setModel(new DefaultComboBoxModel(destinations.toArray()));
+		destinationDropDownBox.setSelectedIndex(-1);
 		GridBagConstraints gbc_destinationDropDownBox = new GridBagConstraints();
 		gbc_destinationDropDownBox.insets = new Insets(0, 0, 5, 0);
 		gbc_destinationDropDownBox.fill = GridBagConstraints.HORIZONTAL;
