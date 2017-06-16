@@ -130,7 +130,7 @@ public class CreateNewUser extends JPanel implements ActionListener {
 		add(lblUserTypr, gbc_lblUserTypr);
 		
 		this.userType = new JComboBox();
-		userType.setModel(new DefaultComboBoxModel(new String[] {"Clerk\t", "Manager"}));
+		userType.setModel(new DefaultComboBoxModel(new String[] {"Clerk", "Manager"}));
 		userType.setSelectedIndex(-1);
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);

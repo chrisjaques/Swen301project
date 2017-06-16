@@ -217,15 +217,31 @@ public class KPSmartController {
 	 *
 	 * @param route - the route to be deleted.
 	 */
-	public void discontinueRoute(Route route) {
+	public String discontinueRoute(String origin, String destination, String prioritySelected) {
+		Route.TransportType transportType;
+		if (prioritySelected.equals("Air")) {
+			transportType = Route.TransportType.AIR;
+		} else if (prioritySelected.equals("Land")) {
+			transportType = Route.TransportType.LAND;
+		} else if (prioritySelected.equals("Sea")) {
+			transportType = Route.TransportType.SEA;
+		} else {
+			return "Please select a Priority.";
+		}
+		
+		// Price doesn't matter so temp value of 0 is added here.
+		Route route = new Route(origin, destination, transportType, 0);
+		
 		boolean success = RouteService.deleteRoute(route);
 		if (success) {
 			System.out.println("Route has been removed");
 //			SaveDataToXML.discontinueRoute(route);
 			// TODO: do something on GUI.
+			return "Success";
 		} else {
 			System.out.println("ERROR: Route failed to delete");
 			// Theoretically should never reach this step.
+			return "Failed to delete";
 		}
 	}
 
@@ -266,8 +282,6 @@ public class KPSmartController {
 	public void logoutUser() {
 
 		setCurrentUser(null);
-
-		//TODO: Navigate GUI to login page.
 	}
 
 	/**
@@ -282,11 +296,22 @@ public class KPSmartController {
 	 *
 	 * @param newPrice
 	 */
-	public void updatePrice(String origin, String destination, TransportType transportType ,double newPrice) {
-		//double oldPrice = RouteService.get
+	public String updatePrice(String origin, String destination, TransportType transportType ,String price) {
+		double newPrice;
+		
+		if (price.matches("^(?:\\d+(?:\\.\\d{2})?)$")) {
+			newPrice = Double.parseDouble(price);
+		} else {
+			return "Price must be in the correct format.";
+		}
+		
 		Route route = new Route(origin, destination, transportType, newPrice);
 		boolean success = RouteService.insertOrUpdate(route);//TODO should probably log this change which would require getting the previous route before i overwrite it
-
+		if (success) {
+			return "Success";
+		} else {
+			return "Price failed to update";
+		}
 	}
 
 	/**
