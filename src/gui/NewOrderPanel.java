@@ -20,6 +20,8 @@ import javax.swing.DefaultComboBoxModel;
 
 @SuppressWarnings("serial")
 public class NewOrderPanel extends JPanel {
+	private JTextField weightTextField;
+	private JTextField volumeTextField;
 
 	/**
 	 * Create the panel.
@@ -41,19 +43,19 @@ public class NewOrderPanel extends JPanel {
 		gbc_lblKpsmartCreate.gridy = 0;
 		add(lblKpsmartCreate, gbc_lblKpsmartCreate);
 		
-		JLabel lblOrigin = new JLabel("Origin");
-		GridBagConstraints gbc_lblOrigin = new GridBagConstraints();
-		gbc_lblOrigin.insets = new Insets(0, 0, 5, 5);
-		gbc_lblOrigin.gridx = 0;
-		gbc_lblOrigin.gridy = 2;
-		add(lblOrigin, gbc_lblOrigin);
+		JLabel originLabel = new JLabel("Origin");
+		GridBagConstraints gbc_originLabel = new GridBagConstraints();
+		gbc_originLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_originLabel.gridx = 0;
+		gbc_originLabel.gridy = 2;
+		add(originLabel, gbc_originLabel);
 		
-		JLabel lblDestination = new JLabel("Destination");
-		GridBagConstraints gbc_lblDestination = new GridBagConstraints();
-		gbc_lblDestination.insets = new Insets(0, 0, 5, 0);
-		gbc_lblDestination.gridx = 2;
-		gbc_lblDestination.gridy = 2;
-		add(lblDestination, gbc_lblDestination);
+		JLabel destinationLabel = new JLabel("Destination");
+		GridBagConstraints gbc_destinationLabel = new GridBagConstraints();
+		gbc_destinationLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_destinationLabel.gridx = 2;
+		gbc_destinationLabel.gridy = 2;
+		add(destinationLabel, gbc_destinationLabel);
 		
 		JButton doneButton = new JButton("Done");
 		doneButton.addActionListener(new ActionListener() {
@@ -84,35 +86,37 @@ public class NewOrderPanel extends JPanel {
 		gbc_destinationDropDownBox.gridy = 3;
 		add(destinationDropDownBox, gbc_destinationDropDownBox);
 		
-		JLabel lblWeight = new JLabel("Weight");
-		GridBagConstraints gbc_lblWeight = new GridBagConstraints();
-		gbc_lblWeight.insets = new Insets(0, 0, 5, 5);
-		gbc_lblWeight.gridx = 0;
-		gbc_lblWeight.gridy = 4;
-		add(lblWeight, gbc_lblWeight);
+		JLabel weightLabel = new JLabel("Weight");
+		GridBagConstraints gbc_weightLabel = new GridBagConstraints();
+		gbc_weightLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_weightLabel.gridx = 0;
+		gbc_weightLabel.gridy = 4;
+		add(weightLabel, gbc_weightLabel);
 		
-		JLabel lblVolume = new JLabel("Volume");
-		GridBagConstraints gbc_lblVolume = new GridBagConstraints();
-		gbc_lblVolume.insets = new Insets(0, 0, 5, 0);
-		gbc_lblVolume.gridx = 2;
-		gbc_lblVolume.gridy = 4;
-		add(lblVolume, gbc_lblVolume);
+		JLabel volumeLabel = new JLabel("Volume");
+		GridBagConstraints gbc_volumeLabel = new GridBagConstraints();
+		gbc_volumeLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_volumeLabel.gridx = 2;
+		gbc_volumeLabel.gridy = 4;
+		add(volumeLabel, gbc_volumeLabel);
 		
-		JSpinner spinner = new JSpinner();
-		GridBagConstraints gbc_spinner = new GridBagConstraints();
-		gbc_spinner.fill = GridBagConstraints.HORIZONTAL;
-		gbc_spinner.insets = new Insets(0, 0, 5, 5);
-		gbc_spinner.gridx = 0;
-		gbc_spinner.gridy = 5;
-		add(spinner, gbc_spinner);
+		weightTextField = new JTextField();
+		GridBagConstraints gbc_weightTextField = new GridBagConstraints();
+		gbc_weightTextField.insets = new Insets(0, 0, 5, 5);
+		gbc_weightTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_weightTextField.gridx = 0;
+		gbc_weightTextField.gridy = 5;
+		add(weightTextField, gbc_weightTextField);
+		weightTextField.setColumns(10);
 		
-		JSpinner spinner_1 = new JSpinner();
-		GridBagConstraints gbc_spinner_1 = new GridBagConstraints();
-		gbc_spinner_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_spinner_1.insets = new Insets(0, 0, 5, 0);
-		gbc_spinner_1.gridx = 2;
-		gbc_spinner_1.gridy = 5;
-		add(spinner_1, gbc_spinner_1);
+		volumeTextField = new JTextField();
+		GridBagConstraints gbc_volumeTextField = new GridBagConstraints();
+		gbc_volumeTextField.insets = new Insets(0, 0, 5, 0);
+		gbc_volumeTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_volumeTextField.gridx = 2;
+		gbc_volumeTextField.gridy = 5;
+		add(volumeTextField, gbc_volumeTextField);
+		volumeTextField.setColumns(10);
 		
 		JLabel lblPriority = new JLabel("Priority");
 		GridBagConstraints gbc_lblPriority = new GridBagConstraints();
@@ -121,15 +125,15 @@ public class NewOrderPanel extends JPanel {
 		gbc_lblPriority.gridy = 6;
 		add(lblPriority, gbc_lblPriority);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Air ", "Land ", "Sea"}));
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		comboBox.setSelectedIndex(-1);
-		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridx = 0;
-		gbc_comboBox.gridy = 7;
-		add(comboBox, gbc_comboBox);
+		JComboBox priorityDropDownBox = new JComboBox();
+		priorityDropDownBox.setModel(new DefaultComboBoxModel(new String[] {"Air ", "Land ", "Sea"}));
+		GridBagConstraints gbc_priorityDropDownBox = new GridBagConstraints();
+		priorityDropDownBox.setSelectedIndex(-1);
+		gbc_priorityDropDownBox.insets = new Insets(0, 0, 5, 5);
+		gbc_priorityDropDownBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_priorityDropDownBox.gridx = 0;
+		gbc_priorityDropDownBox.gridy = 7;
+		add(priorityDropDownBox, gbc_priorityDropDownBox);
 		GridBagConstraints gbc_doneButton = new GridBagConstraints();
 		gbc_doneButton.insets = new Insets(0, 0, 0, 5);
 		gbc_doneButton.gridx = 1;

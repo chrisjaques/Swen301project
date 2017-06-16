@@ -18,6 +18,7 @@ import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
 
 public class NewRoutePanel extends JPanel {
+	private JTextField priceTextField;
 
 	/**
 	 * Create the panel.
@@ -39,19 +40,19 @@ public class NewRoutePanel extends JPanel {
 		gbc_lblKpsmartCreate.gridy = 0;
 		add(lblKpsmartCreate, gbc_lblKpsmartCreate);
 		
-		JLabel lblOrigin = new JLabel("Origin");
-		GridBagConstraints gbc_lblOrigin = new GridBagConstraints();
-		gbc_lblOrigin.insets = new Insets(0, 0, 5, 5);
-		gbc_lblOrigin.gridx = 0;
-		gbc_lblOrigin.gridy = 2;
-		add(lblOrigin, gbc_lblOrigin);
+		JLabel originLabel = new JLabel("Origin");
+		GridBagConstraints gbc_originLabel = new GridBagConstraints();
+		gbc_originLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_originLabel.gridx = 0;
+		gbc_originLabel.gridy = 2;
+		add(originLabel, gbc_originLabel);
 		
-		JLabel lblDestination = new JLabel("Destination");
-		GridBagConstraints gbc_lblDestination = new GridBagConstraints();
-		gbc_lblDestination.insets = new Insets(0, 0, 5, 0);
-		gbc_lblDestination.gridx = 2;
-		gbc_lblDestination.gridy = 2;
-		add(lblDestination, gbc_lblDestination);
+		JLabel destinationLabel = new JLabel("Destination");
+		GridBagConstraints gbc_destinationLabel = new GridBagConstraints();
+		gbc_destinationLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_destinationLabel.gridx = 2;
+		gbc_destinationLabel.gridy = 2;
+		add(destinationLabel, gbc_destinationLabel);
 		
 		JComboBox originDropDownBox = new JComboBox();
 		ArrayList<String> origins = RouteService.getOrigins();
@@ -75,19 +76,19 @@ public class NewRoutePanel extends JPanel {
 		gbc_destinationDropDownBox.gridy = 3;
 		add(destinationDropDownBox, gbc_destinationDropDownBox);
 		
-		JLabel lblPriority = new JLabel("Priority");
-		GridBagConstraints gbc_lblPriority = new GridBagConstraints();
-		gbc_lblPriority.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPriority.gridx = 0;
-		gbc_lblPriority.gridy = 4;
-		add(lblPriority, gbc_lblPriority);
+		JLabel priorityLabel = new JLabel("Priority");
+		GridBagConstraints gbc_priorityLabel = new GridBagConstraints();
+		gbc_priorityLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_priorityLabel.gridx = 0;
+		gbc_priorityLabel.gridy = 4;
+		add(priorityLabel, gbc_priorityLabel);
 		
-		JLabel lblPrice = new JLabel("Price");
-		GridBagConstraints gbc_lblPrice = new GridBagConstraints();
-		gbc_lblPrice.insets = new Insets(0, 0, 5, 0);
-		gbc_lblPrice.gridx = 2;
-		gbc_lblPrice.gridy = 4;
-		add(lblPrice, gbc_lblPrice);
+		JLabel priceLabel = new JLabel("Price");
+		GridBagConstraints gbc_priceLabel = new GridBagConstraints();
+		gbc_priceLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_priceLabel.gridx = 2;
+		gbc_priceLabel.gridy = 4;
+		add(priceLabel, gbc_priceLabel);
 		
 		JComboBox priorityDropDownBox = new JComboBox();
 		priorityDropDownBox.setModel(new DefaultComboBoxModel(new String[] {"Air", "Land", "Sea"}));
@@ -99,21 +100,21 @@ public class NewRoutePanel extends JPanel {
 		gbc_priorityDropDownBox.gridy = 5;
 		add(priorityDropDownBox, gbc_priorityDropDownBox);
 		
+		priceTextField = new JTextField();
+		GridBagConstraints gbc_priceTextField = new GridBagConstraints();
+		gbc_priceTextField.insets = new Insets(0, 0, 5, 0);
+		gbc_priceTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_priceTextField.gridx = 2;
+		gbc_priceTextField.gridy = 5;
+		add(priceTextField, gbc_priceTextField);
+		priceTextField.setColumns(10);
 		
-		JSpinner spinner = new JSpinner();
-		GridBagConstraints gbc_spinner = new GridBagConstraints();
-		gbc_spinner.fill = GridBagConstraints.HORIZONTAL;
-		gbc_spinner.insets = new Insets(0, 0, 5, 0);
-		gbc_spinner.gridx = 2;
-		gbc_spinner.gridy = 5;
-		add(spinner, gbc_spinner);
-		
-		JButton btnDone = new JButton("Done");
-		GridBagConstraints gbc_btnDone = new GridBagConstraints();
-		gbc_btnDone.insets = new Insets(0, 0, 0, 5);
-		gbc_btnDone.gridx = 1;
-		gbc_btnDone.gridy = 6;
-		add(btnDone, gbc_btnDone);
+		JButton doneButton = new JButton("Done");
+		GridBagConstraints gbc_doneButton = new GridBagConstraints();
+		gbc_doneButton.insets = new Insets(0, 0, 0, 5);
+		gbc_doneButton.gridx = 1;
+		gbc_doneButton.gridy = 6;
+		add(doneButton, gbc_doneButton);
 
 	}
 
