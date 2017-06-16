@@ -114,7 +114,7 @@ public class NavigationalHomeScreen extends JFrame{
 		this.newRoutePanel = new NewRoutePanel();
 		userFocusPanel.add(newRoutePanel, "New Route");
 		this.updatePricePanel = new UpdatePricePanel();
-		userFocusPanel.add(updatePricePanel, "Update Price");
+		userFocusPanel.add(updatePricePanel, "Update Pricing");
 		this.viewFiguresPanel = new ViewFiguresPanel();
 		userFocusPanel.add(viewFiguresPanel, "View Figures");
 		DiscontinueRoutePanel p = new DiscontinueRoutePanel();
