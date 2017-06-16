@@ -81,7 +81,7 @@ public class KPSmartController {
 
 		DeliveryRoute currentRoute;
 
-		while(!(queue.peek().getOrigin().equals(origin) && queue.peek().getDestination().equals(destination)) && !queue.isEmpty()){ //keep polling the priorityQueue until the first route off is from origin to destination
+		while(!(queue.peek().getOrigin().equals(origin) && queue.peek().getDestination().equals(destination)) && !queue.isEmpty()){ //keep peeking the priorityQueue until the first route is from origin to destination
 
 			currentRoute = queue.poll();
 
@@ -119,7 +119,7 @@ public class KPSmartController {
 		if(queue.isEmpty()){
 			//TODO no route exists so do something
 		} else {
-			DeliveryRoute deliveryRoute = queue.poll();//TODO do something with the completed route
+			DeliveryRoute deliveryRoute = queue.poll();//TODO do something with the completed route, will need to log something here
 		}
 
 	}
@@ -252,10 +252,11 @@ public class KPSmartController {
 	 *
 	 * @param newPrice
 	 */
-	public void updatePrice(String origin, String destination, TransportType transportType ,int newPrice) {
+	public void updatePrice(String origin, String destination, TransportType transportType ,double newPrice) {
+		//double oldPrice = RouteService.get
 		Route route = new Route(origin, destination, transportType, newPrice);
-		RouteService.insertOrUpdate(route);//TODO should probably log this change which would require getting the previous route before i overwrite it
-		// TODO: set the current price to the new price.
+		boolean success = RouteService.insertOrUpdate(route);//TODO should probably log this change which would require getting the previous route before i overwrite it
+
 	}
 
 	/**
