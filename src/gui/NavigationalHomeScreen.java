@@ -82,11 +82,11 @@ public class NavigationalHomeScreen extends JFrame{
 		updatePriceButton.addActionListener(listener);
 
 
-		JButton createNewClerkButton = new JButton("Create New Clerk");
-		navigationPanel.add(createNewClerkButton);
-		createNewClerkButton.addActionListener(listener);
+		JButton createNewUserButton = new JButton("Create New User");
+		navigationPanel.add(createNewUserButton);
+		createNewUserButton.addActionListener(listener);
 		if(currentUser == "CLERK"){
-			createNewClerkButton.setVisible(false);
+			createNewUserButton.setVisible(false);
 		}
 
 		JButton businessFiguresButton = new JButton("View Business Figures");
