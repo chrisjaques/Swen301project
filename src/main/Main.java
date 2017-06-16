@@ -1,14 +1,15 @@
 package main;
 
-import gui.LoginScreen;
+import gui.KPSmartFrame;
 import logic.KPSmartController;
 
 public class Main{
 
 	public static void main(String[] args) {
 		KPSmartController controller = new KPSmartController();
-		LoginScreen loginScreen = new LoginScreen(controller);
-		loginScreen.openLoginScreen();
+		KPSmartFrame frame = new KPSmartFrame(controller);
+		frame.setVisible(true);
 	}
 
 }
+

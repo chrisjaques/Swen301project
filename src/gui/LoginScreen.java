@@ -124,13 +124,13 @@ public class LoginScreen extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String loginAttempt = controller.loginUser(usernameField.getText(), String.valueOf(passwordField.getPassword()));
-		if (!loginAttempt.equals("Success")) {
-			JOptionPane.showMessageDialog(new JFrame(),
-				    loginAttempt,
-				    "Error",
-				    JOptionPane.ERROR_MESSAGE);
-		}
+//		String loginAttempt = controller.loginUser(usernameField.getText(), String.valueOf(passwordField.getPassword()));
+//		if (!loginAttempt.equals("Success")) {
+//			JOptionPane.showMessageDialog(new JFrame(),
+//				    loginAttempt,
+//				    "Error",
+//				    JOptionPane.ERROR_MESSAGE);
+//		}
 	}
 
 }

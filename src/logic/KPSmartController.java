@@ -6,12 +6,15 @@ import java.util.PriorityQueue;
 import event_logging.SaveDataToXML;
 import gui.HomeScreen;
 
+import gui.KPSmartFrame;
+
 import logic.Route.TransportType;
 
 public class KPSmartController {
 
 	// The user that is logged in to the system. If no user is logged in, currentUser = null.
 	private User currentUser = null;
+	private KPSmartFrame kpSmartFrame;
 
 	/**
 	 * Initialise the controller.
@@ -176,7 +179,7 @@ public class KPSmartController {
 	 * @return boolean - true or false indicating if the user logged in or not. This should be changed later.
 	 */
 
-	public String loginUser(String username, String password) {
+	public void loginUser(String username, String password, KPSmartFrame frame) {
 
 		System.out.println(username);
 		System.out.println(password);
@@ -188,19 +191,18 @@ public class KPSmartController {
 			if (password.equals(user.getPassword())) {
 				System.out.println("Successfully logged in!");
 				setCurrentUser(user);
-				HomeScreen homeScreen = new HomeScreen(this);
-				homeScreen.openHomeScreen();
-				return "Success";
+				frame.changeFocus("Home Screen");
+//				return "Success";
 			} else {
 				// Password is incorrect.
 				System.out.println("ERROR: Password does not match.");
 				// TODO: Display error message on GUI.
-				return "Password does not match.";
+//				return "Password does not match.";
 			}
 		} else {
 			System.out.println("User does not exist.");
 			// TODO: Display error message on GUI.
-			return "User does not exist.";
+//			return "User does not exist.";
 		}
 
 	}
@@ -248,6 +250,14 @@ public class KPSmartController {
 	 */
 	private void setCurrentUser(User user) {
 		this.currentUser = user;
+	}
+
+	public KPSmartFrame getKPSmartFrame() {
+		return this.kpSmartFrame;
+	}
+
+	public void addRefrenceToFrame(KPSmartFrame kpSmartFrame) {
+		this.kpSmartFrame = kpSmartFrame;		
 	}
 
 

@@ -31,7 +31,7 @@ public class CreateNewUser extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JLabel lblKpsmartCreate = new JLabel("KPSmart - Create New User");
+		JLabel lblKpsmartCreate = new JLabel("Create New User");
 		lblKpsmartCreate.setFont(new Font("Lucida Grande", Font.BOLD, 24));
 		GridBagConstraints gbc_lblKpsmartCreate = new GridBagConstraints();
 		gbc_lblKpsmartCreate.gridwidth = 3;

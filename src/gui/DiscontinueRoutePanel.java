@@ -29,7 +29,7 @@ public class DiscontinueRoutePanel extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JLabel lblKpsmartDiscontinue = new JLabel("KPSmart - Discontinue Route");
+		JLabel lblKpsmartDiscontinue = new JLabel("Discontinue Route");
 		lblKpsmartDiscontinue.setFont(new Font("Lucida Grande", Font.BOLD, 24));
 		GridBagConstraints gbc_lblKpsmartDiscontinue = new GridBagConstraints();
 		gbc_lblKpsmartDiscontinue.gridwidth = 3;
