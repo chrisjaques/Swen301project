@@ -188,19 +188,27 @@ public class KPSmartController {
 	 * @param password - password of new account
 	 * @param role - role of new account (Manager or Clerk)
 	 */
-	public void createUser(String username, String password, User.UserType role) {
-		// TODO: some sort of validation
-		// TODO: call user service to add it in the database.
+	public String createUser(String username, String password, String role) {
+		User.UserType userType;
+		if (role.equals("Clerk")) {
+			userType = User.UserType.CLERK;
+		} else if (role.equals("Manager")) {
+			userType = User.UserType.MANAGER;
+		} else {
+			return "Please select a user type";
+		}
 
-		User newUser = new User(username, password, role); // Create User object
+		User newUser = new User(username, password, userType); // Create User object
 		boolean success = UserService.insertOrUpdate(newUser);
 		if (success) {
 			// TODO: call a GUI function?
 			System.out.println("User has been created succesfully");
 			SaveDataToXML.saveToXML(newUser);
+			return "Success";
 		} else {
 			System.out.println("ERROR: failed to create user.");
 			// TODO: call a GUI function?
+			return "Failed to create User";
 		}
 	}
 

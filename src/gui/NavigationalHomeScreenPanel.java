@@ -104,7 +104,7 @@ public class NavigationalHomeScreenPanel extends JPanel implements ActionListene
 		userFocusPanel.setLayout(layout);
 		this.newOrderPanel = new NewOrderPanel(this.controller);
 		userFocusPanel.add(newOrderPanel, "New Order");
-		this.newClerkPanel = new CreateNewUser();
+		this.newClerkPanel = new CreateNewUser(this.controller);
 		userFocusPanel.add(newClerkPanel, "Create New User");
 		this.newRoutePanel = new NewRoutePanel(this.controller);
 		userFocusPanel.add(newRoutePanel, "New Route");

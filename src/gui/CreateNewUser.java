@@ -5,25 +5,39 @@ import javax.swing.JPasswordField;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import logic.KPSmartController;
+
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
-public class CreateNewUser extends JPanel {
+public class CreateNewUser extends JPanel implements ActionListener {
 	private JTextField firstnameTextField;
 	private JTextField lastnameTextField;
 	private JTextField passwordTextField;
 	private JTextField confirmPasswordField;
+	
+	private KPSmartController controller;
+	private JComboBox userType;
 
 	/**
 	 * Create the panel.
 	 */
-	public CreateNewUser() {
+	public CreateNewUser(KPSmartController controller) {
+		this.controller = controller;
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] {0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -115,23 +129,45 @@ public class CreateNewUser extends JPanel {
 		gbc_lblUserTypr.gridy = 9;
 		add(lblUserTypr, gbc_lblUserTypr);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Clerk\t", "Manager"}));
-		comboBox.setSelectedIndex(-1);
+		this.userType = new JComboBox();
+		userType.setModel(new DefaultComboBoxModel(new String[] {"Clerk\t", "Manager"}));
+		userType.setSelectedIndex(-1);
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 1;
 		gbc_comboBox.gridy = 10;
-		add(comboBox, gbc_comboBox);
+		add(userType, gbc_comboBox);
 		
-		JButton doneButton = new JButton("Done");
+		JButton doneButton = new JButton("Create User");
 		GridBagConstraints gbc_doneButton = new GridBagConstraints();
 		gbc_doneButton.insets = new Insets(0, 0, 0, 5);
 		gbc_doneButton.gridx = 1;
 		gbc_doneButton.gridy = 11;
 		add(doneButton, gbc_doneButton);
+		doneButton.addActionListener(this);
 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (this.firstnameTextField.getText() != null && this.lastnameTextField.getText() != null
+				&& this.passwordTextField.getText() != null && this.confirmPasswordField != null
+				&& this.userType.getSelectedItem() != null) {
+			if (this.passwordTextField.getText().equals(this.confirmPasswordField.getText())) {
+				String createAttempt = this.controller.createUser(this.firstnameTextField.getText(), this.passwordTextField.getText(), this.userType.getSelectedItem().toString());
+				if (!createAttempt.equals("Success")) {
+					JOptionPane.showMessageDialog(new JFrame(), createAttempt, "ERROR", JOptionPane.ERROR_MESSAGE);
+				} else {
+					this.controller.getKPSmartFrame().changeFocus("Home Screen");
+				}
+			} else {
+				JOptionPane.showMessageDialog(new JFrame(), "Passwords do not match, try again.", "ERROR", JOptionPane.ERROR_MESSAGE);
+			}
+		} else {
+			JOptionPane.showMessageDialog(new JFrame(), "Please fill out all fields", "ERROR", JOptionPane.ERROR_MESSAGE);
+		}
+		
 	}
 
 }
