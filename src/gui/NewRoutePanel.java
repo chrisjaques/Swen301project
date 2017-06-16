@@ -5,7 +5,12 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.ArrayList;
+
 import javax.swing.JTextField;
+
+import logic.RouteService;
+
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
@@ -13,8 +18,6 @@ import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
 
 public class NewRoutePanel extends JPanel {
-	private JTextField textField;
-	private JTextField textField_1;
 
 	/**
 	 * Create the panel.
@@ -50,23 +53,27 @@ public class NewRoutePanel extends JPanel {
 		gbc_lblDestination.gridy = 2;
 		add(lblDestination, gbc_lblDestination);
 		
-		textField_1 = new JTextField();
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 0;
-		gbc_textField_1.gridy = 3;
-		add(textField_1, gbc_textField_1);
-		textField_1.setColumns(10);
+		JComboBox originDropDownBox = new JComboBox();
+		ArrayList<String> origins = RouteService.getOrigins();
+		originDropDownBox.setModel(new DefaultComboBoxModel(origins.toArray()));
+		originDropDownBox.setSelectedIndex(-1);
+		GridBagConstraints gbc_originDropDownBox = new GridBagConstraints();
+		gbc_originDropDownBox.insets = new Insets(0, 0, 5, 5);
+		gbc_originDropDownBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_originDropDownBox.gridx = 0;
+		gbc_originDropDownBox.gridy = 3;
+		add(originDropDownBox, gbc_originDropDownBox);
 		
-		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 0);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 2;
-		gbc_textField.gridy = 3;
-		add(textField, gbc_textField);
-		textField.setColumns(10);
+		JComboBox destinationDropDownBox = new JComboBox();
+		ArrayList<String> destinations = RouteService.getDestinations();
+		destinationDropDownBox.setModel(new DefaultComboBoxModel(destinations.toArray()));
+		destinationDropDownBox.setSelectedIndex(-1);
+		GridBagConstraints gbc_destinationDropDownBox = new GridBagConstraints();
+		gbc_destinationDropDownBox.insets = new Insets(0, 0, 5, 0);
+		gbc_destinationDropDownBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_destinationDropDownBox.gridx = 2;
+		gbc_destinationDropDownBox.gridy = 3;
+		add(destinationDropDownBox, gbc_destinationDropDownBox);
 		
 		JLabel lblPriority = new JLabel("Priority");
 		GridBagConstraints gbc_lblPriority = new GridBagConstraints();
@@ -82,14 +89,15 @@ public class NewRoutePanel extends JPanel {
 		gbc_lblPrice.gridy = 4;
 		add(lblPrice, gbc_lblPrice);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Air", "Land", "Sea"}));
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridx = 0;
-		gbc_comboBox.gridy = 5;
-		add(comboBox, gbc_comboBox);
+		JComboBox priorityDropDownBox = new JComboBox();
+		priorityDropDownBox.setModel(new DefaultComboBoxModel(new String[] {"Air", "Land", "Sea"}));
+		priorityDropDownBox.setSelectedIndex(-1);
+		GridBagConstraints gbc_priorityDropDownBox = new GridBagConstraints();
+		gbc_priorityDropDownBox.insets = new Insets(0, 0, 5, 5);
+		gbc_priorityDropDownBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_priorityDropDownBox.gridx = 0;
+		gbc_priorityDropDownBox.gridy = 5;
+		add(priorityDropDownBox, gbc_priorityDropDownBox);
 		
 		
 		JSpinner spinner = new JSpinner();
