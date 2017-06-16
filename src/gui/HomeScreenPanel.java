@@ -23,12 +23,13 @@ public class HomeScreenPanel extends JPanel implements ActionListener {
 	private JTextField txtLoading;
 	private KPSmartController controller;
 	private JTextField txtLoading_1;
+	private KPSmartFrame frame;
 	/**
 	 * Create the panel.
 	 */
-	public HomeScreenPanel(KPSmartController controller) {
+	public HomeScreenPanel(KPSmartController controller, KPSmartFrame frame) {
 		setLayout(new BorderLayout(0, 0));
-		
+		this.frame = frame;
 		JLabel lblHome = new JLabel("Home");
 		lblHome.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHome.setFont(new Font("Lucida Grande", Font.BOLD, 24));
@@ -75,7 +76,8 @@ public class HomeScreenPanel extends JPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//change KPSmartFrame focus to focus of button click
+		frame.changeToNavigationalHomeScreen(e.getActionCommand());
+		
 	}
 
 }

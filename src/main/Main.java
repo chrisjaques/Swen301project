@@ -1,7 +1,6 @@
 package main;
 
 import gui.KPSmartFrame;
-import gui.LoginScreen;
 import logic.KPSmartController;
 
 public class Main{

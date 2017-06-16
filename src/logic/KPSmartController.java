@@ -1,10 +1,7 @@
 package logic;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import gui.HomeScreen;
 import gui.KPSmartFrame;
-import gui.LoginScreen;
 
 public class KPSmartController {
 	
