@@ -42,6 +42,7 @@ public class KPSmartFrame extends JFrame {
 	 */
 	public KPSmartFrame(KPSmartController controller) {
 		this.controller = controller;
+		controller.addRefrenceToFrame(this);
 		System.out.println(controller);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 400);
@@ -75,7 +76,7 @@ public class KPSmartFrame extends JFrame {
 	}
 
 	public void changeToNavigationalHomeScreen(String initialFocus) {
-		NavigationalHomeScreenPanel navPanel = new NavigationalHomeScreenPanel(initialFocus, controller.getCurrentUser().getRole().name());
+		NavigationalHomeScreenPanel navPanel = new NavigationalHomeScreenPanel(initialFocus, controller.getCurrentUser().getRole().name(), this.controller);
 		this.mainPanel.add(navPanel, "Navigation Home Screen");
 		this.mainPanelLayout.show(mainPanel, "Navigation Home Screen");
 		
