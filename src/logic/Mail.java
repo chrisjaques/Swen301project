@@ -1,3 +1,4 @@
+package logic;
 public class Mail {
 	private boolean priority;
 	private String volume;
