@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import logic.KPSmartController;
+import logic.User;
 
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -90,14 +91,16 @@ public class HomeScreen extends JFrame {
 		JButton updatePriceButton = new JButton("Update Pricing");
 		panel.add(updatePriceButton);
 		updatePriceButton.addActionListener(l);
+		
+		if (controller.getCurrentUser().getRole().equals(User.UserType.MANAGER)) {
+			JButton createNewUserButton = new JButton("Create New User");
+			panel.add(createNewUserButton);
+			createNewUserButton.addActionListener(l);
 
-		JButton createNewUserButton = new JButton("Create New User");
-		panel.add(createNewUserButton);
-		createNewUserButton.addActionListener(l);
-
-		JButton viewBusinessFiguresButton = new JButton("View Business Figures");
-		panel.add(viewBusinessFiguresButton);
-		viewBusinessFiguresButton.addActionListener(l);
+			JButton viewBusinessFiguresButton = new JButton("View Business Figures");
+			panel.add(viewBusinessFiguresButton);
+			viewBusinessFiguresButton.addActionListener(l);
+		}
 
 	}
 
@@ -105,7 +108,7 @@ public class HomeScreen extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			NavigationalHomeScreen frame = new NavigationalHomeScreen(e.getActionCommand(), "CLERK");
+			NavigationalHomeScreen frame = new NavigationalHomeScreen(e.getActionCommand(), controller.getCurrentUser().getRole().toString());
 			frame.setVisible(true);
 		}
 
