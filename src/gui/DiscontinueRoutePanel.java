@@ -41,14 +41,14 @@ public class DiscontinueRoutePanel extends JPanel implements ActionListener {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JLabel lblKpsmartDiscontinue = new JLabel("Discontinue Route");
-		lblKpsmartDiscontinue.setFont(new Font("Lucida Grande", Font.BOLD, 24));
-		GridBagConstraints gbc_lblKpsmartDiscontinue = new GridBagConstraints();
-		gbc_lblKpsmartDiscontinue.gridwidth = 3;
-		gbc_lblKpsmartDiscontinue.insets = new Insets(0, 0, 5, 0);
-		gbc_lblKpsmartDiscontinue.gridx = 0;
-		gbc_lblKpsmartDiscontinue.gridy = 0;
-		add(lblKpsmartDiscontinue, gbc_lblKpsmartDiscontinue);
+		JLabel discontinueRouteLabel = new JLabel("Discontinue Route");
+		discontinueRouteLabel.setFont(new Font("Lucida Grande", Font.BOLD, 24));
+		GridBagConstraints gbc_discontinueRouteLabel = new GridBagConstraints();
+		gbc_discontinueRouteLabel.gridwidth = 3;
+		gbc_discontinueRouteLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_discontinueRouteLabel.gridx = 0;
+		gbc_discontinueRouteLabel.gridy = 0;
+		add(discontinueRouteLabel, gbc_discontinueRouteLabel);
 		
 		JLabel originLabel = new JLabel("Origin");
 		GridBagConstraints gbc_originLabel = new GridBagConstraints();
