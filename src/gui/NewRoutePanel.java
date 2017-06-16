@@ -28,13 +28,12 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 
 public class NewRoutePanel extends JPanel implements ActionListener {
-	
+
 	private KPSmartController controller;
-	
-	private JComboBox originDropDownBox;
-	private JComboBox destinationDropDownBox;
 	private JComboBox priorityDropDownBox;
 	private JFormattedTextField priceInputField;
+	private JTextField originField;
+	private JTextField destinationField;
 
 	/**
 	 * Create the panel.
@@ -47,7 +46,7 @@ public class NewRoutePanel extends JPanel implements ActionListener {
 		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
-		
+
 		JLabel lblKpsmartCreate = new JLabel("Create New Route");
 		lblKpsmartCreate.setBorder(new EmptyBorder(10, 0, 20, 0));
 		lblKpsmartCreate.setFont(new Font("Lucida Grande", Font.BOLD, 24));
@@ -58,57 +57,56 @@ public class NewRoutePanel extends JPanel implements ActionListener {
 		gbc_lblKpsmartCreate.gridx = 0;
 		gbc_lblKpsmartCreate.gridy = 0;
 		add(lblKpsmartCreate, gbc_lblKpsmartCreate);
-		
+
 		JLabel originLabel = new JLabel("Origin");
 		GridBagConstraints gbc_originLabel = new GridBagConstraints();
 		gbc_originLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_originLabel.gridx = 0;
 		gbc_originLabel.gridy = 2;
 		add(originLabel, gbc_originLabel);
-		
+
 		JLabel destinationLabel = new JLabel("Destination");
 		GridBagConstraints gbc_destinationLabel = new GridBagConstraints();
 		gbc_destinationLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_destinationLabel.gridx = 2;
 		gbc_destinationLabel.gridy = 2;
 		add(destinationLabel, gbc_destinationLabel);
-		
-		this.originDropDownBox = new JComboBox();
 		ArrayList<String> origins = RouteService.getOrigins();
-		originDropDownBox.setModel(new DefaultComboBoxModel(origins.toArray()));
-		originDropDownBox.setSelectedIndex(-1);
-		GridBagConstraints gbc_originDropDownBox = new GridBagConstraints();
-		gbc_originDropDownBox.insets = new Insets(0, 0, 5, 5);
-		gbc_originDropDownBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_originDropDownBox.gridx = 0;
-		gbc_originDropDownBox.gridy = 3;
-		add(originDropDownBox, gbc_originDropDownBox);
-		
-		this.destinationDropDownBox = new JComboBox();
 		ArrayList<String> destinations = RouteService.getDestinations();
-		destinationDropDownBox.setModel(new DefaultComboBoxModel(destinations.toArray()));
-		destinationDropDownBox.setSelectedIndex(-1);
-		GridBagConstraints gbc_destinationDropDownBox = new GridBagConstraints();
-		gbc_destinationDropDownBox.insets = new Insets(0, 0, 5, 0);
-		gbc_destinationDropDownBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_destinationDropDownBox.gridx = 2;
-		gbc_destinationDropDownBox.gridy = 3;
-		add(destinationDropDownBox, gbc_destinationDropDownBox);
-		
+
+		originField = new JTextField();
+		GridBagConstraints gbc_originField = new GridBagConstraints();
+		gbc_originField.insets = new Insets(0, 0, 5, 5);
+		gbc_originField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_originField.gridx = 0;
+		gbc_originField.gridy = 3;
+		add(originField, gbc_originField);
+		originField.setColumns(10);
+
+		destinationField = new JTextField();
+		GridBagConstraints gbc_destinationField = new GridBagConstraints();
+		gbc_destinationField.anchor = GridBagConstraints.NORTH;
+		gbc_destinationField.insets = new Insets(0, 0, 5, 0);
+		gbc_destinationField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_destinationField.gridx = 2;
+		gbc_destinationField.gridy = 3;
+		add(destinationField, gbc_destinationField);
+		destinationField.setColumns(10);
+
 		JLabel priorityLabel = new JLabel("Priority");
 		GridBagConstraints gbc_priorityLabel = new GridBagConstraints();
 		gbc_priorityLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_priorityLabel.gridx = 0;
 		gbc_priorityLabel.gridy = 4;
 		add(priorityLabel, gbc_priorityLabel);
-		
+
 		JLabel priceLabel = new JLabel("Price");
 		GridBagConstraints gbc_priceLabel = new GridBagConstraints();
 		gbc_priceLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_priceLabel.gridx = 2;
 		gbc_priceLabel.gridy = 4;
 		add(priceLabel, gbc_priceLabel);
-		
+
 		this.priorityDropDownBox = new JComboBox();
 		priorityDropDownBox.setModel(new DefaultComboBoxModel(new String[] {"Air", "Land", "Sea"}));
 		priorityDropDownBox.setSelectedIndex(-1);
@@ -118,7 +116,7 @@ public class NewRoutePanel extends JPanel implements ActionListener {
 		gbc_priorityDropDownBox.gridx = 0;
 		gbc_priorityDropDownBox.gridy = 5;
 		add(priorityDropDownBox, gbc_priorityDropDownBox);
-		
+
 		NumberFormat format = DecimalFormat.getInstance();
 		this.priceInputField = new JFormattedTextField(format);
 		GridBagConstraints gbc_priceInputField = new GridBagConstraints();
@@ -127,7 +125,7 @@ public class NewRoutePanel extends JPanel implements ActionListener {
 		gbc_priceInputField.gridx = 2;
 		gbc_priceInputField.gridy = 5;
 		add(priceInputField, gbc_priceInputField);
-		
+
 		JButton doneButton = new JButton("Create New Route");
 		GridBagConstraints gbc_doneButton = new GridBagConstraints();
 		gbc_doneButton.insets = new Insets(0, 0, 0, 5);
@@ -140,23 +138,23 @@ public class NewRoutePanel extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (this.originDropDownBox.getSelectedItem() != null
-				&& this.destinationDropDownBox.getSelectedItem() != null
-				&& this.priorityDropDownBox.getSelectedItem() != null
-				&& this.priceInputField.getValue() != null) {
-			String createAttempt = this.controller.addRoute(this.originDropDownBox.getSelectedItem().toString(),
-					this.destinationDropDownBox.getSelectedItem().toString(), this.priorityDropDownBox.getSelectedItem().toString(),
-					this.priceInputField.getValue().toString());
-			if (!createAttempt.equals("Success")) {
-				JOptionPane.showMessageDialog(new JFrame(), createAttempt, "ERROR", JOptionPane.ERROR_MESSAGE);
+		if (!this.originField.getText().trim().equals("")
+			&& !this.destinationField.getText().trim().equals("")
+			&& this.priorityDropDownBox.getSelectedItem() != null
+			&& this.priceInputField.getValue() != null) {
+				String createAttempt = this.controller.addRoute(this.originField.getText().trim(),
+						this.originField.getText().trim(), this.priorityDropDownBox.getSelectedItem().toString(),
+						this.priceInputField.getValue().toString());
+				if (!createAttempt.equals("Success")) {
+					JOptionPane.showMessageDialog(new JFrame(), createAttempt, "ERROR", JOptionPane.ERROR_MESSAGE);
+				} else {
+					this.controller.getKPSmartFrame().changeFocus("Home Screen");
+				}
+
 			} else {
-				this.controller.getKPSmartFrame().changeFocus("Home Screen");
+				JOptionPane.showMessageDialog(new JFrame(), "Please fill out all fields", "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
-			
-		} else {
-			JOptionPane.showMessageDialog(new JFrame(), "Please fill out all fields", "ERROR", JOptionPane.ERROR_MESSAGE);
-		}
-		
+
 	}
 
 }
