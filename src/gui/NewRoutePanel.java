@@ -137,7 +137,6 @@ public class NewRoutePanel extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		if (this.originDropDownBox.getSelectedItem() != null
 				&& this.destinationDropDownBox.getSelectedItem() != null
 				&& this.priorityDropDownBox.getSelectedItem() != null

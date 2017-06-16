@@ -3,10 +3,13 @@ package gui;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
 
+import logic.KPSmartController;
 import logic.RouteService;
 
 import javax.swing.JSpinner;
@@ -21,14 +24,23 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
-public class NewOrderPanel extends JPanel {
+public class NewOrderPanel extends JPanel implements ActionListener {
 
+	private JComboBox originDropDownBox;
+	private JComboBox destinationDropDownBox;
+	private JFormattedTextField weightInputField;
+	private JFormattedTextField volumeInputField;
+	private JComboBox priorityDropDownBox;
+
+	private KPSmartController controller;
+	
 	/**
 	 * Create the panel.
 	 */
-	public NewOrderPanel() {
+	public NewOrderPanel(KPSmartController controller) {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -59,13 +71,9 @@ public class NewOrderPanel extends JPanel {
 		gbc_destinationLabel.gridy = 2;
 		add(destinationLabel, gbc_destinationLabel);
 		
-		JButton doneButton = new JButton("Done");
-		doneButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		JButton doneButton = new JButton("Create Order");
 		
-		JComboBox originDropDownBox = new JComboBox();
+		this.originDropDownBox = new JComboBox();
 		//get contents for origin drop down
 		ArrayList<String> origins = RouteService.getOrigins();
 		originDropDownBox.setModel(new DefaultComboBoxModel(origins.toArray()));
@@ -77,7 +85,7 @@ public class NewOrderPanel extends JPanel {
 		gbc_originDropDownBox.gridy = 3;
 		add(originDropDownBox, gbc_originDropDownBox);
 		
-		JComboBox destinationDropDownBox = new JComboBox();
+		this.destinationDropDownBox = new JComboBox();
 		ArrayList<String> destinations = RouteService.getDestinations();
 		destinationDropDownBox.setModel(new DefaultComboBoxModel(destinations.toArray()));
 		destinationDropDownBox.setSelectedIndex(-1);
@@ -103,7 +111,7 @@ public class NewOrderPanel extends JPanel {
 		add(volumeLabel, gbc_volumeLabel);
 		
 		NumberFormat format = DecimalFormat.getInstance();
-		JFormattedTextField weightInputField = new JFormattedTextField(format);
+		this.weightInputField = new JFormattedTextField(format);
 		GridBagConstraints gbc_weightInputField = new GridBagConstraints();
 		gbc_weightInputField.insets = new Insets(0, 0, 5, 5);
 		gbc_weightInputField.fill = GridBagConstraints.HORIZONTAL;
@@ -111,7 +119,7 @@ public class NewOrderPanel extends JPanel {
 		gbc_weightInputField.gridy = 5;
 		add(weightInputField, gbc_weightInputField);
 		
-		JFormattedTextField volumeInputField = new JFormattedTextField(format);
+		this.volumeInputField = new JFormattedTextField(format);
 		GridBagConstraints gbc_volumeInputField = new GridBagConstraints();
 		gbc_volumeInputField.insets = new Insets(0, 0, 5, 0);
 		gbc_volumeInputField.fill = GridBagConstraints.HORIZONTAL;
@@ -126,7 +134,7 @@ public class NewOrderPanel extends JPanel {
 		gbc_lblPriority.gridy = 6;
 		add(lblPriority, gbc_lblPriority);
 		
-		JComboBox priorityDropDownBox = new JComboBox();
+		this.priorityDropDownBox = new JComboBox();
 		priorityDropDownBox.setModel(new DefaultComboBoxModel(new String[] {"Air ", "Land ", "Sea"}));
 		GridBagConstraints gbc_priorityDropDownBox = new GridBagConstraints();
 		priorityDropDownBox.setSelectedIndex(-1);
@@ -140,7 +148,38 @@ public class NewOrderPanel extends JPanel {
 		gbc_doneButton.gridx = 1;
 		gbc_doneButton.gridy = 8;
 		add(doneButton, gbc_doneButton);
+		doneButton.addActionListener(this);
 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		if (this.originDropDownBox.getSelectedItem() != null
+				&& this.destinationDropDownBox.getSelectedItem() != null
+				&& this.priorityDropDownBox.getSelectedItem() != null
+				&& this.weightInputField.getValue() != null
+				&& this.volumeInputField.getValue() != null) {
+			
+			System.out.println(this.originDropDownBox.getSelectedItem().toString());
+			System.out.println(this.destinationDropDownBox.getSelectedItem().toString());
+			System.out.println(this.priorityDropDownBox.getSelectedItem().toString());
+			System.out.println(this.weightInputField.getValue().toString());
+			System.out.println(this.volumeInputField.getValue().toString());
+			
+			String createAttempt = this.controller.createOrder(this.priorityDropDownBox.getSelectedItem().toString(),
+					this.volumeInputField.getValue().toString(), this.originDropDownBox.getSelectedItem().toString(),
+					this.destinationDropDownBox.getSelectedItem().toString(), this.weightInputField.getValue().toString());
+			
+			if (!createAttempt.equals("Success")) {
+				JOptionPane.showMessageDialog(new JFrame(), createAttempt, "ERROR", JOptionPane.ERROR_MESSAGE);
+			} else {
+				this.controller.getKPSmartFrame().changeFocus("Home Screen");
+			}
+			
+		} else {
+			JOptionPane.showMessageDialog(new JFrame(), "Please fill out all fields", "ERROR", JOptionPane.ERROR_MESSAGE);
+		}
+		
 	}
 
 }

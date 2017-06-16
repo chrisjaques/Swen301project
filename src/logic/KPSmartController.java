@@ -42,6 +42,8 @@ public class KPSmartController {
 	 * @param destination - the destination of the Route.
 	 * @param priority - the transport type of the route.
 	 * @param price - price of the route.
+	 * 
+	 * @return String - error or success message.
 	 */
 	public String addRoute(String origin, String destination, String priority, String price) {
 		Route.TransportType transportType;
@@ -86,13 +88,44 @@ public class KPSmartController {
 	 * @param destination - where the order needs to go.
 	 * @param weight - weight of the order.
 	 * @param timestamp - when the order is made.
+	 * 
+	 * @return String - error or success message.
 	 */
-	public void createOrder(boolean priority, String volume, String origin, String destination, String weight) {
-		Mail mail = new Mail(priority, volume, origin, destination, weight);
+	public String createOrder(String prioritySelected, String volume, String origin, String destination, String weight) {
+		Route.TransportType transportType;
+		boolean priority = false;
+		
+		// Convert priority/transportType to correct format.
+		if (prioritySelected.equals("Air")) {
+			transportType = Route.TransportType.AIR;
+			priority = true;
+		} else if (prioritySelected.equals("Land")) {
+			transportType = Route.TransportType.LAND;
+		} else if (prioritySelected.equals("Sea")) {
+			transportType = Route.TransportType.SEA;
+		} else {
+			return "Please select a Priority.";
+		}
+		
+		// TODO: Check weight is in correct format.
+		double doubleWeight;
+		if (weight.matches("^(?:\\d+(?:\\.\\d{2})?)$")) {
+			doubleWeight = Double.parseDouble(weight);
+		} else {
+			return "Weight must be in the correct format.";
+		}
+		
+		// TODO: Check volume is in correct format.
+		double doubleVolume;
+		if (volume.matches("^(?:\\d+(?:\\.\\d{2})?)$")) {
+			doubleVolume = Double.parseDouble(volume);
+		} else {
+			return "Volume must be in the correct format.";
+		}
+		
+		
+		Mail mail = new Mail(transportType, doubleVolume, origin, destination, doubleWeight);
 		SaveDataToXML.saveToXML(mail);
-		// TODO: Takes in an Order.
-		//DeliveryRoute deliveryRoute = DeliveryRoute.findRoute(origin,destination,priority); //<- returns Route if it exists or null
-		// TODO do something here. Need to talk to Will and Chris.
 
 
 		PriorityQueue<DeliveryRoute> queue = new PriorityQueue<DeliveryRoute>(new RouteComparitor());
@@ -140,8 +173,10 @@ public class KPSmartController {
 
 		if(queue.isEmpty()){
 			//TODO no route exists so do something
+			return "Route does not exist";
 		} else {
 			DeliveryRoute deliveryRoute = queue.poll();//TODO do something with the completed route, will need to log something here
+			return "Success";
 		}
 
 	}
