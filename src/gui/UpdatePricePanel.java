@@ -5,6 +5,8 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import javax.swing.JTextField;
@@ -17,9 +19,9 @@ import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.GridLayout;
+import javax.swing.JFormattedTextField;
 
 public class UpdatePricePanel extends JPanel {
-	private JTextField newPriceTextField;
 
 	/**
 	 * Create the panel.
@@ -101,14 +103,14 @@ public class UpdatePricePanel extends JPanel {
 		gbc_priorityDropDownBox.gridy = 5;
 		add(priorityDropDownBox, gbc_priorityDropDownBox);
 		
-		newPriceTextField = new JTextField();
-		GridBagConstraints gbc_newPriceTextField = new GridBagConstraints();
-		gbc_newPriceTextField.insets = new Insets(0, 0, 5, 0);
-		gbc_newPriceTextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_newPriceTextField.gridx = 2;
-		gbc_newPriceTextField.gridy = 5;
-		add(newPriceTextField, gbc_newPriceTextField);
-		newPriceTextField.setColumns(10);
+		NumberFormat format = DecimalFormat.getInstance();
+		JFormattedTextField newPriceInputField = new JFormattedTextField(format);
+		GridBagConstraints gbc_newPriceInputField = new GridBagConstraints();
+		gbc_newPriceInputField.insets = new Insets(0, 0, 5, 0);
+		gbc_newPriceInputField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_newPriceInputField.gridx = 2;
+		gbc_newPriceInputField.gridy = 5;
+		add(newPriceInputField, gbc_newPriceInputField);
 		
 		JButton doneButton = new JButton("Done");
 		GridBagConstraints gbc_doneButton = new GridBagConstraints();

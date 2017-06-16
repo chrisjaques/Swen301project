@@ -13,15 +13,17 @@ import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFormattedTextField;
 
 @SuppressWarnings("serial")
 public class NewOrderPanel extends JPanel {
-	private JTextField weightTextField;
-	private JTextField volumeTextField;
 
 	/**
 	 * Create the panel.
@@ -100,23 +102,22 @@ public class NewOrderPanel extends JPanel {
 		gbc_volumeLabel.gridy = 4;
 		add(volumeLabel, gbc_volumeLabel);
 		
-		weightTextField = new JTextField();
-		GridBagConstraints gbc_weightTextField = new GridBagConstraints();
-		gbc_weightTextField.insets = new Insets(0, 0, 5, 5);
-		gbc_weightTextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_weightTextField.gridx = 0;
-		gbc_weightTextField.gridy = 5;
-		add(weightTextField, gbc_weightTextField);
-		weightTextField.setColumns(10);
+		NumberFormat format = DecimalFormat.getInstance();
+		JFormattedTextField weightInputField = new JFormattedTextField(format);
+		GridBagConstraints gbc_weightInputField = new GridBagConstraints();
+		gbc_weightInputField.insets = new Insets(0, 0, 5, 5);
+		gbc_weightInputField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_weightInputField.gridx = 0;
+		gbc_weightInputField.gridy = 5;
+		add(weightInputField, gbc_weightInputField);
 		
-		volumeTextField = new JTextField();
-		GridBagConstraints gbc_volumeTextField = new GridBagConstraints();
-		gbc_volumeTextField.insets = new Insets(0, 0, 5, 0);
-		gbc_volumeTextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_volumeTextField.gridx = 2;
-		gbc_volumeTextField.gridy = 5;
-		add(volumeTextField, gbc_volumeTextField);
-		volumeTextField.setColumns(10);
+		JFormattedTextField volumeInputField = new JFormattedTextField(format);
+		GridBagConstraints gbc_volumeInputField = new GridBagConstraints();
+		gbc_volumeInputField.insets = new Insets(0, 0, 5, 0);
+		gbc_volumeInputField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_volumeInputField.gridx = 2;
+		gbc_volumeInputField.gridy = 5;
+		add(volumeInputField, gbc_volumeInputField);
 		
 		JLabel lblPriority = new JLabel("Priority");
 		GridBagConstraints gbc_lblPriority = new GridBagConstraints();

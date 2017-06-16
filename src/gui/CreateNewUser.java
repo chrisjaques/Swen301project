@@ -12,6 +12,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 
 public class CreateNewUser extends JPanel {
 	private JTextField firstnameTextField;
@@ -25,9 +26,9 @@ public class CreateNewUser extends JPanel {
 	public CreateNewUser() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] {0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		JLabel lblKpsmartCreate = new JLabel("KPSmart - Create New User");
@@ -118,11 +119,18 @@ public class CreateNewUser extends JPanel {
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Clerk\t", "Manager"}));
 		comboBox.setSelectedIndex(-1);
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.insets = new Insets(0, 0, 0, 5);
+		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 1;
 		gbc_comboBox.gridy = 10;
 		add(comboBox, gbc_comboBox);
+		
+		JButton doneButton = new JButton("Done");
+		GridBagConstraints gbc_doneButton = new GridBagConstraints();
+		gbc_doneButton.insets = new Insets(0, 0, 0, 5);
+		gbc_doneButton.gridx = 1;
+		gbc_doneButton.gridy = 11;
+		add(doneButton, gbc_doneButton);
 
 	}
 
