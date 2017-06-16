@@ -37,8 +37,8 @@ public class Route {
 	
 	public Route(String origin, String destination, TransportType transportType, double price) {
 		super();
-		this.origin = origin;
-		this.destination = destination;
+		this.origin = origin.toUpperCase();
+		this.destination = destination.toUpperCase();
 		this.transportType = transportType;
 		this.price = price;
 	}
