@@ -8,11 +8,13 @@ public class UserService {
 	static final String DB_URL = "jdbc:sqlserver://swen301.database.windows.net:1433;database=Swen301;user=swen301@swen301;password={Cotton208};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
 
 	/**
-	 * Add new user or update existing user
+	 * Update existing user
 	 * 
 	 * @param User
 	 */
-	public static boolean insertOrUpdate(User user) {
+	public static boolean update(User user) {
+		
+		boolean success = false;
 		
 		try {
 			Connection conn = DriverManager.getConnection(DB_URL);
@@ -26,31 +28,45 @@ public class UserService {
 			int rowschanged = ps.executeUpdate();
 
 			if (rowschanged > 0)// logging code can be removed
-				System.out.println("Successfully updated user: "
-						+ user.getUsername());
+				success = true;
 
-			if (rowschanged == 0) {
-				ps = conn
-						.prepareStatement("INSERT INTO users (username, password, role) VALUES (?, ?, ?)");
-
-				ps.setString(1, user.getUsername());
-				ps.setString(2, user.getPassword());
-				ps.setString(3, user.getRole().toString());
-
-				rowschanged = ps.executeUpdate();
-
-				if (rowschanged > 0)// logging code can be removed
-					System.out.println("Sucessfully inserted user: "
-							+ user.getUsername());
-			}
 			conn.close();
 		} catch (Exception e) {
 			System.err.println("Got an exception! ");
 			e.printStackTrace();
 			System.err.println(e.getMessage());
-			return false;
 		}
-		return true;
+		return success;
+	}
+	
+	/**
+	 * Add new user
+	 * 
+	 * @param User
+	 */
+	public static boolean insert(User user) {
+		
+		boolean success = false;
+		try {
+			Connection conn = DriverManager.getConnection(DB_URL);
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO users (username, password, role) VALUES (?, ?, ?)");
+
+			ps.setString(1, user.getUsername());
+			ps.setString(2, user.getPassword());
+			ps.setString(3, user.getRole().toString());
+
+			int rowschanged = ps.executeUpdate();
+
+			if (rowschanged > 0)// logging code can be removed
+				success = true;
+			conn.close();
+		} catch (Exception e) {
+			System.err.println("Got an exception! ");
+			e.printStackTrace();
+			System.err.println(e.getMessage());
+
+		}
+		return success;
 	}
 
 	/**

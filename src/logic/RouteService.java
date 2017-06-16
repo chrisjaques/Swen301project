@@ -57,12 +57,14 @@ public class RouteService {
 	}
 
 	/**
-	 * Add new route or update existing route
+	 * Update existing route
 	 * 
 	 * @param route
 	 */
-	public static boolean insertOrUpdate(Route route) {
+	public static boolean update(Route route) {
 
+		boolean success = false;
+		
 		try {
 			Connection conn = DriverManager.getConnection(DB_URL);
 			PreparedStatement ps = conn
@@ -76,28 +78,46 @@ public class RouteService {
 			int rowschanged = ps.executeUpdate();
 
 			if (rowschanged > 0)
-				System.out.println("Successfully updated route");
+				success = true;
 
-			if (rowschanged == 0) {
-				ps = conn
-						.prepareStatement("INSERT INTO route (origin, destination, transporttype, price) VALUES (?, ?, ?, ?)");
-				ps.setString(1, route.getOrigin());
-				ps.setString(2, route.getDestination());
-				ps.setString(3, route.getTransportType().toString());
-				ps.setDouble(4, route.getPrice());
-
-				rowschanged = ps.executeUpdate();
-
-				if (rowschanged > 0)
-					System.out.println("Sucessfully inserted route");
-			}
 			conn.close();
 		} catch (Exception e) {
 			System.err.println("Got an exception! ");
 			e.printStackTrace();
 			System.err.println(e.getMessage());
 		}
-		return true;
+		return success;
+	}
+	
+	/**
+	 * Add new route
+	 * 
+	 * @param route
+	 */
+	public static boolean insert(Route route) {
+
+		boolean success = false;
+		
+		try {
+			Connection conn = DriverManager.getConnection(DB_URL);
+			PreparedStatement ps = conn.prepareStatement("INSERT INTO route (origin, destination, transporttype, price) VALUES (?, ?, ?, ?)");
+				ps.setString(1, route.getOrigin());
+				ps.setString(2, route.getDestination());
+				ps.setString(3, route.getTransportType().toString());
+				ps.setDouble(4, route.getPrice());
+
+				int rowschanged = ps.executeUpdate();
+
+				if (rowschanged > 0)
+					success = true;
+					
+			conn.close();
+		} catch (Exception e) {
+			System.err.println("Got an exception! ");
+			e.printStackTrace();
+			System.err.println(e.getMessage());
+		}
+		return success;
 	}
 
 	/**
