@@ -79,7 +79,6 @@ public class HomeScreenPanel extends JPanel implements ActionListener {
 			panel.add(viewBusinessFiguresButton);
 			viewBusinessFiguresButton.addActionListener(this);
 		}
-		
 	}
 	
 	@Override
