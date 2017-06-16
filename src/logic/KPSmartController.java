@@ -102,7 +102,7 @@ public class KPSmartController {
 		boolean success = RouteService.deleteRoute(route);
 		if (success) {
 			System.out.println("Route has been removed");
-			SaveDataToXML.saveToXML(route);
+//			SaveDataToXML.discontinueRoute(route);
 			// TODO: do something on GUI.
 		} else {
 			System.out.println("ERROR: Route failed to delete");
@@ -131,7 +131,6 @@ public class KPSmartController {
 			if (password.equals(user.getPassword())) {
 				System.out.println("Successfully logged in!");
 				setCurrentUser(user);
-				SaveDataToXML.saveToXML(user);
 				HomeScreen homeScreen = new HomeScreen(this);
 				homeScreen.openHomeScreen();
 				return "Success";
