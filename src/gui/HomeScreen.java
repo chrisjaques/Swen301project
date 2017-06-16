@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import logic.KPSmartController;
+
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -18,19 +21,20 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Color;
 
-public class InitialHomeScreen extends JFrame {
+public class HomeScreen extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtLoading;
+	private KPSmartController controller;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void openHomeScreen(){
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InitialHomeScreen frame = new InitialHomeScreen();
+					HomeScreen frame = new HomeScreen(controller);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,7 +46,8 @@ public class InitialHomeScreen extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InitialHomeScreen() {
+	public HomeScreen(KPSmartController controller) {
+		this.controller = controller;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 400);
 		contentPane = new JPanel();

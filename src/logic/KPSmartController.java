@@ -2,6 +2,9 @@ package logic;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import gui.HomeScreen;
+import gui.LoginScreen;
+
 public class KPSmartController {
 	
 	// The user that is logged in to the system. If no user is logged in, currentUser = null.
@@ -21,7 +24,7 @@ public class KPSmartController {
 	public enum Actions {
 		BOOKING,
 		CREATE_USER,
-		BUSSINESS_FIGURES,
+		BUSINESS_FIGURES,
 		UPDATE_ROUTE,
 		DISCONTINUE_ROUTE,
 		LOGOUT	
@@ -61,6 +64,7 @@ public class KPSmartController {
 	 */
 	public void createOrder(boolean priority, String volume, String origin, String destination, String weight) {
 		Mail mail = new Mail(priority, volume, origin, destination, weight);
+		System.out.println(mail);
 		// TODO: Takes in an Order.
 		DeliveryRoute deliveryRoute = DeliveryRoute.findRoute(origin,destination,priority); //<- returns Route if it exists or null
 		// TODO do something here. Need to talk to Will and Chris.
@@ -115,6 +119,9 @@ public class KPSmartController {
 	 */
 	public void loginUser(String username, String password) {
 		
+		System.out.println(username);
+		System.out.println(password);
+		
 		User user = UserService.getUser(username);
 		// Check if a user was found.
 		if (user != null) {
@@ -124,6 +131,8 @@ public class KPSmartController {
 				setCurrentUser(user);
 				ArrayList<Actions> actions = getActions();
 				// TODO: Call GUI method to navigate to home page and pass in {actions}.
+				HomeScreen homeScreen = new HomeScreen(this);
+				homeScreen.openHomeScreen();
 			} else {
 				// Password is incorrect.
 				System.out.println("ERROR: Password does not match.");
@@ -165,18 +174,21 @@ public class KPSmartController {
 	 * 
 	 * @return - the list of actions available to the user.
 	 */
-	public ArrayList<Actions> getActions() {
+	public ArrayList<Actions> getActions() {		
+		ArrayList<Actions> actions = new ArrayList<Actions>();
+		actions.add(Actions.BOOKING);
+		actions.add(Actions.UPDATE_ROUTE);
+		actions.add(Actions.DISCONTINUE_ROUTE);
+		actions.add(Actions.LOGOUT);	
 		if (getCurrentUser().getRole().equals(User.UserType.MANAGER)) {
-			ArrayList<Actions> actions = (ArrayList<Actions>) Arrays.asList(Actions.values());
-			return actions;
-		} else {
-			ArrayList<Actions> actions = new ArrayList<Actions>();
-			actions.add(Actions.BOOKING);
-			actions.add(Actions.UPDATE_ROUTE);
-			actions.add(Actions.DISCONTINUE_ROUTE);
-			actions.add(Actions.LOGOUT);			
-			return actions;
+			actions.add(Actions.CREATE_USER);
+			actions.add(Actions.BUSINESS_FIGURES);
 		}
+		for (Actions a: actions) {
+			System.out.println(a.getClass());
+			System.out.println(a);
+		}
+		return actions;
 	}
 	
 	/**

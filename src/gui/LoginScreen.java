@@ -7,6 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
+
+import logic.KPSmartController;
+
 import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -15,22 +18,25 @@ import javax.swing.JButton;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Font;
 
-public class LoginScreen extends JFrame {
+public class LoginScreen extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
 	private JTextField usernameField;
 	private JPasswordField passwordField;
+	private KPSmartController controller;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void openLoginScreen() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginScreen frame = new LoginScreen();
+					LoginScreen frame = new LoginScreen(controller);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,7 +48,8 @@ public class LoginScreen extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public LoginScreen() {
+	public LoginScreen(KPSmartController controller) {
+		this.controller = controller;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -109,6 +116,13 @@ public class LoginScreen extends JFrame {
 		gbc_btnDone.gridx = 0;
 		gbc_btnDone.gridy = 6;
 		contentPane.add(btnDone, gbc_btnDone);
+	
+		btnDone.addActionListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		controller.loginUser(usernameField.getText(), String.valueOf(passwordField.getPassword()));
 	}
 
 }
