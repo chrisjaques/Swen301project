@@ -62,7 +62,14 @@ public class KPSmartController {
 		Mail mail = new Mail(priority, volume, origin, destination, weight);
 		// TODO: Takes in an Order.
 		DeliveryRoute deliveryRoute = DeliveryRoute.findRoute(origin,destination,priority); //<- returns Route if it exists or null
-		// TODO do something here. Need to talk to Will and Chris.
+
+		if (deliveryRoute != null) {
+			System.out.println("delivery route found");
+			// TODO: Do something here
+		} else {
+			System.out.println("ERROR: Route from origin to destination does not exist.");
+			// TODO: Do we create a new route here?
+		}
 	}
 	
 	/**
@@ -179,7 +186,7 @@ public class KPSmartController {
 	}
 	
 	/**
-	 * 	Update the current price.
+	 * 	Update the current price of a specified route.
 	 * 
 	 * @param newPrice
 	 */
