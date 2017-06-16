@@ -1,5 +1,6 @@
 package event_logging;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -133,7 +134,8 @@ generate the current report.
 	
 	public static void main(String argv[]) {
 		
-		ReadXMLData.readXML();
+		ArrayList<String> hello = ReadXMLData.amountOfMail();
+		//System.out
 		//Route r = new Route("well", "auck", Route.TransportType.AIR, 1.00);
 		//User u = new User("chloe", "graham", User.UserType.CLERK);
 		//Mail m = new Mail(true, "1","upper hutt", "otaki","20");
