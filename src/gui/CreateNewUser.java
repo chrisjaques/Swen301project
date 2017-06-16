@@ -25,8 +25,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
 public class CreateNewUser extends JPanel implements ActionListener {
-	private JTextField firstnameTextField;
-	private JTextField lastnameTextField;
+	private JTextField usernameTextField;
 	private JTextField passwordTextField;
 	private JTextField confirmPasswordField;
 	
@@ -57,7 +56,7 @@ public class CreateNewUser extends JPanel implements ActionListener {
 		gbc_lblKpsmartCreate.gridy = 0;
 		add(lblKpsmartCreate, gbc_lblKpsmartCreate);
 		
-		JLabel firstnameLabel = new JLabel("First Name");
+		JLabel firstnameLabel = new JLabel("Username");
 		GridBagConstraints gbc_firstnameLabel = new GridBagConstraints();
 		gbc_firstnameLabel.gridwidth = 2;
 		gbc_firstnameLabel.insets = new Insets(0, 0, 5, 5);
@@ -65,16 +64,16 @@ public class CreateNewUser extends JPanel implements ActionListener {
 		gbc_firstnameLabel.gridy = 1;
 		add(firstnameLabel, gbc_firstnameLabel);
 		
-		firstnameTextField = new JTextField();
-		firstnameTextField.setHorizontalAlignment(SwingConstants.CENTER);
+		usernameTextField = new JTextField();
+		usernameTextField.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_firstnameTextField = new GridBagConstraints();
 		gbc_firstnameTextField.gridwidth = 2;
 		gbc_firstnameTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_firstnameTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_firstnameTextField.gridx = 0;
 		gbc_firstnameTextField.gridy = 2;
-		add(firstnameTextField, gbc_firstnameTextField);
-		firstnameTextField.setColumns(10);
+		add(usernameTextField, gbc_firstnameTextField);
+		usernameTextField.setColumns(10);
 		
 		JLabel lastnameLabel = new JLabel("Last Name");
 		GridBagConstraints gbc_lastnameLabel = new GridBagConstraints();
@@ -83,18 +82,7 @@ public class CreateNewUser extends JPanel implements ActionListener {
 		gbc_lastnameLabel.gridx = 0;
 		gbc_lastnameLabel.gridy = 3;
 		add(lastnameLabel, gbc_lastnameLabel);
-		
-		lastnameTextField = new JTextField();
-		lastnameTextField.setHorizontalAlignment(SwingConstants.CENTER);
-		GridBagConstraints gbc_lastnameTextField = new GridBagConstraints();
-		gbc_lastnameTextField.gridwidth = 2;
-		gbc_lastnameTextField.insets = new Insets(0, 0, 5, 5);
-		gbc_lastnameTextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lastnameTextField.gridx = 0;
-		gbc_lastnameTextField.gridy = 4;
-		add(lastnameTextField, gbc_lastnameTextField);
-		lastnameTextField.setColumns(10);
-		
+
 		JLabel passwordLabel = new JLabel("Password");
 		GridBagConstraints gbc_passwordLabel = new GridBagConstraints();
 		gbc_passwordLabel.gridwidth = 2;
@@ -165,11 +153,10 @@ public class CreateNewUser extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (this.firstnameTextField.getText() != null && this.lastnameTextField.getText() != null
-				&& this.passwordTextField.getText() != null && this.confirmPasswordField != null
-				&& this.userType.getSelectedItem() != null) {
+		if (this.usernameTextField.getText() != null && this.passwordTextField.getText() != null 
+				&& this.confirmPasswordField != null && this.userType.getSelectedItem() != null) {
 			if (this.passwordTextField.getText().equals(this.confirmPasswordField.getText())) {
-				String createAttempt = this.controller.createUser(this.firstnameTextField.getText(), this.passwordTextField.getText(), this.userType.getSelectedItem().toString());
+				String createAttempt = this.controller.createUser(this.usernameTextField.getText(), this.passwordTextField.getText(), this.userType.getSelectedItem().toString());
 				if (!createAttempt.equals("Success")) {
 					JOptionPane.showMessageDialog(new JFrame(), createAttempt, "ERROR", JOptionPane.ERROR_MESSAGE);
 				} else {
