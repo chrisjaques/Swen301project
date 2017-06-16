@@ -40,21 +40,40 @@ public class KPSmartController {
 	 *
 	 * @param origin - origin of the Route.
 	 * @param destination - the destination of the Route.
-	 * @param transportType - the transport type of the route.
+	 * @param priority - the transport type of the route.
 	 * @param price - price of the route.
 	 */
-	public void addRoute(String origin, String destination, Route.TransportType transportType, double price) {
-		// TODO: Take in parameters for a route
-		// TODO: create a route with the parameters.
-		Route route = new Route(origin, destination, transportType, price);
+	public String addRoute(String origin, String destination, String priority, String price) {
+		Route.TransportType transportType;
+		if (priority.equals("Air")) {
+			transportType = Route.TransportType.AIR;
+		} else if (priority.equals("Land")) {
+			transportType = Route.TransportType.LAND;
+		} else if (priority.equals("Sea")) {
+			transportType = Route.TransportType.SEA;
+		} else {
+			return "Please select a Priority.";
+		}
+		
+		double doublePrice;
+		
+		// TODO: I have no idea how the double price field works in NewRoutePanel.java.
+		if (price.matches("^(?:\\d+(?:\\.\\d{2})?)$")) {
+			doublePrice = Double.parseDouble(price);
+		} else {
+			return "Price must be in the correct format.";
+		}		
+		
+		Route route = new Route(origin, destination, transportType, doublePrice);
 		boolean success = RouteService.insertOrUpdate(route);
 		if (success) {
-			// TODO: success GUI action
 			System.out.println("new route added");
 			SaveDataToXML.saveToXML(route);
+			return "Success";
 		} else {
-			// TODO: failed GUI action
+			// This should be unreachable code at this point in time.
 			System.out.println("route failed to add");
+			return "Route failed to add";
 		}
 	}
 
