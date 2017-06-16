@@ -79,11 +79,21 @@ public class HomeScreenPanel extends JPanel implements ActionListener {
 			panel.add(viewBusinessFiguresButton);
 			viewBusinessFiguresButton.addActionListener(this);
 		}
+		
+		JButton logoutButton = new JButton("Logout");
+		panel.add(logoutButton);
+		logoutButton.addActionListener(this);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		frame.changeToNavigationalHomeScreen(e.getActionCommand());
+		if (e.getActionCommand().equals("Logout")) {
+			// set current user to null to indicate no user has been logged in.
+			controller.setCurrentUser(null);			
+			controller.getKPSmartFrame().changeFocus("Login Screen");
+		} else {
+			frame.changeToNavigationalHomeScreen(e.getActionCommand());				
+		}
 		
 	}
 

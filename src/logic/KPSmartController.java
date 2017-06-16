@@ -71,7 +71,6 @@ public class KPSmartController {
 	public void createOrder(boolean priority, String volume, String origin, String destination, String weight) {
 		Mail mail = new Mail(priority, volume, origin, destination, weight);
 		SaveDataToXML.saveToXML(mail);
-		System.out.println(mail);
 		// TODO: Takes in an Order.
 		//DeliveryRoute deliveryRoute = DeliveryRoute.findRoute(origin,destination,priority); //<- returns Route if it exists or null
 		// TODO do something here. Need to talk to Will and Chris.
@@ -181,28 +180,21 @@ public class KPSmartController {
 	public String loginUser(String username, String password, KPSmartFrame frame) {
 		this.kpSmartFrame = frame;
 
-		System.out.println(username);
-		System.out.println(password);
-
 		User user = UserService.getUser(username);
 		// Check if a user was found.
 		if (user != null) {
 			// Check if password is correct.
 			if (password.equals(user.getPassword())) {
-				System.out.println("Successfully logged in!");
 				setCurrentUser(user);
 				kpSmartFrame.initialiseHomeScreen();
 				kpSmartFrame.changeFocus("Home Screen");				
 				return "Success";
 			} else {
 				// Password is incorrect.
-				System.out.println("ERROR: Password does not match.");
-				// TODO: Display error message on GUI.
 				return "Password does not match. Please try again.";
 			}
 		} else {
 			System.out.println("User does not exist.");
-			// TODO: Display error message on GUI.
 			return "User does not exist.";
 		}
 
@@ -249,7 +241,7 @@ public class KPSmartController {
 	 *
 	 * @param user - the user that is now logged in.
 	 */
-	private void setCurrentUser(User user) {
+	public void setCurrentUser(User user) {
 		this.currentUser = user;
 	}
 

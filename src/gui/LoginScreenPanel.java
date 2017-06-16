@@ -96,10 +96,12 @@ public class LoginScreenPanel extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String loginAttempt = controller.loginUser(usernameField.getText(), String.valueOf(passwordField.getPassword()), topFrame);
-		
+		String loginAttempt = controller.loginUser(usernameField.getText(), String.valueOf(passwordField.getPassword()), topFrame);		
 		if (!loginAttempt.equals("Success")) {
 			JOptionPane.showMessageDialog(new JFrame(), loginAttempt, "ERROR", JOptionPane.ERROR_MESSAGE);
+		} else {
+			usernameField.setText("");
+			passwordField.setText("");
 		}
 	}
 

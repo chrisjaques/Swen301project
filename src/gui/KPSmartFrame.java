@@ -74,6 +74,7 @@ public class KPSmartFrame extends JFrame {
 	}
 
 	public void changeToNavigationalHomeScreen(String initialFocus) {
+		System.out.println(initialFocus);
 		NavigationalHomeScreenPanel navPanel = new NavigationalHomeScreenPanel(initialFocus, controller.getCurrentUser().getRole().name(), this.controller);
 		this.mainPanel.add(navPanel, "Navigation Home Screen");
 		this.mainPanelLayout.show(mainPanel, "Navigation Home Screen");
