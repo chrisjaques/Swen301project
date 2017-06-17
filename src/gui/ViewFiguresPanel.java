@@ -7,48 +7,62 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.JButton;
 
-public class ViewFiguresPanel extends JPanel {
+public class ViewFiguresPanel extends JPanel implements ActionListener{
 
-	
-	private int eventCount;
-	private int totalCost;
+	JTextPane textPane;
 	
 	/**
 	 * Create the panel.
 	 */
 	public ViewFiguresPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0};
+		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		setEventCount(5);
-		JLabel eventCountLabel = new JLabel("Event Count: "+getEventCount());
-		GridBagConstraints gbc_eventCountLabel = new GridBagConstraints();
-		gbc_eventCountLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_eventCountLabel.gridx = 0;
-		gbc_eventCountLabel.gridy = 0;
-		add(eventCountLabel, gbc_eventCountLabel);
+		JButton allEventsButton = new JButton("View All Events");
+		GridBagConstraints gbc_allEventsButton = new GridBagConstraints();
+		gbc_allEventsButton.insets = new Insets(0, 0, 5, 5);
+		gbc_allEventsButton.gridx = 0;
+		gbc_allEventsButton.gridy = 0;
+		add(allEventsButton, gbc_allEventsButton);
 		
-		setTotalCost(15);
-		JLabel totalIncomeLabel = new JLabel("Total Cost: $"+getTotalCost());
-		GridBagConstraints gbc_totalIncomeLabel = new GridBagConstraints();
-		gbc_totalIncomeLabel.insets = new Insets(0, 0, 5, 0);
-		gbc_totalIncomeLabel.gridx = 1;
-		gbc_totalIncomeLabel.gridy = 0;
-		add(totalIncomeLabel, gbc_totalIncomeLabel);
+		JButton totalRevenueButton = new JButton("Total Revenue");
+		GridBagConstraints gbc_totalRevenueButton = new GridBagConstraints();
+		gbc_totalRevenueButton.insets = new Insets(0, 0, 5, 5);
+		gbc_totalRevenueButton.gridx = 1;
+		gbc_totalRevenueButton.gridy = 0;
+		add(totalRevenueButton, gbc_totalRevenueButton);
+		
+		JButton numEventsButton = new JButton("Number of Events");
+		GridBagConstraints gbc_numEventsButton = new GridBagConstraints();
+		gbc_numEventsButton.insets = new Insets(0, 0, 5, 5);
+		gbc_numEventsButton.gridx = 2;
+		gbc_numEventsButton.gridy = 0;
+		add(numEventsButton, gbc_numEventsButton);
+		
+		JButton mailAnalysisButton = new JButton("Mail Analysis");
+		GridBagConstraints gbc_mailAnalysisButton = new GridBagConstraints();
+		gbc_mailAnalysisButton.insets = new Insets(0, 0, 5, 0);
+		gbc_mailAnalysisButton.gridx = 3;
+		gbc_mailAnalysisButton.gridy = 0;
+		add(mailAnalysisButton, gbc_mailAnalysisButton);
 		
 		
-		JTextPane textPane = new JTextPane();
+		textPane = new JTextPane();
+		textPane.setEditable(false);
 		JScrollPane jsp = new JScrollPane(textPane);
 		GridBagConstraints gbc_textPane = new GridBagConstraints();
-		gbc_textPane.gridwidth = 2;
-		gbc_textPane.insets = new Insets(0, 0, 0, 5);
+		gbc_textPane.gridwidth = 4;
 		gbc_textPane.fill = GridBagConstraints.BOTH;
 		gbc_textPane.gridx = 0;
 		gbc_textPane.gridy = 1;
@@ -56,20 +70,15 @@ public class ViewFiguresPanel extends JPanel {
 
 	}
 	
-	public int getEventCount() {
-		return eventCount;
+	public void updateTextPane(String content){
+		this.textPane.setText(content);
 	}
 
-	public void setEventCount(int eventCount) {
-		this.eventCount = eventCount;
-	}
-
-	public int getTotalCost() {
-		return totalCost;
-	}
-
-	public void setTotalCost(int totalCost) {
-		this.totalCost = totalCost;
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String buttonPressed = e.getActionCommand();
+		//get controller to retreive xml and then update the text area
+		
 	}
 	
 	

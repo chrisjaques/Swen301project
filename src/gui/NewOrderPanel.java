@@ -22,6 +22,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFormattedTextField;
@@ -50,6 +51,7 @@ public class NewOrderPanel extends JPanel implements ActionListener {
 		setLayout(gridBagLayout);
 		
 		JLabel lblKpsmartCreate = new JLabel("Create New Order");
+		lblKpsmartCreate.setForeground(new Color(0, 51, 102));
 		lblKpsmartCreate.setBorder(new EmptyBorder(10, 0, 20, 0));
 		lblKpsmartCreate.setFont(new Font("Lucida Grande", Font.BOLD, 24));
 		GridBagConstraints gbc_lblKpsmartCreate = new GridBagConstraints();

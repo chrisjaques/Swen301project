@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JButton;
+
+import java.awt.Color;
 import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
 
@@ -43,6 +45,7 @@ public class DiscontinueRoutePanel extends JPanel implements ActionListener {
 		setLayout(gridBagLayout);
 		
 		JLabel discontinueRouteLabel = new JLabel("Discontinue Route");
+		discontinueRouteLabel.setForeground(new Color(0, 51, 102));
 		discontinueRouteLabel.setBorder(new EmptyBorder(10, 0, 20, 0));
 
 		discontinueRouteLabel.setFont(new Font("Lucida Grande", Font.BOLD, 24));
