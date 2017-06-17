@@ -3,6 +3,7 @@ package gui;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import logic.KPSmartController;
 import logic.RouteService;
@@ -42,8 +43,11 @@ public class DiscontinueRoutePanel extends JPanel implements ActionListener {
 		setLayout(gridBagLayout);
 		
 		JLabel discontinueRouteLabel = new JLabel("Discontinue Route");
+		discontinueRouteLabel.setBorder(new EmptyBorder(10, 0, 20, 0));
+
 		discontinueRouteLabel.setFont(new Font("Lucida Grande", Font.BOLD, 24));
 		GridBagConstraints gbc_discontinueRouteLabel = new GridBagConstraints();
+		gbc_discontinueRouteLabel.anchor = GridBagConstraints.WEST;
 		gbc_discontinueRouteLabel.gridwidth = 3;
 		gbc_discontinueRouteLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_discontinueRouteLabel.gridx = 0;

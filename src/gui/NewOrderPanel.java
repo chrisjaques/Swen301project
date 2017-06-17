@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import logic.KPSmartController;
 import logic.RouteService;
@@ -49,8 +50,10 @@ public class NewOrderPanel extends JPanel implements ActionListener {
 		setLayout(gridBagLayout);
 		
 		JLabel lblKpsmartCreate = new JLabel("Create New Order");
+		lblKpsmartCreate.setBorder(new EmptyBorder(10, 0, 20, 0));
 		lblKpsmartCreate.setFont(new Font("Lucida Grande", Font.BOLD, 24));
 		GridBagConstraints gbc_lblKpsmartCreate = new GridBagConstraints();
+		gbc_lblKpsmartCreate.anchor = GridBagConstraints.WEST;
 		gbc_lblKpsmartCreate.gridwidth = 3;
 		gbc_lblKpsmartCreate.insets = new Insets(0, 0, 5, 0);
 		gbc_lblKpsmartCreate.gridx = 0;
