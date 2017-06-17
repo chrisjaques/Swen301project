@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 import logic.KPSmartController;
 
@@ -45,7 +44,6 @@ public class NavigationalHomeScreenPanel extends JPanel implements ActionListene
 	}
 	public void addNavigationPanel(JPanel parent){
 		JPanel navigationPanel = new JPanel();
-		navigationPanel.setBorder(new EmptyBorder(10, 10, 10, 30));
 		GridBagConstraints gbc_navigationPanel = new GridBagConstraints();
 		gbc_navigationPanel.insets = new Insets(0, 0, 0, 5);
 		gbc_navigationPanel.fill = GridBagConstraints.BOTH;

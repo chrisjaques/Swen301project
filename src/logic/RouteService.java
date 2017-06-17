@@ -57,14 +57,12 @@ public class RouteService {
 	}
 
 	/**
-	 * Update existing route
+	 * Add new route or update existing route
 	 * 
 	 * @param route
 	 */
-	public static boolean update(Route route) {
+	public static boolean insertOrUpdate(Route route) {
 
-		boolean success = false;
-		
 		try {
 			Connection conn = DriverManager.getConnection(DB_URL);
 			PreparedStatement ps = conn
@@ -78,46 +76,28 @@ public class RouteService {
 			int rowschanged = ps.executeUpdate();
 
 			if (rowschanged > 0)
-				success = true;
+				System.out.println("Successfully updated route");
 
-			conn.close();
-		} catch (Exception e) {
-			System.err.println("Got an exception! ");
-			e.printStackTrace();
-			System.err.println(e.getMessage());
-		}
-		return success;
-	}
-	
-	/**
-	 * Add new route
-	 * 
-	 * @param route
-	 */
-	public static boolean insert(Route route) {
-
-		boolean success = false;
-		
-		try {
-			Connection conn = DriverManager.getConnection(DB_URL);
-			PreparedStatement ps = conn.prepareStatement("INSERT INTO route (origin, destination, transporttype, price) VALUES (?, ?, ?, ?)");
+			if (rowschanged == 0) {
+				ps = conn
+						.prepareStatement("INSERT INTO route (origin, destination, transporttype, price) VALUES (?, ?, ?, ?)");
 				ps.setString(1, route.getOrigin());
 				ps.setString(2, route.getDestination());
 				ps.setString(3, route.getTransportType().toString());
 				ps.setDouble(4, route.getPrice());
 
-				int rowschanged = ps.executeUpdate();
+				rowschanged = ps.executeUpdate();
 
 				if (rowschanged > 0)
-					success = true;
-					
+					System.out.println("Sucessfully inserted route");
+			}
 			conn.close();
 		} catch (Exception e) {
 			System.err.println("Got an exception! ");
 			e.printStackTrace();
 			System.err.println(e.getMessage());
 		}
-		return success;
+		return true;
 	}
 
 	/**

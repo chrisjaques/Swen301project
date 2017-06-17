@@ -14,7 +14,6 @@ public class KPSmartController {
 	// The user that is logged in to the system. If no user is logged in, currentUser = null.
 	private User currentUser = null;
 	private KPSmartFrame kpSmartFrame;
-	private final double weightCost = 0.25;
 
 	/**
 	 * Initialise the controller.
@@ -68,12 +67,13 @@ public class KPSmartController {
 		}		
 		
 		Route route = new Route(origin, destination, transportType, doublePrice);
-		boolean success = RouteService.insert(route);
+		boolean success = RouteService.insertOrUpdate(route);
 		if (success) {
 			System.out.println("new route added");
 			SaveDataToXML.saveToXML(route);
 			return "Success";
 		} else {
+			// This should be unreachable code at this point in time.
 			System.out.println("route failed to add");
 			return "Route failed to add";
 		}
@@ -176,7 +176,6 @@ public class KPSmartController {
 			return "Route does not exist";
 		} else {
 			DeliveryRoute deliveryRoute = queue.poll();//TODO do something with the completed route, will need to log something here
-			mail.setPrice(deliveryRoute.getTotalPrice() + ((mail.getWeight() + mail.getVolume()) * weightCost));
 			return "Success";
 		}
 
@@ -200,16 +199,13 @@ public class KPSmartController {
 		}
 
 		User newUser = new User(username, password, userType); // Create User object
-		boolean success = UserService.insert(newUser);
+		boolean success = UserService.insertOrUpdate(newUser);
 		if (success) {
 			// TODO: call a GUI function?
 			System.out.println("User has been created succesfully");
 			SaveDataToXML.saveToXML(newUser);
 			return "Success";
 		} else {
-			if (UserService.getUser(username) != null){
-				return "Username already exists, please specify a unique username";
-			}
 			System.out.println("ERROR: failed to create user.");
 			// TODO: call a GUI function?
 			return "Failed to create User";
@@ -310,7 +306,7 @@ public class KPSmartController {
 		}
 		
 		Route route = new Route(origin, destination, transportType, newPrice);
-		boolean success = RouteService.update(route);//TODO should probably log this change which would require getting the previous route before i overwrite it
+		boolean success = RouteService.insertOrUpdate(route);//TODO should probably log this change which would require getting the previous route before i overwrite it
 		if (success) {
 			return "Success";
 		} else {
