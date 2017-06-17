@@ -288,7 +288,7 @@ public class RouteService {
 				double price = rs.getDouble("price");
 				Route.TransportType transport;
 
-				switch (transportTypeString) {
+				switch (transportTypeString.trim()) {
 				case "AIR":
 					transport = Route.TransportType.AIR;
 					break;
