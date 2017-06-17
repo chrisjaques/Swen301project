@@ -65,22 +65,22 @@ public class CreateNewUser extends JPanel implements ActionListener {
 		gbc_firstnameLabel.gridy = 1;
 		add(firstnameLabel, gbc_firstnameLabel);
 				
-				usernameTextField = new JTextField();
-				usernameTextField.setHorizontalAlignment(SwingConstants.CENTER);
-				GridBagConstraints gbc_firstnameTextField = new GridBagConstraints();
-				gbc_firstnameTextField.insets = new Insets(0, 0, 5, 5);
-				gbc_firstnameTextField.fill = GridBagConstraints.HORIZONTAL;
-				gbc_firstnameTextField.gridx = 1;
-				gbc_firstnameTextField.gridy = 2;
-				add(usernameTextField, gbc_firstnameTextField);
-				usernameTextField.setColumns(10);
-		
-				JLabel passwordLabel = new JLabel("Password");
-				GridBagConstraints gbc_passwordLabel = new GridBagConstraints();
-				gbc_passwordLabel.insets = new Insets(0, 0, 5, 5);
-				gbc_passwordLabel.gridx = 1;
-				gbc_passwordLabel.gridy = 3;
-				add(passwordLabel, gbc_passwordLabel);
+		usernameTextField = new JTextField();
+		usernameTextField.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints gbc_firstnameTextField = new GridBagConstraints();
+		gbc_firstnameTextField.insets = new Insets(0, 0, 5, 5);
+		gbc_firstnameTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_firstnameTextField.gridx = 1;
+		gbc_firstnameTextField.gridy = 2;
+		add(usernameTextField, gbc_firstnameTextField);
+		usernameTextField.setColumns(10);
+
+		JLabel passwordLabel = new JLabel("Password");
+		GridBagConstraints gbc_passwordLabel = new GridBagConstraints();
+		gbc_passwordLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_passwordLabel.gridx = 1;
+		gbc_passwordLabel.gridy = 3;
+		add(passwordLabel, gbc_passwordLabel);
 		
 		passwordTextField = new JPasswordField();
 		passwordTextField.setHorizontalAlignment(SwingConstants.CENTER);

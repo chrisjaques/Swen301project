@@ -3,10 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
+import event_logging.ReadXMLData;
 import event_logging.SaveDataToXML;
-
 import gui.KPSmartFrame;
-
 import logic.Route.TransportType;
 
 public class KPSmartController {
@@ -295,7 +294,13 @@ public class KPSmartController {
 	/**
 	 * Display the business figures of the business.
 	 */
-	public void monitorBusinessFigures() {
+	public String readBusinessFigures() {
+		ArrayList<String> info = ReadXMLData.readXML();
+		String printme = "";
+		for (String s : info){
+			printme += s;
+		}
+		return printme;
 		// TODO: probably open up the business figures window.
 	}
 
