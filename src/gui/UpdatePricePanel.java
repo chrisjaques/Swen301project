@@ -22,6 +22,8 @@ import logic.RouteService;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
+
+import java.awt.Color;
 import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.GridLayout;
@@ -49,10 +51,10 @@ public class UpdatePricePanel extends JPanel implements ActionListener {
 		setLayout(gridBagLayout);
 		
 		JLabel lblKpsmartCreate = new JLabel("Update Route Price");
+		lblKpsmartCreate.setForeground(new Color(0, 51, 102));
 		lblKpsmartCreate.setBorder(new EmptyBorder(10, 0, 20, 0));
 		lblKpsmartCreate.setFont(new Font("Lucida Grande", Font.BOLD, 24));
 		GridBagConstraints gbc_lblKpsmartCreate = new GridBagConstraints();
-		gbc_lblKpsmartCreate.anchor = GridBagConstraints.WEST;
 		gbc_lblKpsmartCreate.gridwidth = 3;
 		gbc_lblKpsmartCreate.insets = new Insets(0, 0, 5, 0);
 		gbc_lblKpsmartCreate.gridx = 0;

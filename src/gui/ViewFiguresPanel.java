@@ -7,69 +7,89 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.JButton;
+import java.awt.GridLayout;
 
-public class ViewFiguresPanel extends JPanel {
+public class ViewFiguresPanel extends JPanel implements ActionListener{
 
-	
-	private int eventCount;
-	private int totalCost;
+	JTextPane textPane;
 	
 	/**
 	 * Create the panel.
 	 */
 	public ViewFiguresPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]{139, 192, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{1, 29, 258, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		setEventCount(5);
-		JLabel eventCountLabel = new JLabel("Event Count: "+getEventCount());
-		GridBagConstraints gbc_eventCountLabel = new GridBagConstraints();
-		gbc_eventCountLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_eventCountLabel.gridx = 0;
-		gbc_eventCountLabel.gridy = 0;
-		add(eventCountLabel, gbc_eventCountLabel);
+		JPanel panel = new JPanel();
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.insets = new Insets(0, 0, 5, 5);
+		gbc_panel.gridx = 0;
+		gbc_panel.gridy = 0;
+		add(panel, gbc_panel);
+		panel.setLayout(new GridLayout(1, 4, 0, 0));
 		
-		setTotalCost(15);
-		JLabel totalIncomeLabel = new JLabel("Total Cost: $"+getTotalCost());
-		GridBagConstraints gbc_totalIncomeLabel = new GridBagConstraints();
-		gbc_totalIncomeLabel.insets = new Insets(0, 0, 5, 0);
-		gbc_totalIncomeLabel.gridx = 1;
-		gbc_totalIncomeLabel.gridy = 0;
-		add(totalIncomeLabel, gbc_totalIncomeLabel);
+		JButton btnViewAllEvents = new JButton("View All Events");
+		GridBagConstraints gbc_btnViewAllEvents = new GridBagConstraints();
+		gbc_btnViewAllEvents.insets = new Insets(0, 0, 5, 5);
+		gbc_btnViewAllEvents.gridx = 0;
+		gbc_btnViewAllEvents.gridy = 1;
+		add(btnViewAllEvents, gbc_btnViewAllEvents);
+		
+		JButton btnMailAnalysis = new JButton("Mail Analysis");
+		GridBagConstraints gbc_btnMailAnalysis = new GridBagConstraints();
+		gbc_btnMailAnalysis.insets = new Insets(0, 0, 5, 5);
+		gbc_btnMailAnalysis.gridx = 1;
+		gbc_btnMailAnalysis.gridy = 1;
+		add(btnMailAnalysis, gbc_btnMailAnalysis);
+		
+		JButton btnNewButton = new JButton("Total Revenue");
+		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewButton.gridx = 2;
+		gbc_btnNewButton.gridy = 1;
+		add(btnNewButton, gbc_btnNewButton);
+		
+		JButton btnNumberOfEvents = new JButton("Number of Events");
+		GridBagConstraints gbc_btnNumberOfEvents = new GridBagConstraints();
+		gbc_btnNumberOfEvents.insets = new Insets(0, 0, 5, 0);
+		gbc_btnNumberOfEvents.gridx = 3;
+		gbc_btnNumberOfEvents.gridy = 1;
+		add(btnNumberOfEvents, gbc_btnNumberOfEvents);
 		
 		
-		JTextPane textPane = new JTextPane();
+		textPane = new JTextPane();
+		textPane.setEditable(false);
 		JScrollPane jsp = new JScrollPane(textPane);
-		GridBagConstraints gbc_textPane = new GridBagConstraints();
-		gbc_textPane.gridwidth = 2;
-		gbc_textPane.insets = new Insets(0, 0, 0, 5);
-		gbc_textPane.fill = GridBagConstraints.BOTH;
-		gbc_textPane.gridx = 0;
-		gbc_textPane.gridy = 1;
-		add(jsp, gbc_textPane);
+		GridBagConstraints gbc_jsp = new GridBagConstraints();
+		gbc_jsp.insets = new Insets(0, 0, 0, 5);
+		gbc_jsp.fill = GridBagConstraints.BOTH;
+		gbc_jsp.gridwidth = 4;
+		gbc_jsp.gridx = 0;
+		gbc_jsp.gridy = 2;
+		add(jsp, gbc_jsp);
 
 	}
 	
-	public int getEventCount() {
-		return eventCount;
+	public void updateTextPane(String content){
+		this.textPane.setText(content);
 	}
 
-	public void setEventCount(int eventCount) {
-		this.eventCount = eventCount;
-	}
-
-	public int getTotalCost() {
-		return totalCost;
-	}
-
-	public void setTotalCost(int totalCost) {
-		this.totalCost = totalCost;
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String buttonPressed = e.getActionCommand();
+		//get controller to retreive xml and then update the text area
+		
 	}
 	
 	

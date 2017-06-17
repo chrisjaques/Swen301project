@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.CardLayout;
+import java.awt.Color;
 
 public class KPSmartFrame extends JFrame {
 
@@ -52,6 +53,7 @@ public class KPSmartFrame extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 
 		JLabel lblKpsmart = new JLabel("KPSmart");
+		lblKpsmart.setForeground(new Color(0, 51, 102));
 		lblKpsmart.setFont(new Font("Lucida Grande", Font.BOLD | Font.ITALIC, 24));
 		lblKpsmart.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblKpsmart, BorderLayout.NORTH);
