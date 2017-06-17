@@ -87,7 +87,7 @@ public class LoginScreenPanel extends JPanel implements ActionListener{
 		gbc_passwordField.gridy = 4;
 		add(passwordField, gbc_passwordField);
 
-		JButton doneButton = new JButton("Done");
+		JButton doneButton = new JButton("Login");
 		GridBagConstraints gbc_doneButton = new GridBagConstraints();
 		gbc_doneButton.gridx = 0;
 		gbc_doneButton.gridy = 5;
