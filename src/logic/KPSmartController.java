@@ -124,8 +124,6 @@ public class KPSmartController {
 		
 		
 		Mail mail = new Mail(transportType, doubleVolume, origin, destination, doubleWeight);
-		SaveDataToXML.saveToXML(mail);
-
 
 		PriorityQueue<DeliveryRoute> queue = new PriorityQueue<DeliveryRoute>(new RouteComparitor());
 
@@ -180,6 +178,7 @@ public class KPSmartController {
 		} else {
 			DeliveryRoute deliveryRoute = queue.poll();//TODO do something with the completed route, will need to log something here
 			mail.setPrice(deliveryRoute.getTotalPrice() + ((mail.getWeight() + mail.getVolume()) * weightCost));
+			SaveDataToXML.saveToXML(mail);
 			return "Success";
 		}
 
@@ -303,13 +302,59 @@ public class KPSmartController {
 		return printme;
 		// TODO: probably open up the business figures window.
 	}
+	
+	/**
+	 * Display the business figures of the business.
+	 */
+	public String readMailFigures() {
+		ArrayList<String> info = ReadXMLData.amountOfMail();
+		String printme = "";
+		for (String s : info){
+			printme += s;
+		}
+		return printme;
+		// TODO: probably open up the business figures window.
+	}
 
+	/**
+	 * Display the business figures of the business.
+	 */
+	public String readRevenueFigures() {
+		Double info = ReadXMLData.totalRevenue();
+
+		return Double.toString(info);
+		// TODO: probably open up the business figures window.
+	}
+	/**
+	 * Display the business figures of the business.
+	 */
+	public String readAmountFigures() {
+		ArrayList<String> info = ReadXMLData.amountOfMail();
+		String printme = "";
+		for (String s : info){
+			printme += s;
+		}
+		return printme;
+		// TODO: probably open up the business figures window.
+	}
+	
 	/**
 	 * 	Update the current price.
 	 *
 	 * @param newPrice
 	 */
-	public String updatePrice(String origin, String destination, TransportType transportType ,String price) {
+	public String updatePrice(String origin, String destination, String transportType ,String price) {
+		Route.TransportType tType;
+		if (transportType.equals("Air")) {
+			tType = Route.TransportType.AIR;
+		} else if (transportType.equals("Land")) {
+			tType = Route.TransportType.LAND;
+		} else if (transportType.equals("Sea")) {
+			tType = Route.TransportType.SEA;
+		} else {
+			return "Please select a Priority.";
+		}
+		
 		double newPrice;
 		
 		if (price.matches("^(?:\\d+(?:\\.\\d{2})?)$")) {
@@ -318,7 +363,7 @@ public class KPSmartController {
 			return "Price must be in the correct format.";
 		}
 		
-		Route route = new Route(origin, destination, transportType, newPrice);
+		Route route = new Route(origin, destination, tType, newPrice);
 		boolean success = RouteService.update(route);//TODO should probably log this change which would require getting the previous route before i overwrite it
 		if (success) {
 			return "Success";

@@ -146,7 +146,7 @@ public class UpdatePricePanel extends JPanel implements ActionListener {
 				&& this.destinationDropDownBox.getSelectedItem() != null
 				&& this.priorityDropDownBox.getSelectedItem() != null
 				&& this.newPriceInputField.getValue() != null) {
-			String createAttempt = this.controller.addRoute(this.originDropDownBox.getSelectedItem().toString(),
+			String createAttempt = this.controller.updatePrice(this.originDropDownBox.getSelectedItem().toString(),
 					this.destinationDropDownBox.getSelectedItem().toString(), this.priorityDropDownBox.getSelectedItem().toString(),
 					this.newPriceInputField.getValue().toString());
 			if (!createAttempt.equals("Success")) {

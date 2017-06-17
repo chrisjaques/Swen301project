@@ -111,9 +111,9 @@ public class ReadXMLData {
 			            Node n = nl2.item(i2);
 
 			            if(n.getNodeName().equals("destination")){
-			            	destination = n.getFirstChild().getTextContent();
+			            	destination = n.getFirstChild().getTextContent().trim();
 			            } else if(n.getNodeName().equals("origin")){
-			            	origin = n.getFirstChild().getTextContent();
+			            	origin = n.getFirstChild().getTextContent().trim();
 			            } else if(n.getNodeName().equals("volume")){
 			            	volume = Double.parseDouble(n.getFirstChild().getTextContent());
 			            } else if(n.getNodeName().equals("weight")){
@@ -139,7 +139,7 @@ public class ReadXMLData {
 			}
 			
 			for(MailCount mail : mailCountList){
-				mailList.add("Amount of mail going from " + mail.getOrigin() + " to " + mail.getDestination() + ": Mail count - " + mail.getCount() + ", Total volume - " + mail.getVolume() + ", Total weight - " + mail.getWeight());
+				mailList.add("Amount of mail going from " + mail.getOrigin() + " to " + mail.getDestination() + ": Mail count - " + mail.getCount() + ", Total volume - " + mail.getVolume() + ", Total weight - " + mail.getWeight() + "\n");
 			}
 			
 			for(String mail : mailList){

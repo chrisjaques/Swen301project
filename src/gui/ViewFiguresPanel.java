@@ -67,7 +67,7 @@ public class ViewFiguresPanel extends JPanel implements ActionListener{
 		gbc_btnMailAnalysis.gridy = 1;
 		btnMailAnalysis.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				updateTextPane(controller.readBusinessFigures());
+				updateTextPane(controller.readMailFigures());
 			}
 		});
 		add(btnMailAnalysis, gbc_btnMailAnalysis);
@@ -79,7 +79,7 @@ public class ViewFiguresPanel extends JPanel implements ActionListener{
 		gbc_btnNewButton.gridy = 1;
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				updateTextPane(controller.readBusinessFigures());
+				updateTextPane(controller.readRevenueFigures());
 			}
 		});
 		add(btnNewButton, gbc_btnNewButton);
