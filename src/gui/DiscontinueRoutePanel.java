@@ -50,7 +50,6 @@ public class DiscontinueRoutePanel extends JPanel implements ActionListener {
 
 		discontinueRouteLabel.setFont(new Font("Lucida Grande", Font.BOLD, 24));
 		GridBagConstraints gbc_discontinueRouteLabel = new GridBagConstraints();
-		gbc_discontinueRouteLabel.anchor = GridBagConstraints.WEST;
 		gbc_discontinueRouteLabel.gridwidth = 3;
 		gbc_discontinueRouteLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_discontinueRouteLabel.gridx = 0;
