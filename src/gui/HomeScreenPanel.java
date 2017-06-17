@@ -34,6 +34,7 @@ public class HomeScreenPanel extends JPanel implements ActionListener {
 		setLayout(new BorderLayout(0, 0));
 		this.frame = frame;
 		JLabel lblHome = new JLabel("Home");
+		lblHome.setForeground(new Color(0, 51, 102));
 		lblHome.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHome.setFont(new Font("Lucida Grande", Font.BOLD, 24));
 		add(lblHome, BorderLayout.NORTH);

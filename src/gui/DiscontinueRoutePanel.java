@@ -3,6 +3,7 @@ package gui;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import logic.KPSmartController;
 import logic.RouteService;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JButton;
+
+import java.awt.Color;
 import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
 
@@ -41,14 +44,17 @@ public class DiscontinueRoutePanel extends JPanel implements ActionListener {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JLabel lblKpsmartDiscontinue = new JLabel("Discontinue Route");
-		lblKpsmartDiscontinue.setFont(new Font("Lucida Grande", Font.BOLD, 24));
-		GridBagConstraints gbc_lblKpsmartDiscontinue = new GridBagConstraints();
-		gbc_lblKpsmartDiscontinue.gridwidth = 3;
-		gbc_lblKpsmartDiscontinue.insets = new Insets(0, 0, 5, 0);
-		gbc_lblKpsmartDiscontinue.gridx = 0;
-		gbc_lblKpsmartDiscontinue.gridy = 0;
-		add(lblKpsmartDiscontinue, gbc_lblKpsmartDiscontinue);
+		JLabel discontinueRouteLabel = new JLabel("Discontinue Route");
+		discontinueRouteLabel.setForeground(new Color(0, 51, 102));
+		discontinueRouteLabel.setBorder(new EmptyBorder(10, 0, 20, 0));
+
+		discontinueRouteLabel.setFont(new Font("Lucida Grande", Font.BOLD, 24));
+		GridBagConstraints gbc_discontinueRouteLabel = new GridBagConstraints();
+		gbc_discontinueRouteLabel.gridwidth = 3;
+		gbc_discontinueRouteLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_discontinueRouteLabel.gridx = 0;
+		gbc_discontinueRouteLabel.gridy = 0;
+		add(discontinueRouteLabel, gbc_discontinueRouteLabel);
 		
 		JLabel originLabel = new JLabel("Origin");
 		GridBagConstraints gbc_originLabel = new GridBagConstraints();

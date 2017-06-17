@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import java.awt.Color;
 import java.awt.Font;
 
 public class LoginScreenPanel extends JPanel implements ActionListener{
@@ -45,6 +46,7 @@ public class LoginScreenPanel extends JPanel implements ActionListener{
 		setLayout(gridBagLayout);
 
 		JLabel lblLogin = new JLabel("Login");
+		lblLogin.setForeground(new Color(0, 51, 102));
 		lblLogin.setFont(new Font("Lucida Grande", Font.BOLD, 24));
 		GridBagConstraints gbc_lblLogin = new GridBagConstraints();
 		gbc_lblLogin.insets = new Insets(0, 0, 5, 0);
