@@ -145,7 +145,7 @@ public class NewRoutePanel extends JPanel implements ActionListener {
 			&& this.priorityDropDownBox.getSelectedItem() != null
 			&& this.priceInputField.getValue() != null) {
 				String createAttempt = this.controller.addRoute(this.originField.getText().trim(),
-						this.originField.getText().trim(), this.priorityDropDownBox.getSelectedItem().toString(),
+						this.destinationField.getText().trim(), this.priorityDropDownBox.getSelectedItem().toString(),
 						this.priceInputField.getValue().toString());
 				if (!createAttempt.equals("Success")) {
 					JOptionPane.showMessageDialog(new JFrame(), createAttempt, "ERROR", JOptionPane.ERROR_MESSAGE);

@@ -3,10 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
+import event_logging.ReadXMLData;
 import event_logging.SaveDataToXML;
-
 import gui.KPSmartFrame;
-
 import logic.Route.TransportType;
 
 public class KPSmartController {
@@ -96,12 +95,12 @@ public class KPSmartController {
 		boolean priority = false;
 		
 		// Convert priority/transportType to correct format.
-		if (prioritySelected.equals("Air")) {
+		if (prioritySelected.trim().equals("Air")) {
 			transportType = Route.TransportType.AIR;
 			priority = true;
-		} else if (prioritySelected.equals("Land")) {
+		} else if (prioritySelected.trim().equals("Land")) {
 			transportType = Route.TransportType.LAND;
-		} else if (prioritySelected.equals("Sea")) {
+		} else if (prioritySelected.trim().equals("Sea")) {
 			transportType = Route.TransportType.SEA;
 		} else {
 			return "Please select a Priority.";
@@ -136,8 +135,12 @@ public class KPSmartController {
 
 		DeliveryRoute currentRoute;
 
-		while(!(queue.peek().getOrigin().equals(origin) && queue.peek().getDestination().equals(destination)) && !queue.isEmpty()){ //keep peeking the priorityQueue until the first route is from origin to destination
-
+		while(!queue.isEmpty()){
+			
+			if(queue.peek().getOrigin().equals(origin) && queue.peek().getDestination().equals(destination)){//we have found complete route so break the loop
+				break;
+			}
+				
 			currentRoute = queue.poll();
 
 			availableRoutes = RouteService.getRoutesByOrigin(currentRoute.getDestination());
@@ -291,7 +294,13 @@ public class KPSmartController {
 	/**
 	 * Display the business figures of the business.
 	 */
-	public void monitorBusinessFigures() {
+	public String readBusinessFigures() {
+		ArrayList<String> info = ReadXMLData.readXML();
+		String printme = "";
+		for (String s : info){
+			printme += s;
+		}
+		return printme;
 		// TODO: probably open up the business figures window.
 	}
 

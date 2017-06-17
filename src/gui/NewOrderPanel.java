@@ -43,6 +43,9 @@ public class NewOrderPanel extends JPanel implements ActionListener {
 	 * Create the panel.
 	 */
 	public NewOrderPanel(KPSmartController controller) {
+		
+		this.controller = controller;
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -164,15 +167,17 @@ public class NewOrderPanel extends JPanel implements ActionListener {
 				&& this.weightInputField.getValue() != null
 				&& this.volumeInputField.getValue() != null) {
 			
-			System.out.println(this.originDropDownBox.getSelectedItem().toString());
-			System.out.println(this.destinationDropDownBox.getSelectedItem().toString());
-			System.out.println(this.priorityDropDownBox.getSelectedItem().toString());
-			System.out.println(this.weightInputField.getValue().toString());
-			System.out.println(this.volumeInputField.getValue().toString());
+			String origin = this.originDropDownBox.getSelectedItem().toString();
+			String destination = this.destinationDropDownBox.getSelectedItem().toString();
+			String priority = this.priorityDropDownBox.getSelectedItem().toString();
+			String weight = this.weightInputField.getValue().toString();
+			String volume = this.volumeInputField.getValue().toString();
 			
-			String createAttempt = this.controller.createOrder(this.priorityDropDownBox.getSelectedItem().toString(),
-					this.volumeInputField.getValue().toString(), this.originDropDownBox.getSelectedItem().toString(),
-					this.destinationDropDownBox.getSelectedItem().toString(), this.weightInputField.getValue().toString());
+			String createAttempt = controller.createOrder(priority, volume, origin, destination, weight);
+			
+//			String createAttempt = controller.createOrder(this.priorityDropDownBox.getSelectedItem().toString(),
+//					this.volumeInputField.getValue().toString(), this.originDropDownBox.getSelectedItem().toString(),
+//					this.destinationDropDownBox.getSelectedItem().toString(), this.weightInputField.getValue().toString());
 			
 			if (!createAttempt.equals("Success")) {
 				JOptionPane.showMessageDialog(new JFrame(), createAttempt, "ERROR", JOptionPane.ERROR_MESSAGE);
