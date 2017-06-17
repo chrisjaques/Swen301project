@@ -38,7 +38,9 @@ public static ArrayList<String> readXML(){
 
 				switch (nNode.getNodeName()) {
 				case "mail":
+					System.out.println("hi1");
 					elements.add(ProcessData.processMail(nNode));
+					System.out.println("hi2");
 					break;
 				case "cost":
 					elements.add(ProcessData.processCost(nNode));
@@ -49,18 +51,15 @@ public static ArrayList<String> readXML(){
 				case "user":
 					elements.add(ProcessData.processUser(nNode));
 					break;
-				case "#text":
-					
+				case "#text":					
 					break;
 				default:
 					throw new XMLParseException("Invalid XML parsed");
 				}
-
 			}
 			
 		  } catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
-		
 		  } catch (SAXException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -128,7 +127,7 @@ public static ArrayList<String> readXML(){
 				Boolean present = false;
 
 				for(MailCount mail : mailCountList){
-					System.out.println(mail.getDestination() + mail.getOrigin());
+
 					if(mail.getDestination().equals(destination) && mail.getOrigin().equals(origin)){
 						mail.addData(volume, weight);
 						present = true;
@@ -159,49 +158,6 @@ public static ArrayList<String> readXML(){
 		}
 		
 		return mailList;
-	}
-	
-	private static class MailCount{
-		
-		private double volume;
-		private double weight;
-		private String destination;
-		private String origin;
-		private int count;
-		
-		private MailCount(double volume, double weight, String dest, String origin){
-			this.volume = volume;
-			this.weight = weight;
-			this.destination = dest;
-			this.origin = origin;
-			this.count = 1;
-		}
-		
-		public void addData(double volume2, double weight2) {
-			this.volume += volume2;
-			this.weight += weight2;
-			this.count++;
-		}
-
-		private String getDestination(){
-			return this.destination;
-		}
-		
-		private String getOrigin(){
-			return this.origin;
-		}
-		
-		private int getCount(){
-			return this.count;
-		}
-		
-		private double getVolume(){
-			return this.volume;
-		}
-		
-		private double getWeight(){
-			return this.weight;
-		}
 	}
 	
 	/**
@@ -250,8 +206,7 @@ public static ArrayList<String> readXML(){
 		
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		Document xml;
-		double revenue = 0;
-		//revenue.
+		double revenue = 0.00;
 		
 		try {
 			
@@ -264,15 +219,21 @@ public static ArrayList<String> readXML(){
 			NodeList nl = root.getElementsByTagName("mail");
 			
 			for (int temp = 0; temp < nl.getLength(); temp++) {{
-		            Node n = nl.item(temp);
-
-		            if(n.getNodeName().equals("price")){
-		            	//revenue
-		            	// n.getFirstChild().getTextContent();
-		            }
-		        }
+	            Node n = nl.item(temp);
+	            
+	            if(n.getNodeType()==Node.ELEMENT_NODE) {
+			        NodeList nl2 = n.getChildNodes();
+			        
+			        for(int i2=0; i2<nl2.getLength(); i2++) {
+			            Node node = nl2.item(i2);
+			            if(node.getNodeName().equals("price")){
+			            	revenue = revenue + Double.parseDouble(node.getFirstChild().getTextContent());
+			            }
+			        }
+			        
+	            }
 			}
-			
+		}
 		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
 		} catch (IOException e) {
@@ -284,64 +245,46 @@ public static ArrayList<String> readXML(){
 		return revenue;
 	}
 
-
-	public static ArrayList<String> readXMLFromTimePeriod(int time){
+	private static class MailCount{
 		
-		ArrayList<String> elements = new ArrayList<String>();
-		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-		Document xml;
+		private double volume;
+		private double weight;
+		private String destination;
+		private String origin;
+		private int count;
 		
-		try {
-			
-			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-			// parse using the builder to get the DOM mapping of the XML file
-			xml = docBuilder.parse("resources/logfile.xml");
-			xml.getDocumentElement().normalize();
-			
-			Element root = xml.getDocumentElement(); //getAttributes()
-			NodeList nl = root.getChildNodes();
-			
-			for (int temp = 0; temp < nl.getLength(); temp++) {
-
-				Node nNode = nl.item(temp);
-
-				switch (nNode.getNodeName()) {
-				case "mail":
-					elements.add(ProcessData.processMail(nNode));
-					break;
-				case "cost":
-					elements.add(ProcessData.processCost(nNode));
-					break;
-				case "route":
-					elements.add(ProcessData.processRoute(nNode));
-					break;
-				case "user":
-					elements.add(ProcessData.processUser(nNode));
-					break;
-				case "#text":
-					
-					break;
-				default:
-					throw new XMLParseException("Invalid XML parsed");
-				}
-
-			}
-			
-		  } catch (ParserConfigurationException pce) {
-			pce.printStackTrace();
+		private MailCount(double volume, double weight, String dest, String origin){
+			this.volume = volume;
+			this.weight = weight;
+			this.destination = dest;
+			this.origin = origin;
+			this.count = 1;
+		}
 		
-		  } catch (SAXException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (XMLParseException e) {
-			e.printStackTrace();
+		public void addData(double volume2, double weight2) {
+			this.volume += volume2;
+			this.weight += weight2;
+			this.count++;
 		}
 
-		for (int temp = 0; temp < elements.size(); temp++) {
-			System.out.println(elements.get(temp));
+		private String getDestination(){
+			return this.destination;
 		}
-		return elements;
+		
+		private String getOrigin(){
+			return this.origin;
+		}
+		
+		private int getCount(){
+			return this.count;
+		}
+		
+		private double getVolume(){
+			return this.volume;
+		}
+		
+		private double getWeight(){
+			return this.weight;
+		}
 	}
-	
 }
